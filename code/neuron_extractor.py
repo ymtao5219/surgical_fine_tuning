@@ -21,3 +21,10 @@ class NeuronExtractor:
         outputs = self.model(**input_ids)
         cls_embedding = outputs.last_hidden_state[:, 0, :].detach().cpu().numpy()
         return cls_embedding
+
+    @torch.no_grad()
+    def extract_layer_embedding(self, sentences, layer_num):
+        input_ids = self.tokenizer(sentences, padding=True, truncation=True, return_tensors="pt").to(self.device)
+        outputs = self.model(**input_ids)
+        embedding = outputs.hidden_states[layer_num-1].detach().cpu().numpy()
+        return embedding
