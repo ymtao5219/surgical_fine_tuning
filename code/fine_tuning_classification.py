@@ -7,6 +7,18 @@ Original file is located at
     https://colab.research.google.com/drive/16WJVkQ7yGEtLyI8XTpxYqG4bqJkKIW1y
 """
 
+
+
+"""
+NOTE: 
+1. This code uses placeholder data and generic skeleton for fine tuning BERT for classification.
+2. The data being used here is not to be used for fine tuning. Fine tuning should be done on a downstream task.
+3. This code also serves as a tester for loading custom data instead of HuggingFace datasets.
+
+TODO:
+Remove redundant code of Neuron Extractor and Neuron Analyzer and instead import from the Python files.
+"""
+
 ! pip install transformers evaluate
 
 import transformers
