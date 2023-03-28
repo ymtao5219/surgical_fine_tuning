@@ -1,5 +1,5 @@
 {
-    "with_wh": [
+    "with_wh_word": [
         "Who is your favorite author?",
         "What is your favorite color?",
         "When is your birthday?",
@@ -101,7 +101,7 @@
         "Where is the best place to watch the stars at night?",
         "How often do you exercise? "
     ],
-    "without_wh": [
+    "without_wh_word": [
         "She is a talented singer who can hit high notes effortlessly.",
         "He loves to play soccer in his free time.",
         "The sky is a beautiful shade of orange during sunset.",
