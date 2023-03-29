@@ -67,5 +67,8 @@ class NeuronAnalyzer:
         # num_of_neurons = self.pretained_activations.shape[1]
         t_stats, p_vals = ttest_ind(self.pretained_activations, self.finetuned_activations, axis=0)
         significant_neurons = np.where(p_vals < alpha)[0]
+        # insignificant_neurons = np.where(p_vals >= alpha)[0]
         # ipdb.set_trace()
+        # todo
+        # return np.concatenate((t_stats[significant_neurons], t_stats[insignificant_neurons]), axis=0)
         return t_stats[significant_neurons]
