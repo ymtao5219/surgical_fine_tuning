@@ -33,13 +33,12 @@ class NeuronAnalyzer:
     #     self.neuron_rankings = []
     #     self._rank_neuron()
     
-    def rank_neuron(self, method="t_stat"): 
+    def rank_neuron(self, top_k=10, method="t_stat"): 
         if method == "t_stat":
             t_stats = self._compute_t_stat()
             # Get the indices of the sorted array in descending order
             sorted_neurons_indices = np.argsort(t_stats)[::-1]
-        
-        return list(sorted_neurons_indices)
+        return list(sorted_neurons_indices)[:top_k]
         
     def _compute_t_stat(self, alpha=0.05):
         # num_of_neurons = self.pretained_activations.shape[1]

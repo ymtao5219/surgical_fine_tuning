@@ -1,26 +1,35 @@
 import numpy as np
 import ipdb
-from datasets import load_dataset
+import os
 from transformers import AutoModel, AutoTokenizer
 from neuron_extractor import *
 from neuron_analyzer import *
-
-# Load dataset
-dataset_name = "ptb_text_only"
-dataset = load_dataset(dataset_name, split="test").select(range(500))
+from utils import *
+from collections import defaultdict
 
 # Load the pretrained model
-model_checkpoint_pretrained = "bert-base-multilingual-cased"
-model_pretrained = AutoModel.from_pretrained(model_checkpoint_pretrained)
-tokenizer_pretrained = AutoTokenizer.from_pretrained(model_checkpoint_pretrained)
-cls_emb_pretrained = NeuronExtractor(model_pretrained, tokenizer_pretrained).extract_cls(dataset["sentence"])
 
-# Load the finetuned model
-model_checkpoint_finetuned = "QCRI/bert-base-multilingual-cased-pos-english"
-model_finetuned = AutoModel.from_pretrained(model_checkpoint_finetuned)
-tokenizer_finetuned = AutoTokenizer.from_pretrained(model_checkpoint_finetuned)
-cls_emb_finetuned = NeuronExtractor(model_finetuned, tokenizer_finetuned).extract_cls(dataset["sentence"])
+model_checkpoint = "QCRI/bert-base-multilingual-cased-pos-english"
+# model_checkpoint = "bert-base-multilingual-cased"
+model = AutoModel.from_pretrained(model_checkpoint)
+tokenizer= AutoTokenizer.from_pretrained(model_checkpoint)
 
+attr2neuron =  defaultdict(list)
 
-# Analysis 
-NeuronAnalyzer(cls_emb_pretrained, cls_emb_finetuned).plot_neuron_histograms(top_k=10)
+# read json 
+for f in os.listdir('./data'):
+    data = read_json('./data/' + f)
+    attr = f.split(".")[0]
+    sentences_with = data[f"with_{attr}"]
+    sentences_without = data[f"without_{attr}"]
+    # extract cls embedding for pairs of sentences
+    cls_emb_with = NeuronExtractor(model, tokenizer).extract_cls(sentences_with)
+    cls_emb_without = NeuronExtractor(model, tokenizer).extract_cls(sentences_without)
+    # extract top activated neurons
+    neuron_indices = NeuronAnalyzer(cls_emb_with, cls_emb_without).rank_neuron(top_k=10)
+    # construct graph
+    attr2neuron[attr] = neuron_indices
+    
+print(attr2neuron)
+
+    
