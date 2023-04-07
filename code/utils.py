@@ -21,8 +21,10 @@ def plot_heatmap(binary_arrays, file_path="./figs/heatmap.png"):
     # Stack the binary arrays vertically to form a 2D NumPy array
     stacked_arrays = np.vstack(binary_arrays)
 
-    plt.figure(figsize=(20, len(binary_arrays) * 1.5))
-    sns.heatmap(stacked_arrays, cmap="coolwarm", cbar=False, square=True, linewidths=0, xticklabels=False, yticklabels=False)
-
+    nrows, ncols = stacked_arrays.shape
+    # plot the binary matrix as an image
+    plt.imshow(binary_arrays, cmap='binary', aspect=12)
+    plt.colorbar()
+    
     if file_path:
         plt.savefig(file_path, dpi=500, bbox_inches='tight')
