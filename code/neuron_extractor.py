@@ -16,15 +16,9 @@ class NeuronExtractor:
     
     # todo: batched inference, due to the limited memory of the GPU
     @torch.no_grad()
-    def extract_cls(self, sentences):
+    def extract_layer_embedding(self, sentences, layer_num=-1):
         input_ids = self.tokenizer(sentences, padding=True, truncation=True, return_tensors="pt", is_split_into_words=self.is_split_into_words).to(self.device)
-        outputs = self.model(**input_ids)
-        cls_embedding = outputs.last_hidden_state[:, 0, :].detach().cpu().numpy()
+        outputs = self.model(**input_ids, output_hidden_states=True)
+        # Extract the CLS embedding for the specified layer
+        cls_embedding = outputs.hidden_states[layer_num][:, 0, :].detach().cpu().numpy()
         return cls_embedding
-
-    @torch.no_grad()
-    def extract_layer_embedding(self, sentences, layer_num):
-        input_ids = self.tokenizer(sentences, padding=True, truncation=True, return_tensors="pt", is_split_into_words=self.is_split_into_words).to(self.device)
-        outputs = self.model(**input_ids)
-        embedding = outputs.hidden_states[layer_num-1].detach().cpu().numpy()
-        return embedding

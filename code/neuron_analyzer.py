@@ -1,5 +1,5 @@
 
-from scipy.stats import ttest_ind
+
 import numpy as np
 import matplotlib.pyplot as plt
 import ipdb
@@ -15,34 +15,82 @@ class NeuronAnalyzer:
         
         self.neuron_rankings = None
         
+        
+    def plot_neuron_histograms(self, neuron_type, k=10, save_path="./figs"):
+        
+        if neuron_type == "top":
+            neuron_indices = self.rank_neuron(neuron_type="top")[:k]
+        if neuron_type == "bottom":
+            neuron_indices = self.rank_neuron(neuron_type="bottom")[:k]
+        
+        # Create the figure and subplots
+        fig, axs = plt.subplots((k+3)//4, 4, figsize=(30, 5*(k+3)//4))
     
-    def plot_neuron_histograms(self, top_k=10, save_path="./figs"):
-        neuron_indices = self.rank_neuron()[:top_k]
-        for top_i, neuron_idx in enumerate(neuron_indices): 
-            
-            plt.hist(self.pretained_activations[:, neuron_idx], bins=20, alpha=0.5, label="pretrained", color='blue')
-            plt.hist(self.finetuned_activations[:, neuron_idx], bins=20, alpha=0.5, label="finetuned", color='red')
-            plt.title('Histogram of activations for neuron {}'.format(neuron_idx))
-            plt.xlabel('Actviations')
-            plt.ylabel('Frequency')
-            plt.legend(loc='upper right')
-            plt.savefig(f"{save_path}/histograms_top{top_i}_neuron_{neuron_idx}.png")
-            plt.clf()
+        # Loop over each top neuron and plot its histograms on a subplot
+        for i, neuron_idx in enumerate(neuron_indices):
+            axs[i//4, i%4].hist(self.pretained_activations[:, neuron_idx], bins=20, alpha=0.5, label="shuffled", color='blue')
+            axs[i//4, i%4].hist(self.finetuned_activations[:, neuron_idx], bins=20, alpha=0.5, label="unshuffled", color='red')
+            axs[i//4, i%4].set_title('Histogram of activations for neuron {}'.format(neuron_idx))
+            axs[i//4, i%4].set_xlabel('Activations')
+            axs[i//4, i%4].set_ylabel('Frequency')
+            axs[i//4, i%4].legend(loc='upper right')
+    
+        # Adjust the layout of the subplots
+        fig.tight_layout()
+    
+        # Save the plot to a file and show it
+        if neuron_type == "top":
+            plt.savefig(f"{save_path}/histograms_top{k}_neurons_before_finetuning.png")
+        if neuron_type == "bottom":
+            plt.savefig(f"{save_path}/histograms_bottom{k}_neurons_before_finetuning.png")
+        plt.show()
+
+        
 
     # def compute_spearman_stat(self):
     #     self.neuron_rankings = []
     #     self._rank_neuron()
     
-    def rank_neuron(self, top_k=10, method="t_stat"): 
-        if method == "t_stat":
-            t_stats = self._compute_t_stat()
-            # Get the indices of the sorted array in descending order
-            sorted_neurons_indices = np.argsort(t_stats)[::-1]
-        return list(sorted_neurons_indices)[:top_k]
+    def rank_neuron(self, metric, neuron_type="all", k=None, alpha=0.01):
+        '''rank neurons based on the test statistic
+        Args:
+            metric: the test statistic to use
+            k: the number of neurons to return, if k is None, return all activated/inactivated neurons
+        '''
+        neuron2stats_significant, neuron2stats_insignificant = self._compute_test_statistic(metric, alpha)
         
-    def _compute_t_stat(self, alpha=0.05):
-        # num_of_neurons = self.pretained_activations.shape[1]
-        t_stats, p_vals = ttest_ind(self.pretained_activations, self.finetuned_activations, axis=0)
-        significant_neurons = np.where(p_vals < alpha)[0]
+        # return a binary vector indicating whether a neuron is activated or not
+        if neuron_type == "all":
+            res = np.zeros(self.pretained_activations.shape[1])
+            # ipdb.set_trace()
+            res[list(neuron2stats_significant.keys())] = 1
+            return res
+        
+        # return a dictionary of activated neurons and their test statistics
+        if neuron_type == "top":
+            return self._sort_neuron_by_statistic(neuron2stats_significant, k=k, reverse=True)
+        
+        # return a dictionary of inactivated neurons and their test statistics
+        if neuron_type == "bottom":
+            return self._sort_neuron_by_statistic(neuron2stats_insignificant, k=k, reverse=False)
+
+    def _compute_test_statistic(self, metric, alpha):
+        '''compute the test statistic for each neuron'''
+        num_of_neurons = self.pretained_activations.shape[1]
+        neuron2stats_significant = {}
+        neuron2stats_insignificant = {}
         # ipdb.set_trace()
-        return t_stats[significant_neurons]
+        for i in range(num_of_neurons):
+            stat, p_value = metric(self.pretained_activations[:, i], self.finetuned_activations[:, i])
+            if p_value < alpha:
+                neuron2stats_significant[i] = abs(stat)
+            else: 
+                neuron2stats_insignificant[i] = abs(stat)
+        return neuron2stats_significant, neuron2stats_insignificant
+
+    def _sort_neuron_by_statistic(dct, k=None, reverse=True):
+        '''sort a dictionary by its values'''
+        sorted_items = sorted(dct.items(), key=lambda item: item[1], reverse=reverse)
+        # if k is None, return all items
+        top_k_items = sorted_items[:k] if k is not None else sorted_items
+        return {k: v for k, v in top_k_items}

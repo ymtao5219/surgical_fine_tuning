@@ -14,17 +14,15 @@ def read_json(file_path):
         data = json.load(f)
     return data
 
-def plot_bipartite_graph(my_dict):
-    G = nx.Graph()
-    top_nodes = list(my_dict.keys())
-    bottom_nodes = list(set([val for sublist in my_dict.values() for val in sublist]))
-    G.add_nodes_from(top_nodes, bipartite=0)
-    G.add_nodes_from(bottom_nodes, bipartite=1)
-    for key, values in my_dict.items():
-        for value in values:
-            G.add_edge(key, value)
-    pos = {node: (0, i) for i, node in enumerate(top_nodes)}
-    pos.update({node: (1, i) for i, node in enumerate(bottom_nodes)})
-    nx.draw(G, pos=pos, with_labels=True, node_color=["red"]*len(top_nodes) + ["green"]*len(bottom_nodes), node_shape="s")
-    plt.savefig("./figs/bipartite_graph.png")
-    plt.show()
+import seaborn as sns
+
+def plot_heatmap(binary_arrays, file_path="./figs/heatmap.png"):
+
+    # Stack the binary arrays vertically to form a 2D NumPy array
+    stacked_arrays = np.vstack(binary_arrays)
+
+    plt.figure(figsize=(20, len(binary_arrays) * 1.5))
+    sns.heatmap(stacked_arrays, cmap="coolwarm", cbar=False, square=True, linewidths=0, xticklabels=False, yticklabels=False)
+
+    if file_path:
+        plt.savefig(file_path, dpi=500, bbox_inches='tight')
