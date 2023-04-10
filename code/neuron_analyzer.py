@@ -6,17 +6,17 @@ import ipdb
 class NeuronAnalyzer: 
     
     '''
-    Take cls embeddings from pretrained and finetuned models and perform statistical analysis on the neurons.
+    Take cls embeddings from sentences with/without a particular attirbute and perform statistical analysis on the neurons.
     '''
     
-    def __init__(self, pretained_activations, finetuned_activations) -> None:
-        self.pretained_activations = pretained_activations
-        self.finetuned_activations = finetuned_activations
+    def __init__(self, activations1, activations2) -> None:
+        self.activations1 = activations1
+        self.activations2 = activations2
         
         self.neuron_rankings = None
         
         
-    def plot_neuron_histograms(self, neuron_type, k=10, save_path="./figs"):
+    def plot_neuron_histograms(self, neuron_type, k=10, labels=["shuffled, unshuffled"], save_path="./figs"):
         
         if neuron_type == "top":
             neuron_indices = self.rank_neuron(neuron_type="top")[:k]
@@ -28,8 +28,8 @@ class NeuronAnalyzer:
     
         # Loop over each top neuron and plot its histograms on a subplot
         for i, neuron_idx in enumerate(neuron_indices):
-            axs[i//4, i%4].hist(self.pretained_activations[:, neuron_idx], bins=20, alpha=0.5, label="shuffled", color='blue')
-            axs[i//4, i%4].hist(self.finetuned_activations[:, neuron_idx], bins=20, alpha=0.5, label="unshuffled", color='red')
+            axs[i//4, i%4].hist(self.activations1[:, neuron_idx], bins=20, alpha=0.5, label=labels[0], color='blue')
+            axs[i//4, i%4].hist(self.activations2[:, neuron_idx], bins=20, alpha=0.5, label=labels[1], color='red')
             axs[i//4, i%4].set_title('Histogram of activations for neuron {}'.format(neuron_idx))
             axs[i//4, i%4].set_xlabel('Activations')
             axs[i//4, i%4].set_ylabel('Frequency')
@@ -61,7 +61,7 @@ class NeuronAnalyzer:
         
         # return a binary vector indicating whether a neuron is activated or not
         if neuron_type == "all":
-            res = np.zeros(self.pretained_activations.shape[1])
+            res = np.zeros(self.activations1.shape[1])
             # ipdb.set_trace()
             res[list(neuron2stats_significant.keys())] = 1
             return res
@@ -76,12 +76,12 @@ class NeuronAnalyzer:
 
     def _compute_test_statistic(self, metric, alpha):
         '''compute the test statistic for each neuron'''
-        num_of_neurons = self.pretained_activations.shape[1]
+        num_of_neurons = self.activations1.shape[1]
         neuron2stats_significant = {}
         neuron2stats_insignificant = {}
         # ipdb.set_trace()
         for i in range(num_of_neurons):
-            stat, p_value = metric(self.pretained_activations[:, i], self.finetuned_activations[:, i])
+            stat, p_value = metric(self.activations1[:, i], self.activations2[:, i])
             if p_value < alpha:
                 neuron2stats_significant[i] = abs(stat)
             else: 

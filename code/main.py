@@ -53,20 +53,21 @@ for row in validation_data:
         label_sentences[label].append(sentence)
 
 res = []
-
+num_of_activated_neurons = []
 for i in range(1, num_layers+1):
     # extract cls embedding for pairs of sentences
     cls_emb_with = NeuronExtractor(model, tokenizer).extract_layer_embedding(label_sentences[1], layer_num=i)
     cls_emb_without = NeuronExtractor(model, tokenizer).extract_layer_embedding(label_sentences[0], layer_num=i)
     # extract top activated neurons
     binary_vector = NeuronAnalyzer(cls_emb_with, cls_emb_without).rank_neuron(metric=ks_2samp, neuron_type="all")
-    print(f"the number of activated neurons at layer {i}", np.sum(binary_vector))
+    num_of_activated_neurons.append(np.sum(binary_vector))
     res.append(binary_vector)
-
+print("the number of activated neurons at layer ", num_of_activated_neurons)
 # stacked_arrays = np.vstack(res)
 # save_numpy_array_to_file(stacked_arrays, f"./data/binary_matrix.npy")
 
-plot_heatmap(res)
+dataset_name = "sst2"
+plot_heatmap(res, file_path=f"./figs/heatmap_{dataset_name}.png")
 
 
     
