@@ -15,18 +15,17 @@ class NeuronAnalyzer:
         
         self.neuron_rankings = None
         
+    def plot_neuron_histograms(self, metric, neuron_type, model_type, k, labels, save_path="./figs"):
         
-    def plot_neuron_histograms(self, neuron_type, k=10, labels=["shuffled, unshuffled"], save_path="./figs"):
-        
+        # ipdb.set_trace()
         if neuron_type == "top":
-            neuron_indices = self.rank_neuron(neuron_type="top")[:k]
+            neuron_indices = self.rank_neuron(metric, neuron_type, k=k).keys()
         if neuron_type == "bottom":
-            neuron_indices = self.rank_neuron(neuron_type="bottom")[:k]
+            neuron_indices = self.rank_neuron(metric, neuron_type, k=k).keys()
         
-        # Create the figure and subplots
         fig, axs = plt.subplots((k+3)//4, 4, figsize=(30, 5*(k+3)//4))
     
-        # Loop over each top neuron and plot its histograms on a subplot
+        # Loop over each top/bottom neuron and plot its histograms on a subplot
         for i, neuron_idx in enumerate(neuron_indices):
             axs[i//4, i%4].hist(self.activations1[:, neuron_idx], bins=20, alpha=0.5, label=labels[0], color='blue')
             axs[i//4, i%4].hist(self.activations2[:, neuron_idx], bins=20, alpha=0.5, label=labels[1], color='red')
@@ -34,24 +33,19 @@ class NeuronAnalyzer:
             axs[i//4, i%4].set_xlabel('Activations')
             axs[i//4, i%4].set_ylabel('Frequency')
             axs[i//4, i%4].legend(loc='upper right')
-    
-        # Adjust the layout of the subplots
         fig.tight_layout()
-    
-        # Save the plot to a file and show it
-        if neuron_type == "top":
-            plt.savefig(f"{save_path}/histograms_top{k}_neurons_before_finetuning.png")
-        if neuron_type == "bottom":
-            plt.savefig(f"{save_path}/histograms_bottom{k}_neurons_before_finetuning.png")
-        plt.show()
 
-        
+        if neuron_type == "top":
+            plt.savefig(f"{save_path}/histograms_top{k}_neurons_{model_type}.png")
+        if neuron_type == "bottom":
+            plt.savefig(f"{save_path}/histograms_bottom{k}_neurons_{model_type}.png")
+        plt.show()
 
     # def compute_spearman_stat(self):
     #     self.neuron_rankings = []
     #     self._rank_neuron()
     
-    def rank_neuron(self, metric, neuron_type="all", k=None, alpha=0.01):
+    def rank_neuron(self, metric, neuron_type, k=None, alpha=0.01):
         '''rank neurons based on the test statistic
         Args:
             metric: the test statistic to use
@@ -60,7 +54,7 @@ class NeuronAnalyzer:
         neuron2stats_significant, neuron2stats_insignificant = self._compute_test_statistic(metric, alpha)
         
         # return a binary vector indicating whether a neuron is activated or not
-        if neuron_type == "all":
+        if neuron_type == "all" and k is None:
             res = np.zeros(self.activations1.shape[1])
             # ipdb.set_trace()
             res[list(neuron2stats_significant.keys())] = 1
@@ -88,7 +82,7 @@ class NeuronAnalyzer:
                 neuron2stats_insignificant[i] = abs(stat)
         return neuron2stats_significant, neuron2stats_insignificant
 
-    def _sort_neuron_by_statistic(dct, k=None, reverse=True):
+    def _sort_neuron_by_statistic(self, dct, k, reverse):
         '''sort a dictionary by its values'''
         sorted_items = sorted(dct.items(), key=lambda item: item[1], reverse=reverse)
         # if k is None, return all items
