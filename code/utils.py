@@ -16,13 +16,11 @@ def read_json(file_path):
 
 def plot_heatmap(binary_arrays, file_name):
     # Stack the binary arrays vertically to form a 2D NumPy array
-    stacked_arrays = np.vstack(binary_arrays)
-
-    nrows, ncols = stacked_arrays.shape
+    nrows, ncols = binary_arrays.shape
     
     # create a figure and subplot for the heatmap
     fig, ax = plt.subplots()
-    heatmap = ax.imshow(binary_arrays, cmap='binary', aspect=12)
+    heatmap = ax.imshow(binary_arrays, cmap='viridis', aspect=12)
     ax.set_title("Heatmap of activated neurons")
     plt.colorbar(heatmap)
     ax.set_xlabel("Neurons")
