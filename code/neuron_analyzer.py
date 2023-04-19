@@ -67,6 +67,21 @@ class NeuronAnalyzer:
         # return a dictionary of inactivated neurons and their test statistics
         if neuron_type == "bottom":
             return self._sort_neuron_by_statistic(neuron2stats_insignificant, k=k, reverse=False)
+        
+    def compute_test_statistic_bonferroni(self, metric, alpha):
+        num_neurons = self.activations1.shape[1]
+        num_comparisons = self.activations2.shape[0]
+        adj_alpha = alpha / num_comparisons
+
+        res = np.zeros((num_neurons, num_comparisons))
+        # loop over columns of A and corresponding columns of each 2-dimensional array in B and compare using KS test
+        for i in range(num_neurons):
+            for j in range(num_comparisons):
+                _, p_val = metric(self.activations1[:,i],  self.activations2[j,:,i])
+                adj_p_val = p_val * num_comparisons
+                if adj_p_val <= adj_alpha:
+                    res[i, j] = 1
+        return np.sum(res, axis=1)
 
     def _compute_test_statistic(self, metric, alpha):
         '''compute the test statistic for each neuron'''

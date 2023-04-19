@@ -1,6 +1,8 @@
 import random
 from typing import List
 from datasets import load_dataset
+import csv 
+import random
 
 '''
 A class to sample sentences from GLUE Benchmark datasets.
@@ -32,12 +34,12 @@ class GLUESampler:
             self.sentences.append(data["sentence"])
         elif dataset_name in ["mrpc", "stsb", "rte", "wnli"]:
             self.sentences.extend([data["sentence1"], data["sentence2"]])
-        # elif dataset_name in ["qqp"]:
-        #     self.sentences.extend([data["question1"], data["question2"]])
-        # elif dataset_name in ["mnli_mismatched", "mnli_matched" "ax"]:
-        #     self.sentences.extend([data["premise"], data["hypothesis"]])
-        # elif dataset_name in ["qnli"]:
-        #     self.sentences.extend([data["question"], data["sentence"]])
+        elif dataset_name in ["qqp"]:
+            self.sentences.extend([data["question1"], data["question2"]])
+        elif dataset_name in ["mnli_mismatched", "mnli_matched" "ax"]:
+            self.sentences.extend([data["premise"], data["hypothesis"]])
+        elif dataset_name in ["qnli"]:
+            self.sentences.extend([data["question"], data["sentence"]])
 
     def sample_sentences(self, seed, num_sentences) -> List[str]:
         if len(self.sentences) >= num_sentences:
@@ -47,9 +49,48 @@ class GLUESampler:
             print("Not enough sentences available in the datasets.")
             return []
 
-# Example usage:
-# sampler = GLUESampler(seed=1314, num_sentences=100)
-# sampled_sentences = sampler.sample_sentences()
+def shuffle_csv_rows(file_name):
+    with open(file_name, 'r') as csv_file:
+        # Read the CSV file
+        reader = csv.reader(csv_file)
+        
+        # Store all rows in a list
+        rows = [row for row in reader]
+        
+    # Shuffle the rows
+    random.shuffle(rows)
+    
+    # Write the shuffled rows to a new file
+    output_file = 'shuffled_' + file_name
+    with open(output_file, 'w', newline='') as shuffled_csv:
+        writer = csv.writer(shuffled_csv)
+        
+        # Write the shuffled rows
+        writer.writerows(rows)
+        
+    print(f'Shuffled CSV saved as {output_file}')
 
-# for i, sentence in enumerate(sampled_sentences):
-#     print(f"Sample {i + 1}: {sentence}")
+        
+def sample_sentences(file_name, M, N, seed=42):
+    with open(file_name, 'r') as file:
+        reader = csv.reader(file)
+        sentences = [row[0] for row in reader]
+
+    samples = []
+    for i in range(M):
+        random.seed(seed + i)
+        sample = random.sample(sentences, N)
+        samples.append(sample)
+
+    return samples
+
+def list_to_csv(lst, file_name):
+    with open(file_name, 'w', newline='') as file:
+        writer = csv.writer(file)
+        for row in lst:
+            writer.writerow([row])
+
+# save the sampled sentences to a csv file
+# res = GLUESampler().sentences
+# list_to_csv(res, "glue_sentences.csv")
+# shuffle_csv_rows("glue_sentences.csv")
