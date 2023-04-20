@@ -68,11 +68,11 @@ if __name__ == "__main__":
     # sampling parameters
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--num_of_sentences", type=int, default=100, help="Num of sentences to probe")
-    parser.add_argument("--num_of_negative_batches", type=int, default=5, help="Num of batches to take from negative samples")
+    parser.add_argument("--num_of_negative_batches", type=int, default=10, help="Num of batches to take from negative samples")
     
     # test statistic
     # choice: ttest_ind, ks_2samp
-    parser.add_argument("--test_statistic", type=str, default="ttest_ind", help="Test statistic to use for hypothesis testing")
+    parser.add_argument("--test_statistic", type=str, default="ks_2samp", help="Test statistic to use for hypothesis testing")
     parser.add_argument("--alpha", type=float, default=0.01, help="Significance level for hypothesis testing")
     
     main(parser.parse_args())

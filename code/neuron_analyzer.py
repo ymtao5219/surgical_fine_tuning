@@ -46,8 +46,7 @@ class NeuronAnalyzer:
         for i in range(num_neurons):
             for j in range(num_comparisons):
                 _, p_val = metric(self.activations1[:,i],  self.activations2[j,:,i])
-                adj_p_val = p_val * num_comparisons
-                if adj_p_val <= adj_alpha:
+                if p_val <= adj_alpha:
                     res[i, j] = 1
         return np.sum(res, axis=1)
 
