@@ -5,7 +5,7 @@ import csv
 import random
 
 '''
-A class to sample sentences from GLUE Benchmark datasets.
+Save and randomly shuffle all sentences on the TEST sets from GLUE datasets to a CSV file.
 '''
 
 class GLUESampler:
@@ -69,20 +69,6 @@ def shuffle_csv_rows(file_name):
         writer.writerows(rows)
         
     print(f'Shuffled CSV saved as {output_file}')
-
-        
-def sample_sentences(file_name, M, N, seed=42):
-    with open(file_name, 'r') as file:
-        reader = csv.reader(file)
-        sentences = [row[0] for row in reader]
-
-    samples = []
-    for i in range(M):
-        random.seed(seed + i)
-        sample = random.sample(sentences, N)
-        samples.append(sample)
-
-    return samples
 
 def list_to_csv(lst, file_name):
     with open(file_name, 'w', newline='') as file:

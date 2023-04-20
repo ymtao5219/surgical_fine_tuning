@@ -14,7 +14,6 @@ class NeuronExtractor:
         self.is_split_into_words = is_split_into_words
         self.model.to(self.device)
     
-    # todo: batched inference, due to the limited memory of the GPU
     @torch.no_grad()
     def extract_layer_embedding(self, sentences, layer_num=-1):
         input_ids = self.tokenizer(sentences, padding=True, truncation=True, return_tensors="pt", is_split_into_words=self.is_split_into_words).to(self.device)

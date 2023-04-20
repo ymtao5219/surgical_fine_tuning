@@ -1,12 +1,10 @@
 
 
 import numpy as np
-import matplotlib.pyplot as plt
 import ipdb
 class NeuronAnalyzer: 
-    
     '''
-    Take cls embeddings from sentences with/without a particular attirbute and perform statistical analysis on the neurons.
+    Take cls embeddings from sentences with/without a particular attirbute and perform statistical analysis on the activations for each neuron.
     '''
     
     def __init__(self, activations1, activations2) -> None:
@@ -14,36 +12,6 @@ class NeuronAnalyzer:
         self.activations2 = activations2
         
         self.neuron_rankings = None
-        
-    def plot_neuron_histograms(self, metric, neuron_type, model_type, k, labels, save_path="./figs"):
-        
-        # ipdb.set_trace()
-        if neuron_type == "top":
-            neuron_indices = self.rank_neuron(metric, neuron_type, k=k).keys()
-        if neuron_type == "bottom":
-            neuron_indices = self.rank_neuron(metric, neuron_type, k=k).keys()
-        
-        fig, axs = plt.subplots((k+3)//4, 4, figsize=(30, 5*(k+3)//4))
-    
-        # Loop over each top/bottom neuron and plot its histograms on a subplot
-        for i, neuron_idx in enumerate(neuron_indices):
-            axs[i//4, i%4].hist(self.activations1[:, neuron_idx], bins=20, alpha=0.5, label=labels[0], color='blue')
-            axs[i//4, i%4].hist(self.activations2[:, neuron_idx], bins=20, alpha=0.5, label=labels[1], color='red')
-            axs[i//4, i%4].set_title('Histogram of activations for neuron {}'.format(neuron_idx))
-            axs[i//4, i%4].set_xlabel('Activations')
-            axs[i//4, i%4].set_ylabel('Frequency')
-            axs[i//4, i%4].legend(loc='upper right')
-        fig.tight_layout()
-
-        if neuron_type == "top":
-            plt.savefig(f"{save_path}/histograms_top{k}_neurons_{model_type}.png")
-        if neuron_type == "bottom":
-            plt.savefig(f"{save_path}/histograms_bottom{k}_neurons_{model_type}.png")
-        plt.show()
-
-    # def compute_spearman_stat(self):
-    #     self.neuron_rankings = []
-    #     self._rank_neuron()
     
     def rank_neuron(self, metric, neuron_type, k=None, alpha=0.01):
         '''rank neurons based on the test statistic
