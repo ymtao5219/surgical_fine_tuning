@@ -62,7 +62,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_type", type=str, default="before_fintuning", help="Model type")
     
     # data
-    parser.add_argument("--probe_set", type=str, default="data/sst2.csv", help="Probe dataset name")
+    parser.add_argument("--probe_set", type=str, default="data/go_emotions.csv", help="Probe dataset name")
     parser.add_argument("--negative_samples", type=str, default="data/glue_sentences.csv", help="Dataset name for negative samples")
     
     # sampling parameters
