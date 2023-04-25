@@ -159,3 +159,6 @@ for param_name, param_fim_diag in latest_fim_diag.items():
     
     # Accumulate the Frobenius norm of the FIM diagonal for the layer.
     fim_diag_by_layer[layer_name] += torch.norm(param_fim_diag, p='fro').item()
+    
+# results for sst: 
+# {'bert': 1.8422247858252376, 'bert.encoder.layer_0': 0.21834398788632825, 'bert.encoder.layer_1': 0.6748188219571603, 'bert.encoder.layer_2': 0.9248718323360663, 'bert.encoder.layer_3': 1.229006150533678, 'bert.encoder.layer_4': 4.430021893567755, 'bert.encoder.layer_5': 1.0039661235641688, 'bert.encoder.layer_6': 1.355893575002483, 'bert.encoder.layer_7': 0.49571840724820504, 'bert.encoder.layer_8': 0.3360497066314565, 'bert.encoder.layer_9': 0.4027107157598948, 'bert.encoder.layer_10': 0.650813913642196, 'bert.encoder.layer_11': 0.6185599805758102, 'classifier': 19.317310333251953}
