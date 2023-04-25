@@ -110,7 +110,7 @@ model.to(device)
 
 dataset = load_dataset("glue", glue_task_name)["validation"]
 # Randomly select 100 instances.
-dataset = dataset.shuffle(seed=42).select(range(10))
+dataset = dataset.shuffle(seed=42).select(range(100))
 
 batch_size = 1
 
