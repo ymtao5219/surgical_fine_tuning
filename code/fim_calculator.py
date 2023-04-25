@@ -12,7 +12,14 @@ from torch.utils.data import DataLoader
 from transformers import AutoModel, AutoTokenizer, AutoConfig, AutoModelForSequenceClassification
 from datasets import load_dataset
 
+import re
+
 import ipdb 
+
+'''
+The fim_diag function is taken from here
+https://github.com/tudor-berariu/fisher-information-matrix/blob/master/fim.py
+'''
 
 def fim_diag(model: Module,
              data_loader: DataLoader,
@@ -103,9 +110,9 @@ model.to(device)
 
 dataset = load_dataset("glue", glue_task_name)["validation"]
 # Randomly select 100 instances.
-dataset = dataset.shuffle(seed=42).select(range(100))
+dataset = dataset.shuffle(seed=42).select(range(10))
 
-batch_size = 8
+batch_size = 1
 
 def tokenize_function(example):
     return tokenizer(example["sentence"], truncation=True, padding=True, return_tensors="pt")
@@ -118,14 +125,14 @@ data_loader = DataLoader(tokenized_data, batch_size=batch_size)
 all_fims = fim_diag(
     model=model,
     data_loader=data_loader,
-    samples_no=None,
+    samples_no=100,
     empirical=True,
     device=device,
     verbose=True,
     every_n=None
 )
 
-print(all_fims)
+# print(all_fims)
 
 # Extract the latest FIM diagonal from the all_fims dictionary.
 latest_fim_diag = all_fims[max(all_fims.keys())]
@@ -135,14 +142,20 @@ fim_diag_by_layer = {}
 
 # Loop over the FIM diagonal for each parameter.
 for param_name, param_fim_diag in latest_fim_diag.items():
-    # Extract the layer name from the parameter name.
-    layer_name = param_name.split('.')[0]
-
+    # Extract the layer name and layer index from the parameter name.
+    layer_name_parts = param_name.split('.')
+    layer_name = layer_name_parts[0]
+    
+    if layer_name == "bert" and layer_name_parts[1] == "encoder":
+        # ipdb.set_trace()
+        layer_index_match = re.search(r'\d+', layer_name_parts[3])
+        if layer_index_match is not None:
+            layer_index = layer_index_match.group()
+            layer_name = f"{layer_name}.encoder.layer_{layer_index}"
+    # ipdb.set_trace()
     # If the layer name is not in the fim_diag_by_layer dictionary, initialize it.
     if layer_name not in fim_diag_by_layer:
-        fim_diag_by_layer[layer_name] = torch.zeros_like(param_fim_diag)
+        fim_diag_by_layer[layer_name] = 0.0
     
-    # Accumulate the FIM diagonal for the layer.
-    fim_diag_by_layer[layer_name] += param_fim_diag
-    
-print(fim_diag_by_layer)
+    # Accumulate the Frobenius norm of the FIM diagonal for the layer.
+    fim_diag_by_layer[layer_name] += torch.norm(param_fim_diag, p='fro').item()
