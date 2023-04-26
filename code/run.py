@@ -7,16 +7,10 @@ from data_loader import *
 import ipdb
 
 def main(args):
+    # todo: test for different models
     
-    GLUE_TASKS = [ "sst2", "cola", "mnli", "mnli-mm", "mrpc", "qnli", "qqp", "rte", "stsb", "wnli"]
-    SUPERGLUE_TASKS = ["boolq", "cb", "copa", "multirc", "record", "rte", "wic", "wsc"]
-
-    model_name = "bert-base-cased"
-    glue_task_name = "mnli"
-    num_sentences = 100
-
-    fim_calculator = FIMCalculator(model_name, glue_task_name, num_sentences)
-    fim_diag_by_layer = fim_calculator.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+    GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
+    SUPERGLUE_TASKS = ["wic", "cb", "boolq", "copa", "multirc", "record", "wsc"]
     ipdb.set_trace()
 
 if __name__ == "__main__":
