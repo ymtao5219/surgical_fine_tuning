@@ -1,50 +1,20 @@
 import argparse
 from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer
-from datasets import load_dataset
 
+from data_loader import *
 
 def main(args):
-    # Load dataset
-    dataset = load_dataset(args.dataset_name)
     
     model_name = args.parent_model
     tokenizer = BertTokenizerFast.from_pretrained(model_name)
     freeze_layers = args.freeze_layers
-    dataset_name = args.dataset_name
+    task_name = args.task_name
 
-    if dataset_name in ["mnli_mismatched", "mnli_matched"]:
-        dataset_train_split = load_dataset('glue', 'mnli', split='train')
-        dataset_val_split = load_dataset('glue', dataset_name, split='validation')
-    else:
-        dataset_train_split = load_dataset('glue', dataset_name, split='train')
-        dataset_val_split = load_dataset('glue', dataset_name, split='validation')
-    
-    train_dataset, val_dataset = dataset_train_split, dataset_val_split
-    # Preprocessing function
-  
-    if dataset_name in ["mrpc", "stsb", "rte", "wnli"]:
-        def preprocess_function(examples):
-            return tokenizer(examples['sentence1'], examples['sentence2'], truncation=True, padding='max_length')
-    elif dataset_name in ["qqp"]:
-        def preprocess_function(examples):
-            return tokenizer(examples['question1'], examples['question2'], truncation=True, padding='max_length')
-    elif dataset_name in ["mnli_mismatched", "mnli_matched", "ax"]:
-        def preprocess_function(examples):
-            return tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
-    elif dataset_name in ["qnli"]:
-        def preprocess_function(examples):
-            return tokenizer(examples['question'], examples['sentence'], truncation=True, padding='max_length')
-    else:
-        def preprocess_function(examples):
-            return tokenizer(examples['sentence'], truncation=True, padding='max_length')
-    
-    # Preprocess datasets
-    train_dataset = train_dataset.map(preprocess_function, batched=True)
-    val_dataset = val_dataset.map(preprocess_function, batched=True)
+    data_loader = GlueDataloader(task_name, model_name)
+    train_dataset, val_dataset = data_loader.get_train_val_split()
 
     # Model
-    model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(dataset_train_split.features["label"].names))
-
+    model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.features["label"].names))
 
     def add_prefix(val):
         return "bert.encoder.layer." + str(val)
@@ -63,8 +33,8 @@ def main(args):
     training_args = TrainingArguments(
         output_dir="checkpoints",
         evaluation_strategy="epoch",
-        per_device_train_batch_size=16,
-        per_device_eval_batch_size=16,
+        per_device_train_batch_size=8,
+        per_device_eval_batch_size=8,
         num_train_epochs=3,
         seed=42,
         save_strategy="epoch",
@@ -87,9 +57,9 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
-    parser.add_argument("--parent_model", type=str, default="bert-base-multilingual-cased", help="Name of the parent model to use from Hugging Face")
+    parser.add_argument("--parent_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face")
     parser.add_argument("--attr_name", type=str, default="sentiment", help="Name of the attribute of interest")
-    parser.add_argument("--dataset_name", type=str, help="Name of the dataset to use from Hugging Face")
+    parser.add_argument("--task_name", type=str, default="cola", help="Name of the dataset to use from Hugging Face")
     parser.add_argument("--freeze_layers", type=str, default=[], help="List of which layers to freeze")
     args = parser.parse_args()
 

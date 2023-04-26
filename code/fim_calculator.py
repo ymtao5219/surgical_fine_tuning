@@ -2,43 +2,44 @@ import torch
 from torch.nn import Module
 from torch.utils.data import DataLoader
 from torch.distributions import Categorical
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from datasets import load_dataset
+from transformers import AutoModelForSequenceClassification
 import re
 import sys
 import time
 from typing import Dict, Optional
 from torch import Tensor
 
+from data_loader import *
+
 import ipdb
 
 class FIMCalculator:
 
-    def __init__(self, model_name: str, glue_task_name: str, num_sentences: int):
+    def __init__(self, model_name: str, tokenized_data):
         self.model_name = model_name
-        self.glue_task_name = glue_task_name
-        self.num_sentences = num_sentences
-
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.tokenized_data = tokenized_data
+        
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
-
-        self.dataset = load_dataset("glue", glue_task_name)["validation"].shuffle(seed=42).select(range(num_sentences))
-
-        self.tokenized_data = self.dataset.map(self.tokenize_function, batched=True, remove_columns=["sentence", "idx"])
+        self.num_sentences = len(self.tokenized_data)
+        # self.tokenized_data = self.dataset.map(self.tokenize_function, batched=True, remove_columns=["sentence", "idx"])
         self.tokenized_data.set_format("torch", columns=["input_ids", "attention_mask", "label"])
 
     def compute_fim(self, batch_size=1, empirical=True, verbose=True, every_n=None):
         data_loader = DataLoader(self.tokenized_data, batch_size=batch_size)
-        all_fims = self.fim_diag(self.model, data_loader, samples_no=self.num_sentences, empirical=empirical, device=self.device, verbose=verbose, every_n=every_n)
+        # ipdb.set_trace()
+        all_fims = self.fim_diag(self.model, 
+                                 data_loader, 
+                                 samples_no=self.num_sentences, 
+                                 empirical=empirical, 
+                                 device=self.device, 
+                                 verbose=verbose, 
+                                 every_n=every_n)
         
         fim_diag_by_layer = self.aggregate_fisher_information(all_fims)
         return fim_diag_by_layer
-
-    def tokenize_function(self, example):
-        return self.tokenizer(example["sentence"], truncation=True, padding=True, return_tensors="pt")
 
     @staticmethod
     def fim_diag(model: Module,
@@ -139,12 +140,17 @@ class FIMCalculator:
             fim_diag_by_layer[layer_name] += torch.norm(param_fim_diag, p='fro').item()
 
         return fim_diag_by_layer
+    
+# example usage 
+# GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
+# SUPERGLUE_TASKS = ["wic", "cb", "boolq", "copa", "multirc", "record", "wsc"]
 
-# Example usage:
-model_name = "bert-base-cased"
-glue_task_name = "sst2"
-num_sentences = 100
+# not work for ["stsb", "mnli_mismatched", "record"]
+# get inf/nan values: ["boolq", "copa", "wsc"]
 
-fim_calculator = FIMCalculator(model_name, glue_task_name, num_sentences)
-fim_diag_by_layer = fim_calculator.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
-ipdb.set_trace()
+# model_name = "bert-base-cased"
+# tokenized_data = GlueDataloader("wsc").get_samples(10)
+
+# calc = FIMCalculator(model_name, tokenized_data)
+# fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+# ipdb.set_trace()
