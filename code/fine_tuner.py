@@ -1,5 +1,6 @@
 import argparse
 from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer
+import time 
 
 from data_loader import *
 
@@ -49,9 +50,19 @@ def main(args):
         eval_dataset=val_dataset,
     )
 
-    # Fine-tuning
+    # Record the start time
+    start_time = time.time()
+
+    # Train the model
     trainer.train()
 
+    # Record the end time
+    end_time = time.time()
+
+    # Calculate the total training time
+    training_time = end_time - start_time
+    print(f"Total training time: {training_time:.2f} seconds")
+    
     # Save the best model
     trainer.save_model(f"checkpoints/best_model_{args.attr_name}")
 
