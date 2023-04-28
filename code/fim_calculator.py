@@ -123,23 +123,33 @@ class FIMCalculator:
     def aggregate_fisher_information(all_fims):
         latest_fim_diag = all_fims[max(all_fims.keys())]
         fim_diag_by_layer = {}
-
+        
+        # param_names = []
         for param_name, param_fim_diag in latest_fim_diag.items():
             layer_name_parts = param_name.split('.')
             layer_name = layer_name_parts[0]
-
+            
+            # param_names.append(param_name)
+            
             if layer_name == "bert" and layer_name_parts[1] == "encoder":
                 layer_index_match = re.search(r'\d+', layer_name_parts[3])
                 if layer_index_match is not None:
                     layer_index = layer_index_match.group()
                     layer_name = f"{layer_name}.encoder.layer_{layer_index}"
 
-            if layer_name not in fim_diag_by_layer:
-                fim_diag_by_layer[layer_name] = 0.0
+                if layer_name not in fim_diag_by_layer:
+                    fim_diag_by_layer[layer_name] = 0.0
 
-            fim_diag_by_layer[layer_name] += torch.norm(param_fim_diag, p='fro').item()
-
+                fim_diag_by_layer[layer_name] += torch.norm(param_fim_diag, p='fro').item()
+        # ipdb.set_trace()
         return fim_diag_by_layer
+
+    @staticmethod
+    def bottom_k_layers(input_dict, k):
+        sorted_items = sorted(input_dict.items(), key=lambda x: x[1])
+        keys = [item[0] for item in sorted_items[:k]]
+        return keys
+
     
 # example usage 
 # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
@@ -148,9 +158,12 @@ class FIMCalculator:
 # not work for ["stsb", "mnli_mismatched", "record"]
 # get inf/nan values: ["boolq", "copa", "wsc"]
 
-# model_name = "bert-base-cased"
-# tokenized_data = GlueDataloader("wsc").get_samples(10)
+model_name = "bert-base-cased"
+tokenized_data = GlueDataloader("wic").get_samples(100)
 
-# calc = FIMCalculator(model_name, tokenized_data)
-# fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
-# ipdb.set_trace()
+calc = FIMCalculator(model_name, tokenized_data)
+fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+
+# select those with lowest FIM layers to freeze
+layers_to_freeze = calc.bottom_k_layers(fim, k=7)
+ipdb.set_trace()
