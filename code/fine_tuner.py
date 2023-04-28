@@ -2,12 +2,22 @@ import argparse
 from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer
 import time 
 
+import evaluate
+import numpy as np
+
 from data_loader import *
+
+metric = evaluate.load("accuracy")
+
+def compute_metrics(eval_pred):
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis=-1)
+    return metric.compute(predictions=predictions, references=labels)
+
 
 def main(args):
     
     model_name = args.parent_model
-    tokenizer = BertTokenizerFast.from_pretrained(model_name)
     freeze_layers = args.freeze_layers
     task_name = args.task_name
 
@@ -39,8 +49,7 @@ def main(args):
         num_train_epochs=3,
         seed=42,
         save_strategy="epoch",
-        load_best_model_at_end=True, 
-        logging_dir="results/logs"
+        load_best_model_at_end=True
     )
 
     # Trainer
@@ -49,6 +58,7 @@ def main(args):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
+        compute_metrics=compute_metrics
     )
 
     # Record the start time
