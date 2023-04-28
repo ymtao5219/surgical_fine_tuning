@@ -39,7 +39,8 @@ def main(args):
         num_train_epochs=3,
         seed=42,
         save_strategy="epoch",
-        load_best_model_at_end=True
+        load_best_model_at_end=True, 
+        logging_dir="results/logs"
     )
 
     # Trainer
@@ -64,14 +65,16 @@ def main(args):
     print(f"Total training time: {training_time:.2f} seconds")
     
     # Save the best model
-    trainer.save_model(f"checkpoints/best_model_{args.attr_name}")
+    trainer.save_model(f"checkpoints/best_model_{args.task_name}")
 
+    # Evaluate the model
+    trainer.evaluate()
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
     parser.add_argument("--parent_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face")
-    parser.add_argument("--attr_name", type=str, default="sentiment", help="Name of the attribute of interest")
-    parser.add_argument("--task_name", type=str, default="cola", help="Name of the dataset to use from Hugging Face")
-    parser.add_argument("--freeze_layers", type=str, default=[], help="List of which layers to freeze")
+    parser.add_argument("--task_name", type=str, default="wic", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
+    parser.add_argument("--freeze_layers", type=list, default=[], help="List of which layers to freeze")
     args = parser.parse_args()
 
     main(args)
