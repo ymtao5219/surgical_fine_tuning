@@ -45,9 +45,11 @@ def main(args):
     training_args = TrainingArguments(
         output_dir="checkpoints",
         evaluation_strategy="epoch",
-        per_device_train_batch_size=8,
-        per_device_eval_batch_size=8,
+        per_device_train_batch_size=32,
+        per_device_eval_batch_size=64,
         num_train_epochs=3,
+        learning_rate=2e-5,
+        weight_decay=0.01,
         seed=42,
         save_strategy="epoch",
         load_best_model_at_end=True
