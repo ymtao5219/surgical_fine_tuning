@@ -1,4 +1,6 @@
 from datasets import load_dataset
+import evaluate
+import numpy as np
 import random
 from transformers import AutoTokenizer
 
@@ -7,20 +9,24 @@ from transformers import AutoTokenizer
 class GlueDataloader:
     GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
     SUPERGLUE_TASKS = ["wic", "cb", "boolq", "copa", "multirc", "record", "wsc"]
+    glue = "glue"
+    super_glue = "super_glue"
 
     def __init__(self, task_name, model_name= "bert-base-cased", tokenizer=None):
         self.task_name = task_name.lower()
         self.model_name = model_name
         
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        
+        self.task_type = ""
         self.dataset = self._load_dataset()
 
     def _load_dataset(self):
         if self.task_name in self.GLUE_TASKS:
-            dataset = load_dataset("glue", self.task_name)
+            dataset = load_dataset(self.glue, self.task_name)
+            self.task_type = self.glue
         elif self.task_name in self.SUPERGLUE_TASKS:
-            dataset = load_dataset("super_glue", self.task_name)
+            dataset = load_dataset(self.super_glue, self.task_name)
+            self.task_type = self.super_glue
         else:
             raise ValueError("Invalid task name. Please choose from GLUE or SuperGLUE tasks.")
 
@@ -37,7 +43,7 @@ class GlueDataloader:
         
         # special case for mnli
         if self.task_name in ["mnli_mismatched", "mnli_matched"]:
-            dataset_train_split = load_dataset("glue", "mnli", split="train")
+            dataset_train_split = load_dataset(self.glue, "mnli", split="train")
             dataset_val_split = self.dataset["validation"]
         else:
             dataset_train_split = self.dataset["train"]
@@ -75,6 +81,15 @@ class GlueDataloader:
             preprocess_function = lambda examples: self.tokenizer(examples['text'], truncation=True, padding='max_length')
         
         return preprocess_function
+    
+    def get_metric(self):
+        def compute_metrics(eval_pred):
+            metric = evaluate.load(self.task_type, self.task_name)
+            logits, labels = eval_pred
+            predictions = np.argmax(logits, axis=-1)
+            return metric.compute(predictions=predictions, references=labels)
+        return compute_metrics
+
 
 # example usage
 # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]

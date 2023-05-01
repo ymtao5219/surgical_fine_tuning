@@ -1,18 +1,7 @@
 import argparse
-from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer
+from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, glue_compute_metrics
 import time 
-
-import evaluate
-import numpy as np
-
 from data_loader import *
-
-metric = evaluate.load("accuracy")
-
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
-    return metric.compute(predictions=predictions, references=labels)
 
 
 def main(args):
@@ -61,7 +50,7 @@ def main(args):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
-        compute_metrics=compute_metrics
+        compute_metrics=data_loader.get_metric()
     )
 
     # Record the start time
