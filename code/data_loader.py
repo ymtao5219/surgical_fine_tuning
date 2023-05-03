@@ -82,7 +82,7 @@ class GlueDataloader:
 
             # Preprocess the sampled training and validation datasets
             train_dataset = selected_dataset.map(preprocess_function, batched=True)
-            val_dataset = val_dataset["validation"].map(preprocess_function, batched=True)
+            val_dataset = val_dataset.map(preprocess_function, batched=True)
 
             return train_dataset, val_dataset
     

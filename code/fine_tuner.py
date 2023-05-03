@@ -8,6 +8,11 @@ import numpy as np
 from data_loader import *
 from utils import *
 
+import logging
+# Set logging level
+logging.getLogger("datasets").setLevel(logging.ERROR)
+logging.getLogger("transformers").setLevel(logging.ERROR)
+
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
@@ -38,7 +43,7 @@ def main(args):
     if task_name == "copa": 
         model = AutoModelForMultipleChoice.from_pretrained(model_name)
     else: 
-        model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.features["label"].names))
+        model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
 
     def add_prefix(val):
         return "bert.encoder.layer." + str(val)
@@ -56,6 +61,7 @@ def main(args):
 
     # Training arguments
     training_args = TrainingArguments(
+        disable_tqdm=True,
         output_dir="checkpoints",
         evaluation_strategy="epoch",
         per_device_train_batch_size=8,
