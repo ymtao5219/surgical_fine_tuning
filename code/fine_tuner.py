@@ -5,6 +5,8 @@ import time
 import evaluate
 import numpy as np
 
+import yaml 
+
 from data_loader import *
 from utils import *
 
@@ -58,21 +60,16 @@ def main(args):
             if name.startswith(freeze_layers):
                 param.requires_grad = False
 
-
+    if args.benchmark == "glue":
+        config_path = "../configs/glue_training_args.yaml"
+    else: 
+        config_path = "../configs/superglue_training_args.yaml"
+        
+    with open(config_path, "r") as f:
+        training_args_dict = yaml.safe_load(f)
+        
     # Training arguments
-    training_args = TrainingArguments(
-        disable_tqdm=True,
-        output_dir="checkpoints",
-        evaluation_strategy="epoch",
-        per_device_train_batch_size=8,
-        per_device_eval_batch_size=8,
-        num_train_epochs=3,
-        seed=42,
-        save_strategy="no",
-        # load_best_model_at_end=True,
-        # metric_for_best_model="accuracy",
-        # greater_is_better=True
-    )
+    training_args = TrainingArguments(**training_args_dict)
 
     # Trainer
     trainer = Trainer(
@@ -108,6 +105,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
     parser.add_argument("--parent_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face")
+    parser.add_argument("--benchmark", type=str, default="glue", help="Name of the benchmark to use (glue or superglue)")
     parser.add_argument("--task_name", type=str, default="wic", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
     parser.add_argument("--freeze_layers", nargs='+', type=int, help="List of which layers to freeze")
     parser.add_argument("--few_shot", type=int, help="Number of examples per class to use for fine-tuning")
