@@ -61,9 +61,9 @@ def main(args):
                 param.requires_grad = False
 
     if args.benchmark == "glue":
-        config_path = "../configs/glue_training_args.yaml"
+        config_path = "configs/glue_training_args.yaml"
     else: 
-        config_path = "../configs/superglue_training_args.yaml"
+        config_path = "configs/superglue_training_args.yaml"
         
     with open(config_path, "r") as f:
         training_args_dict = yaml.safe_load(f)
