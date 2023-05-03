@@ -1,20 +1,44 @@
 import argparse
-from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, glue_compute_metrics
+from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice
 import time 
+
+import evaluate
+import numpy as np
+
 from data_loader import *
+from utils import *
+
+import os
+os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
+
+metric = evaluate.load("accuracy")
+
+def compute_metrics(eval_pred):
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis=-1)
+    return metric.compute(predictions=predictions, references=labels)
 
 
 def main(args):
+    set_random_seed(42)
     
     model_name = args.parent_model
     freeze_layers = args.freeze_layers
     task_name = args.task_name
+    
+    if args.few_shot:
+        data_loader = GlueDataloader(task_name, model_name)
+        train_dataset, val_dataset = data_loader.get_train_val_split(args.few_shot)
+    else: 
+        data_loader = GlueDataloader(task_name, model_name)
+        train_dataset, val_dataset = data_loader.get_train_val_split()
 
-    data_loader = GlueDataloader(task_name, model_name)
-    train_dataset, val_dataset = data_loader.get_train_val_split()
-
+    # ipdb.set_trace()
     # Model
-    model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.features["label"].names))
+    if task_name == "copa": 
+        model = AutoModelForMultipleChoice.from_pretrained(model_name)
+    else: 
+        model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.features["label"].names))
 
     def add_prefix(val):
         return "bert.encoder.layer." + str(val)
@@ -34,14 +58,14 @@ def main(args):
     training_args = TrainingArguments(
         output_dir="checkpoints",
         evaluation_strategy="epoch",
-        per_device_train_batch_size=32,
-        per_device_eval_batch_size=64,
+        per_device_train_batch_size=8,
+        per_device_eval_batch_size=8,
         num_train_epochs=3,
-        learning_rate=2e-5,
-        weight_decay=0.01,
         seed=42,
-        save_strategy="epoch",
-        load_best_model_at_end=True
+        save_strategy="no",
+        # load_best_model_at_end=True,
+        # metric_for_best_model="accuracy",
+        # greater_is_better=True
     )
 
     # Trainer
@@ -50,7 +74,7 @@ def main(args):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
-        compute_metrics=data_loader.get_metric()
+        compute_metrics=compute_metrics
     )
 
     # Record the start time
@@ -65,18 +89,22 @@ def main(args):
     # Calculate the total training time
     training_time = end_time - start_time
     print(f"Total training time: {training_time:.2f} seconds")
+
+    # print("evaluating on test set")
+    # GLUE benchmark has not labels for test set, so the following code is commented out
+    # # Evaluate the model
+    # test_results = trainer.evaluate()
+    # print(test_results)
     
     # Save the best model
     trainer.save_model(f"checkpoints/best_model_{args.task_name}")
 
-    # Evaluate the model
-    trainer.evaluate()
-    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
     parser.add_argument("--parent_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face")
     parser.add_argument("--task_name", type=str, default="wic", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
     parser.add_argument("--freeze_layers", nargs='+', type=int, help="List of which layers to freeze")
+    parser.add_argument("--few_shot", type=int, help="Number of examples per class to use for fine-tuning")
     args = parser.parse_args()
 
     main(args)
