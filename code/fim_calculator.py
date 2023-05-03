@@ -8,10 +8,21 @@ import sys
 import time
 from typing import Dict, Optional
 from torch import Tensor
+import numpy as np 
+import random 
 
 from data_loader import *
 
 import ipdb
+
+# Set seed for reproducibility
+def set_seed(seed: int):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+set_seed(42)
 
 class FIMCalculator:
 
@@ -20,7 +31,6 @@ class FIMCalculator:
         self.tokenized_data = tokenized_data
         
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
-
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.num_sentences = len(self.tokenized_data)
@@ -49,11 +59,12 @@ class FIMCalculator:
                  device: torch.device = None,
                  verbose: bool = False,
                  every_n: int = None) -> Dict[int, Dict[str, Tensor]]:
+        model.eval()
         fim = {}
         for name, param in model.named_parameters():
             if param.requires_grad:
                 fim[name] = torch.zeros_like(param)
-
+        
         seen_no = 0
         last = 0
         tic = time.time()
@@ -65,20 +76,21 @@ class FIMCalculator:
             try:
                 # data, target = next(data_iterator)
                 batch = next(data_iterator)
+                
                 data, target = batch["input_ids"], batch["label"]
+                # ipdb.set_trace()
             except StopIteration:
                 if samples_no is None:
                     break
                 data_iterator = iter(data_loader)
                 data, target = next(data_loader)
-
+            # ipdb.set_trace()
             if device is not None:
                 data = data.to(device)
                 if empirical:
                     target = target.to(device)
-
-            logits = model(data).logits
             
+            logits = model(data).logits
             if empirical:
                 outdx = target.unsqueeze(1)
             else:
@@ -156,14 +168,15 @@ class FIMCalculator:
 # SUPERGLUE_TASKS = ["wic", "cb", "boolq", "copa", "multirc", "record", "wsc"]
 
 # not work for ["stsb", "mnli_mismatched", "record"]
-# get inf/nan values: ["boolq", "copa", "wsc"]
+# get inf/nan values: ["boolq"]
 
 model_name = "bert-base-cased"
 tokenized_data = GlueDataloader("wic").get_samples(100)
+
 
 calc = FIMCalculator(model_name, tokenized_data)
 fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
 
 # select those with lowest FIM layers to freeze
-layers_to_freeze = calc.bottom_k_layers(fim, k=7)
+layers_to_freeze = calc.bottom_k_layers(fim, k=12)
 ipdb.set_trace()
