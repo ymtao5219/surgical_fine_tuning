@@ -2,3 +2,6 @@ __pycache__/
 ignore/
 # ignore model files
 best_model_*/
+
+# ignore log files
+*.log
