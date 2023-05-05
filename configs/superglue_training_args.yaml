@@ -6,5 +6,5 @@ per_device_eval_batch_size: 16
 num_train_epochs: 10
 seed: 42
 save_strategy: "no"
-learning_rate: 5e-5
+learning_rate: !!float 5e-5
 weight_decay: 0.01
