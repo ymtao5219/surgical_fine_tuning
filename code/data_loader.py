@@ -31,7 +31,7 @@ class GlueDataloader:
         sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
         preprocess_function = self._get_preprocessing_function()
 
-        sampled_data = sampled_data.map(preprocess_function)
+        sampled_data = sampled_data.map(preprocess_function, batched=False, remove_columns=sampled_data.column_names)
         
         return sampled_data
 
@@ -47,11 +47,13 @@ class GlueDataloader:
         
         train_dataset, val_dataset = dataset_train_split, dataset_val_split
         preprocess_function = self._get_preprocessing_function()
-        
+
         if num_samples_per_class is None: 
             # Preprocess datasets
-            train_dataset = train_dataset.map(preprocess_function, batched=True)
-            val_dataset = val_dataset.map(preprocess_function, batched=True)
+            # ipdb.set_trace()
+            train_dataset = train_dataset.map(preprocess_function, batched=False, remove_columns=train_dataset.column_names)
+            val_dataset = val_dataset.map(preprocess_function, batched=False, remove_columns=val_dataset.column_names)
+
             return train_dataset, val_dataset
         
         else: 
@@ -81,8 +83,8 @@ class GlueDataloader:
             selected_dataset = Dataset.from_dict(selected_samples_dict)
 
             # Preprocess the sampled training and validation datasets
-            train_dataset = selected_dataset.map(preprocess_function, batched=True)
-            val_dataset = val_dataset.map(preprocess_function, batched=True)
+            train_dataset = selected_dataset.map(preprocess_function, batched=False)
+            val_dataset = val_dataset.map(preprocess_function, batched=False)
 
             return train_dataset, val_dataset
     
@@ -90,6 +92,7 @@ class GlueDataloader:
         '''
         Get the preprocessing function for each task
         '''
+        
         # GLUE tasks
         if self.task_name in ["mrpc", "stsb", "rte", "wnli"]: 
             preprocess_function = lambda examples: self.tokenizer(examples['sentence1'], examples['sentence2'], truncation=True, padding='max_length')
@@ -105,113 +108,186 @@ class GlueDataloader:
         # SuperGLUE tasks
         elif self.task_name in ["boolq"]: 
             preprocess_function = lambda examples: self.tokenizer(examples['question'], examples['passage'], truncation=True, padding='max_length')
+
+        # NLI task 
         elif self.task_name in ["cb"]:
             preprocess_function = lambda examples: self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
+
+        # qa task 
         elif self.task_name in ["copa"]:
             def preprocess_function_copa(examples):
-                # Combine the premise and choices into pairs of sentences
-                sentences = []
-                for premise, choice1, choice2 in zip(examples['premise'], examples['choice1'], examples['choice2']):
-                    sentences.append((premise, choice1))
-                    sentences.append((premise, choice2))
+                # Check if we are working with a single example or a batch
+                is_single_example = isinstance(examples["premise"], str)
 
-                # Tokenize the pairs of sentences
+                # Handle single examples
+                if is_single_example:
+                    question_header = examples["question"]
+                    sentences = [
+                        [f"{examples['premise']} What was the {question_header} of this?", f"{examples['choice1']}"],
+                        [f"{examples['premise']} What was the {question_header} of this?", f"{examples['choice2']}"]
+                    ]
+                    labels = examples['label']
+
+                # Handle batches
+                else:
+                    question_headers = examples["question"]
+                    sentences = []
+                    labels = []
+                    for premise, question, choice1, choice2, label in zip(examples['premise'], question_headers, examples['choice1'], examples['choice2'], examples['label']):
+                        sentences.append([f"{premise} What was the {question} of this?", f"{choice1}"])
+                        sentences.append([f"{premise} What was the {question} of this?", f"{choice2}"])
+                        labels.append(label)
+
+                # Encode the sentences
                 encoded = self.tokenizer(
-                    [sent[0] for sent in sentences],
-                    [sent[1] for sent in sentences],
+                    sentences,
                     truncation=True,
                     padding='max_length',
-                    max_length=512
+                    return_tensors="pt"
                 )
 
-                # Duplicate each label to match the pairs of sentences
-                labels = [label * 2 for label in examples['label']]
-
-                # Calculate the difference between the logits of the two choices
-                encoded['labels'] = [1 if i % 2 == label else 0 for i, label in enumerate(labels)]
-
-                return encoded
-            preprocess_function = preprocess_function_copa
-        elif self.task_name in ["multirc"]:
-            def preprocess_data_multirc(examples):
-                # Create a list to store the sentence pairs
-                sentence_pairs = []
+                # Combine the tokenized results
+                input_ids = encoded['input_ids'].view(-1, 2, self.tokenizer.model_max_length)
+                attention_mask = encoded['attention_mask'].view(-1, 2, self.tokenizer.model_max_length)
+                token_type_ids = encoded['token_type_ids'].view(-1, 2, self.tokenizer.model_max_length)
                 
-                # Iterate over the examples and create pairs of passage, question, and answer
-                for passage, questions, answers, labels in zip(examples['passage'], examples['questions'], examples['answers'], examples['labels']):
-                    for question, answer, label in zip(questions, answers, labels):
-                        sentence_pairs.append((passage, question, answer))
+                # Add labels to the processed examples
+                processed_examples = {
+                    'input_ids': input_ids,
+                    'attention_mask': attention_mask,
+                    'token_type_ids': token_type_ids,
+                    'labels': torch.tensor(labels)
+                }
+
+                return processed_examples
+            preprocess_function = preprocess_function_copa
+        
+        # qa task 
+        elif self.task_name in ["multirc"]:
+            def preprocess_data_multirc(example):
+                # Get passage, questions, answers, and labels from the example
+                passage = example['paragraph']
+                questions = example['question']
+                answers = example['answer']
+                labels = example['label']
 
                 # Tokenize the pairs of sentences
                 encoded = self.tokenizer(
-                    [f"{pair[0]} {pair[1]}" for pair in sentence_pairs],
-                    [pair[2] for pair in sentence_pairs],
+                    passage,
+                    questions,
+                    answers,
                     truncation=True,
-                    padding='max_length',
-                    max_length=512
+                    padding='max_length'
                 )
-
+                # ipdb.set_trace()
                 # Use the provided labels
-                encoded['labels'] = [label for labels in examples['labels'] for label in labels]
+                encoded['labels'] = labels
 
                 return encoded
             preprocess_function = preprocess_data_multirc
-            
+        
+        # qa task 
         elif self.task_name in ["record"]:
-            def preprocess_data_record(examples):
-                # Create a list to store the sentence pairs
-                sentence_pairs = []
-                
-                # Iterate over the examples and create pairs of passage and question
-                for passage, queries, entities, answers in zip(examples['passage'], examples['query'], examples['entities'], examples['answers']):
-                    for query, entity, answer in zip(queries, entities, answers):
-                        sentence_pairs.append((passage, query, entity))
+            '''
+              ReCoRD contains a passage, query containing a '@placeholder' string, and a set
+                of entities that are the possible values of the placeholder. Each train and
+                validation example will have a list of answers, any of which would be
+                considered correct.
 
-                # Tokenize the pairs of sentences
-                encoded = self.tokenizer(
-                    [f"{pair[0]} {pair[1]}" for pair in sentence_pairs],
-                    [pair[2] for pair in sentence_pairs],
+                For example, a typical example from ReCoRD might look like
+                {
+                    'passsage': 'This is the passage.',
+                    'query': 'A @placeholder is a bird.',
+                    'entities': ['penguin', 'potato', 'pigeon'],
+                    'answers': ['penguin', 'pigeon'],
+                }
+            '''
+            def preprocess_data_record(examples):
+
+                passage_text = examples['passage'][0]
+                query = examples['query'][0] # .replace('@placeholder', '[MASK]')
+                entities = examples['entities']
+                correct_entities = examples['answers']
+
+                label = False
+                if entities:
+                    for entity in entities: 
+                        if entity in correct_entities:
+                            label = True
+                # ipdb.set_trace()
+                # entity_spans = example['entity_spans']
+                # answer_dict = {}
+                # for i in range(len(entity_spans['text'])):
+                #     key = (entity_spans['start'][i], entity_spans['end'][i])
+                #     value = entity_spans['text'][i]
+                #     answer_dict[key] = value
+
+                input_text = f"{query} [SEP] {passage_text}"
+                input_encoding = self.tokenizer(
+                    input_text,
                     truncation=True,
-                    padding='max_length',
-                    max_length=512
+                    padding='max_length'
                 )
 
-                # Use the provided answers
-                encoded['labels'] = [answer['start'] for answers in examples['answers'] for answer in answers]
-
-                return encoded
+                input_ids = input_encoding['input_ids']
+                attention_mask = input_encoding['attention_mask']
+                token_type_ids = input_encoding['token_type_ids']
+                
+                # ipdb.set_trace()
+                return {
+                    'input_ids': input_ids,
+                    'attention_mask': attention_mask,
+                    'token_type_ids': token_type_ids,
+                    'label': torch.tensor(label, dtype=torch.long),
+                }
             preprocess_function = preprocess_data_record
+        
+        # word sense disambiguation task
         elif self.task_name in ["wic"]:
             preprocess_function = lambda examples: self.tokenizer(examples['sentence1'], examples['sentence2'], truncation=True, padding='max_length')
+        
+        # coreference resolution task
         elif self.task_name in ["wsc"]:
-            def preprocess_data_wsc(examples):
-                # Replace the pronoun with a special token and create a list to store the sentence pairs
-                sentence_pairs = []
-                for text, span1, span2 in zip(examples['text'], examples['span1'], examples['span2']):
-                    pronoun, antecedent = (span1, span2) if span1['start'] < span2['start'] else (span2, span1)
-                    modified_text = text[:pronoun['start']] + self.tokenizer.mask_token + text[pronoun['end']:]
-                    sentence_pairs.append((modified_text, antecedent['text']))
+            def preprocess_function_wsc(examples):
 
-                # Tokenize the pairs of sentences
+                sentences = examples["text"]
+                pronoun = examples["span1_text"]
+                target = examples["span2_text"]
+                span1_index = examples["span1_index"]
+                span2_index = examples["span2_index"]
+                labels = examples['label']
+
+                # Encode the sentences
                 encoded = self.tokenizer(
-                    [pair[0] for pair in sentence_pairs],
-                    [pair[1] for pair in sentence_pairs],
+                    sentences,
                     truncation=True,
                     padding='max_length',
-                    max_length=512
+                    return_tensors="pt"
                 )
 
-                # Use the provided labels
-                encoded['labels'] = examples['label']
+                # Add token type ids for pronoun and target
+                token_type_ids = torch.zeros_like(encoded["input_ids"])
+                for i, (p_index, t_index) in enumerate(zip(span1_index, span2_index)):
+                    token_type_ids[i, p_index] = 1
+                    token_type_ids[i, t_index] = 1
 
-                return encoded
-            preprocess_function = preprocess_data_wsc
+                # Add labels to the processed examples
+                processed_examples = {
+                    'input_ids': encoded['input_ids'],
+                    'attention_mask': encoded['attention_mask'],
+                    'token_type_ids': token_type_ids,
+                    'labels': torch.tensor(labels)
+                }
+
+                return processed_examples
+            
+            preprocess_function = preprocess_function_wsc
         return preprocess_function
     
 # example usage
 # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
 # SUPERGLUE_TASKS = ["boolq", "cb", "copa", "multirc", "record", "wic",  "wsc"]
-# data = GlueDataloader("cola")
+# data = GlueDataloader("record")
 # samples = data.get_samples(10)
 # train, val = data.get_train_val_split()
 # ipdb.set_trace()
