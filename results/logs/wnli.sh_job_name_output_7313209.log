@@ -1,0 +1,140 @@
+######################################################################
+full model fine-tuning
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 254.91it/s]
+
+Map:   0%|          | 0/635 [00:00<?, ? examples/s]
+Map: 100%|██████████| 635/635 [00:00<00:00, 2459.94 examples/s]
+                                                               
+
+Map:   0%|          | 0/71 [00:00<?, ? examples/s]
+                                                  
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 114, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 87, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1902, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2645, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2677, in compute_loss
+    outputs = model(**inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/models/bert/modeling_bert.py", line 1562, in forward
+    outputs = self.bert(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/models/bert/modeling_bert.py", line 1020, in forward
+    encoder_outputs = self.encoder(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/models/bert/modeling_bert.py", line 610, in forward
+    layer_outputs = layer_module(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/models/bert/modeling_bert.py", line 495, in forward
+    self_attention_outputs = self.attention(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/models/bert/modeling_bert.py", line 425, in forward
+    self_outputs = self.self(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/models/bert/modeling_bert.py", line 357, in forward
+    attention_probs = self.dropout(attention_probs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/dropout.py", line 58, in forward
+    return F.dropout(input, self.p, self.training, self.inplace)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/functional.py", line 1252, in dropout
+    return _VF.dropout_(input, p, training) if inplace else _VF.dropout(input, p, training)
+RuntimeError: CUDA out of memory. Tried to allocate 192.00 MiB (GPU 0; 11.93 GiB total capacity; 11.10 GiB already allocated; 175.06 MiB free; 11.22 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+######################################################################
+layer-wise fine-tuning top 1
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 492.89it/s]
+
+Map:   0%|          | 0/71 [00:00<?, ? examples/s]
+                                                  
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 0.6934608221054077, 'eval_accuracy': 0.49295774647887325, 'eval_runtime': 2.1956, 'eval_samples_per_second': 32.337, 'eval_steps_per_second': 2.277, 'epoch': 1.0}
+{'eval_loss': 0.7014331817626953, 'eval_accuracy': 0.4788732394366197, 'eval_runtime': 2.2631, 'eval_samples_per_second': 31.374, 'eval_steps_per_second': 2.209, 'epoch': 2.0}
+{'eval_loss': 0.6985408663749695, 'eval_accuracy': 0.4507042253521127, 'eval_runtime': 2.2215, 'eval_samples_per_second': 31.96, 'eval_steps_per_second': 2.251, 'epoch': 3.0}
+{'train_runtime': 135.2818, 'train_samples_per_second': 14.082, 'train_steps_per_second': 0.887, 'train_loss': 0.7185445785522461, 'epoch': 3.0}
+Total training time: 135.30 seconds
+######################################################################
+layer-wise fine-tuning top 2
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 342.87it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 0.6928284168243408, 'eval_accuracy': 0.5633802816901409, 'eval_runtime': 2.2417, 'eval_samples_per_second': 31.673, 'eval_steps_per_second': 2.23, 'epoch': 1.0}
+{'eval_loss': 0.7063759565353394, 'eval_accuracy': 0.4084507042253521, 'eval_runtime': 2.2245, 'eval_samples_per_second': 31.917, 'eval_steps_per_second': 2.248, 'epoch': 2.0}
+{'eval_loss': 0.7042611837387085, 'eval_accuracy': 0.4225352112676056, 'eval_runtime': 2.2158, 'eval_samples_per_second': 32.042, 'eval_steps_per_second': 2.256, 'epoch': 3.0}
+{'train_runtime': 141.3153, 'train_samples_per_second': 13.48, 'train_steps_per_second': 0.849, 'train_loss': 0.7172705332438151, 'epoch': 3.0}
+Total training time: 141.33 seconds
+######################################################################
+layer-wise fine-tuning top 3
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 442.06it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.3', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 0.6928452253341675, 'eval_accuracy': 0.5633802816901409, 'eval_runtime': 2.2313, 'eval_samples_per_second': 31.821, 'eval_steps_per_second': 2.241, 'epoch': 1.0}
+{'eval_loss': 0.710941731929779, 'eval_accuracy': 0.4084507042253521, 'eval_runtime': 2.2213, 'eval_samples_per_second': 31.964, 'eval_steps_per_second': 2.251, 'epoch': 2.0}
+{'eval_loss': 0.7084774374961853, 'eval_accuracy': 0.39436619718309857, 'eval_runtime': 2.2104, 'eval_samples_per_second': 32.121, 'eval_steps_per_second': 2.262, 'epoch': 3.0}
+{'train_runtime': 145.187, 'train_samples_per_second': 13.121, 'train_steps_per_second': 0.827, 'train_loss': 0.7173396428426106, 'epoch': 3.0}
+Total training time: 145.20 seconds
+######################################################################
+layer-wise fine-tuning top 4
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 383.57it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 0.7080138921737671, 'eval_accuracy': 0.5633802816901409, 'eval_runtime': 2.2308, 'eval_samples_per_second': 31.828, 'eval_steps_per_second': 2.241, 'epoch': 1.0}
+{'eval_loss': 0.7181410193443298, 'eval_accuracy': 0.352112676056338, 'eval_runtime': 2.2311, 'eval_samples_per_second': 31.823, 'eval_steps_per_second': 2.241, 'epoch': 2.0}
+{'eval_loss': 0.7255295515060425, 'eval_accuracy': 0.3380281690140845, 'eval_runtime': 2.1937, 'eval_samples_per_second': 32.365, 'eval_steps_per_second': 2.279, 'epoch': 3.0}
+{'train_runtime': 148.4669, 'train_samples_per_second': 12.831, 'train_steps_per_second': 0.808, 'train_loss': 0.7126716613769531, 'epoch': 3.0}
+Total training time: 148.48 seconds
+######################################################################
+layer-wise fine-tuning top 5
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 318.60it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 0.7141281962394714, 'eval_accuracy': 0.5633802816901409, 'eval_runtime': 2.2213, 'eval_samples_per_second': 31.963, 'eval_steps_per_second': 2.251, 'epoch': 1.0}
+{'eval_loss': 0.7173198461532593, 'eval_accuracy': 0.38028169014084506, 'eval_runtime': 2.2265, 'eval_samples_per_second': 31.888, 'eval_steps_per_second': 2.246, 'epoch': 2.0}
+{'eval_loss': 0.7244870066642761, 'eval_accuracy': 0.3380281690140845, 'eval_runtime': 2.2169, 'eval_samples_per_second': 32.027, 'eval_steps_per_second': 2.255, 'epoch': 3.0}
+{'train_runtime': 152.2988, 'train_samples_per_second': 12.508, 'train_steps_per_second': 0.788, 'train_loss': 0.7103480656941732, 'epoch': 3.0}
+Total training time: 152.32 seconds
+######################################################################
+finished

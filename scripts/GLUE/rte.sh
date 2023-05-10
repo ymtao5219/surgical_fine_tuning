@@ -11,7 +11,6 @@ echo "######################################################################"
 echo "full model fine-tuning"
 python code/fine_tuner.py --task_name rte
 
-
 echo "######################################################################"
 # top layers based on fisher information: [1, 4, 3, 5, 0]
 echo "layer-wise fine-tuning top 1"

@@ -1,7 +1,8 @@
 __pycache__/
 ignore/
-# ignore model files
+# ignore model files and checkpoints
 best_model_*/
-
-# ignore log files
-*.log
+code/checkpoints
+checkpoints/
+# # ignore log files (need to save output logs)
+# *.log

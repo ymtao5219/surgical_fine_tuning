@@ -7,10 +7,9 @@
 #SBATCH -G 1  # Number of GPUs
 
 
-# echo "######################################################################"
-# echo "full model fine-tuning"
-# python code/fine_tuner.py --task_name qnli
-
+echo "######################################################################"
+echo "full model fine-tuning"
+python code/fine_tuner.py --task_name qnli
 
 echo "######################################################################"
 # top layers based on fisher information: [1, 3, 4, 5, 0]
