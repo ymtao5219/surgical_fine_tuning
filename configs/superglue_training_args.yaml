@@ -13,7 +13,3 @@ adam_beta2: 0.999
 warmup_steps: 10000
 lr_scheduler_type: "linear"
 gradient_accumulation_steps: 2
-learning_rate: 5.0e-5
-num_train_epochs: 10
-seed: 42
-save_strategy: "no"
