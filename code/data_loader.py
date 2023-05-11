@@ -30,8 +30,8 @@ class GlueDataloader:
         random.seed(seed)
         sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
         preprocess_function = self._get_preprocessing_function()
-
-        sampled_data = sampled_data.map(preprocess_function, batched=False, remove_columns=sampled_data.column_names)
+        columns_to_remove = [col for col in sampled_data.column_names if col != 'label']
+        sampled_data = sampled_data.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
         
         return sampled_data
 
@@ -51,8 +51,9 @@ class GlueDataloader:
         if num_samples_per_class is None: 
             # Preprocess datasets
             # ipdb.set_trace()
-            train_dataset = train_dataset.map(preprocess_function, batched=False, remove_columns=train_dataset.column_names)
-            val_dataset = val_dataset.map(preprocess_function, batched=False, remove_columns=val_dataset.column_names)
+            columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
+            train_dataset = train_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
+            val_dataset = val_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
 
             return train_dataset, val_dataset
         
@@ -83,8 +84,9 @@ class GlueDataloader:
             selected_dataset = Dataset.from_dict(selected_samples_dict)
 
             # Preprocess the sampled training and validation datasets
-            train_dataset = selected_dataset.map(preprocess_function, batched=False)
-            val_dataset = val_dataset.map(preprocess_function, batched=False)
+            columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
+            train_dataset = selected_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
+            val_dataset = val_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
 
             return train_dataset, val_dataset
     
@@ -111,7 +113,11 @@ class GlueDataloader:
 
         # NLI task 
         elif self.task_name in ["cb"]:
-            preprocess_function = lambda examples: self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
+            def preprocess_function_cb(examples):
+                encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
+                encoded['label'] = examples['label']
+                return encoded
+            preprocess_function = preprocess_function_cb
 
         # qa task 
         elif self.task_name in ["copa"]:
@@ -156,7 +162,7 @@ class GlueDataloader:
                     'input_ids': input_ids,
                     'attention_mask': attention_mask,
                     'token_type_ids': token_type_ids,
-                    'labels': torch.tensor(labels)
+                    'label': torch.tensor(labels)
                 }
 
                 return processed_examples
@@ -181,7 +187,7 @@ class GlueDataloader:
                 )
                 # ipdb.set_trace()
                 # Use the provided labels
-                encoded['labels'] = labels
+                encoded['label'] = labels
 
                 return encoded
             preprocess_function = preprocess_data_multirc
@@ -276,7 +282,7 @@ class GlueDataloader:
                     'input_ids': encoded['input_ids'],
                     'attention_mask': encoded['attention_mask'],
                     'token_type_ids': token_type_ids,
-                    'labels': torch.tensor(labels)
+                    'label': torch.tensor(labels)
                 }
 
                 return processed_examples
