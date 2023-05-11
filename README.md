@@ -1,7 +1,6 @@
 # What-Is-Transfered-In-Fine-Tuning
 UMass-Microsoft Spring23 Project
 
-<<<<<<< HEAD
 ## Usage 
 
 - `checkpoints/` contain fine-tuned models
