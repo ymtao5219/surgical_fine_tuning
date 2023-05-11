@@ -1,6 +1,8 @@
 # What-Is-Transfered-In-Fine-Tuning
 UMass-Microsoft Spring23 Project
 
+## Usage 
+
 - `checkpoints/` contain fine-tuned models
 
 - `code/` python scripts for analysis 
@@ -10,5 +12,6 @@ UMass-Microsoft Spring23 Project
   - `utils`
 
 - `results/` saved results, figures, logs
+- 
 
-- `scripts/` bash scripts for extensive experiments
+- `scripts/` sbatch scripts to submit jobs

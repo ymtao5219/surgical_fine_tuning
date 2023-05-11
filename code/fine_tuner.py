@@ -10,6 +10,8 @@ import yaml
 from data_loader import *
 from utils import *
 
+import torch
+
 import logging
 # Set logging level
 logging.getLogger("datasets").setLevel(logging.ERROR)
@@ -18,21 +20,37 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
-metric = evaluate.load("accuracy")
-
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
-    return metric.compute(predictions=predictions, references=labels)
-
 
 def main(args):
     set_random_seed(42)
     
+    if torch.cuda.device_count() > 1:
+        print(f"Using {torch.cuda.device_count()} GPUs")
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(f"Using {device}")
+        
     model_name = args.parent_model
     freeze_layers = args.freeze_layers
     task_name = args.task_name
     
+    if task_name == "cola":
+        metric = evaluate.load("matthews_correlation")
+
+        def compute_metrics(eval_pred):
+            logits, labels = eval_pred
+            predictions = np.argmax(logits, axis=-1)
+            return metric.compute(predictions=predictions, references=labels)
+    else: 
+        metric = evaluate.load("accuracy")
+
+        def compute_metrics(eval_pred):
+            logits, labels = eval_pred
+            predictions = np.argmax(logits, axis=-1)
+            return metric.compute(predictions=predictions, references=labels)
+
+
     if args.few_shot:
         data_loader = GlueDataloader(task_name, model_name)
         train_dataset, val_dataset = data_loader.get_train_val_split(args.few_shot)
@@ -47,6 +65,7 @@ def main(args):
     else: 
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
 
+    # ipdb.set_trace()
     def add_prefix(val):
         return "bert.encoder.layer." + str(val)
 
@@ -71,6 +90,18 @@ def main(args):
     # Training arguments
     training_args = TrainingArguments(**training_args_dict)
 
+    # training_args = TrainingArguments(
+    #     disable_tqdm=True,
+    #     output_dir="checkpoints",
+    #     evaluation_strategy="epoch",
+    #     per_device_train_batch_size=16,
+    #     per_device_eval_batch_size=16,
+    #     num_train_epochs=10,
+    #     seed=42,
+    #     save_strategy="no",
+    #     learning_rate=5e-5, 
+    #     weight_decay=0.01)
+    
     # Trainer
     trainer = Trainer(
         model=model,

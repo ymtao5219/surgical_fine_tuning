@@ -22,7 +22,7 @@ def set_seed(seed: int):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
-set_seed(42)
+set_seed(1314)
 
 class FIMCalculator:
 
@@ -164,14 +164,13 @@ class FIMCalculator:
 
     
 # example usage 
-# GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
-# SUPERGLUE_TASKS = ["wic", "cb", "boolq", "copa", "multirc", "record", "wsc"]
+GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
+SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 
-# not work for ["stsb", "mnli_mismatched", "record"]
-# get inf/nan values: ["boolq"]
-
+# Alex
+# ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
 model_name = "bert-base-cased"
-tokenized_data = GlueDataloader("wic").get_samples(100)
+tokenized_data = GlueDataloader("cb").get_samples(100)
 
 
 calc = FIMCalculator(model_name, tokenized_data)
