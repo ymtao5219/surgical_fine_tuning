@@ -1,0 +1,45 @@
+Loading miniconda version 22.11.1-1
+######################################################################
+full model fine-tuning
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 49.80it/s]
+/home/yuanmingtao_umass_edu/.conda/envs/petl/lib/python3.9/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+{'eval_loss': 1.0623544454574585, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.779, 'eval_samples_per_second': 31.478, 'eval_steps_per_second': 2.248, 'epoch': 1.0}
+{'eval_loss': 1.0618880987167358, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7224, 'eval_samples_per_second': 32.512, 'eval_steps_per_second': 2.322, 'epoch': 2.0}
+{'eval_loss': 1.0610960721969604, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.718, 'eval_samples_per_second': 32.595, 'eval_steps_per_second': 2.328, 'epoch': 3.0}
+{'eval_loss': 1.0600354671478271, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7255, 'eval_samples_per_second': 32.454, 'eval_steps_per_second': 2.318, 'epoch': 4.0}
+{'eval_loss': 1.0587185621261597, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7372, 'eval_samples_per_second': 32.235, 'eval_steps_per_second': 2.302, 'epoch': 5.0}
+{'eval_loss': 1.0571846961975098, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.752, 'eval_samples_per_second': 31.964, 'eval_steps_per_second': 2.283, 'epoch': 6.0}
+{'eval_loss': 1.055475115776062, 'eval_accuracy': 0.4107142857142857, 'eval_runtime': 1.7232, 'eval_samples_per_second': 32.499, 'eval_steps_per_second': 2.321, 'epoch': 7.0}
+{'eval_loss': 1.0536209344863892, 'eval_accuracy': 0.4107142857142857, 'eval_runtime': 1.7246, 'eval_samples_per_second': 32.472, 'eval_steps_per_second': 2.319, 'epoch': 8.0}
+{'eval_loss': 1.0514782667160034, 'eval_accuracy': 0.4107142857142857, 'eval_runtime': 1.7205, 'eval_samples_per_second': 32.55, 'eval_steps_per_second': 2.325, 'epoch': 9.0}
+{'eval_loss': 1.0489357709884644, 'eval_accuracy': 0.42857142857142855, 'eval_runtime': 1.7222, 'eval_samples_per_second': 32.517, 'eval_steps_per_second': 2.323, 'epoch': 10.0}
+{'train_runtime': 246.0837, 'train_samples_per_second': 10.159, 'train_steps_per_second': 0.325, 'train_loss': 1.0230074882507325, 'epoch': 10.0}
+Total training time: 246.11 seconds
+######################################################################
+layer-wise fine-tuning top 1
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 170.24it/s]
+/home/yuanmingtao_umass_edu/.conda/envs/petl/lib/python3.9/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 1.0624375343322754, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7312, 'eval_samples_per_second': 32.347, 'eval_steps_per_second': 2.311, 'epoch': 1.0}
+{'eval_loss': 1.0622646808624268, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.731, 'eval_samples_per_second': 32.352, 'eval_steps_per_second': 2.311, 'epoch': 2.0}
+{'eval_loss': 1.0619761943817139, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7244, 'eval_samples_per_second': 32.475, 'eval_steps_per_second': 2.32, 'epoch': 3.0}
+{'eval_loss': 1.0615792274475098, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7267, 'eval_samples_per_second': 32.432, 'eval_steps_per_second': 2.317, 'epoch': 4.0}
+{'eval_loss': 1.0610756874084473, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7291, 'eval_samples_per_second': 32.386, 'eval_steps_per_second': 2.313, 'epoch': 5.0}
+{'eval_loss': 1.060470461845398, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7211, 'eval_samples_per_second': 32.538, 'eval_steps_per_second': 2.324, 'epoch': 6.0}
+{'eval_loss': 1.059791922569275, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7263, 'eval_samples_per_second': 32.44, 'eval_steps_per_second': 2.317, 'epoch': 7.0}
+{'eval_loss': 1.0589935779571533, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7213, 'eval_samples_per_second': 32.534, 'eval_steps_per_second': 2.324, 'epoch': 8.0}
+{'eval_loss': 1.0580556392669678, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7241, 'eval_samples_per_second': 32.481, 'eval_steps_per_second': 2.32, 'epoch': 9.0}
+{'eval_loss': 1.0569924116134644, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7264, 'eval_samples_per_second': 32.438, 'eval_steps_per_second': 2.317, 'epoch': 10.0}
+{'train_runtime': 193.1368, 'train_samples_per_second': 12.944, 'train_steps_per_second': 0.414, 'train_loss': 1.026606845855713, 'epoch': 10.0}
+Total training time: 193.16 seconds
+######################################################################
+layer-wise fine-tuning top 2
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 327.72it/s]
+/home/yuanmingtao_umass_edu/.conda/envs/petl/lib/python3.9/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+slurmstepd-gypsum-gpu007: error: *** JOB 7477728 ON gypsum-gpu007 CANCELLED AT 2023-05-13T15:48:08 ***

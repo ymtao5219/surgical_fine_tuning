@@ -1,5 +1,6 @@
 import argparse
-from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice
+from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
+
 import time 
 
 import evaluate
@@ -62,6 +63,8 @@ def main(args):
     # Model
     if task_name == "copa": 
         model = AutoModelForMultipleChoice.from_pretrained(model_name)
+    elif task_name == "multirc":
+        model = AutoModelForQuestionAnswering.from_pretrained(model_name)
     else: 
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
 
@@ -89,18 +92,6 @@ def main(args):
         
     # Training arguments
     training_args = TrainingArguments(**training_args_dict)
-
-    # training_args = TrainingArguments(
-    #     disable_tqdm=True,
-    #     output_dir="checkpoints",
-    #     evaluation_strategy="epoch",
-    #     per_device_train_batch_size=16,
-    #     per_device_eval_batch_size=16,
-    #     num_train_epochs=10,
-    #     seed=42,
-    #     save_strategy="no",
-    #     learning_rate=5e-5, 
-    #     weight_decay=0.01)
     
     # Trainer
     trainer = Trainer(

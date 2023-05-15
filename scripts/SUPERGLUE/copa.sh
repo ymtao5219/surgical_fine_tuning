@@ -18,19 +18,19 @@ python code/fine_tuner.py --benchmark superglue --task_name copa
 # echo "######################################################################"
 # # top layers based on fisher information: [5, 1, 4, 3, 2]
 # echo "layer-wise fine-tuning top 1"
-# python code/fine_tuner.py --benchmark superglue --task_name cb --freeze_layers 0 1 2 3 4 6 7 8 9 10 11
+# python code/fine_tuner.py --benchmark superglue --task_name copa --freeze_layers 0 1 2 3 4 6 7 8 9 10 11
 # echo "######################################################################"
 # echo "layer-wise fine-tuning top 2"
-# python code/fine_tuner.py --benchmark superglue --task_name cb --freeze_layers 0 2 3 4 6 7 8 9 10 11
+# python code/fine_tuner.py --benchmark superglue --task_name copa --freeze_layers 0 2 3 4 6 7 8 9 10 11
 # echo "######################################################################"
 # echo "layer-wise fine-tuning top 3"
-# python code/fine_tuner.py --benchmark superglue --task_name cb --freeze_layers 0 2 3 6 7 8 9 10 11
+# python code/fine_tuner.py --benchmark superglue --task_name copa --freeze_layers 0 2 3 6 7 8 9 10 11
 # echo "######################################################################"
 # echo "layer-wise fine-tuning top 4"
-# python code/fine_tuner.py --benchmark superglue --task_name cb --freeze_layers 0 2 6 7 8 9 10 11
+# python code/fine_tuner.py --benchmark superglue --task_name copa --freeze_layers 0 2 6 7 8 9 10 11
 # echo "######################################################################"
 # echo "layer-wise fine-tuning top 5"
-# python code/fine_tuner.py --benchmark superglue --task_name cb --freeze_layers 0 6 7 8 9 10 11
+# python code/fine_tuner.py --benchmark superglue --task_name copa --freeze_layers 0 6 7 8 9 10 11
 
 # echo "######################################################################"
 # echo "finished"
