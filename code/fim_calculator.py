@@ -169,8 +169,8 @@ SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 
 # Alex
 # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
-# model_name = "bert-base-cased"
-model_name = "bert-large-cased"
+model_name = "bert-base-cased"
+# model_name = "bert-large-cased"
 tokenized_data = GlueDataloader("cb").get_samples(100)
 
 calc = FIMCalculator(model_name, tokenized_data)
