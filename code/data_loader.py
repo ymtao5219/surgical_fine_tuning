@@ -2,6 +2,7 @@ from datasets import load_dataset, Dataset, DatasetDict
 import random
 from transformers import AutoTokenizer
 import torch
+from collections import defaultdict
 # import ipdb
 
 class GlueDataloader:
@@ -209,43 +210,40 @@ class GlueDataloader:
                 }
             '''
             def preprocess_data_record(examples):
+                encoded = defaultdict(list)
 
-                passage_text = examples['passage'][0]
-                query = examples['query'][0] # .replace('@placeholder', '[MASK]')
-                entities = examples['entities']
-                correct_entities = examples['answers']
+                idx = examples["idx"]
+                passage = examples["passage"]
+                query = examples["query"]
+                entities = examples["entities"]
+                answers = examples["answers"]
 
-                label = False
-                if entities:
-                    for entity in entities: 
-                        if entity in correct_entities:
-                            label = True
-                # ipdb.set_trace()
-                # entity_spans = example['entity_spans']
-                # answer_dict = {}
-                # for i in range(len(entity_spans['text'])):
-                #     key = (entity_spans['start'][i], entity_spans['end'][i])
-                #     value = entity_spans['text'][i]
-                #     answer_dict[key] = value
+                for entity in entities:
+                    label = 1 if entity in answers else 0
+                    query_filled = query.replace("@placeholder", entity)
+                    example_encoded = self.tokenizer(
+                        passage,
+                        query_filled,
+                        max_length=self.tokenizer.model_max_length,
+                        truncation=True,
+                        padding="max_length",
+                        return_overflowing_tokens=True,
+                    )
 
-                input_text = f"{query} [SEP] {passage_text}"
-                input_encoding = self.tokenizer(
-                    input_text,
-                    truncation=True,
-                    padding='max_length'
-                )
-
-                input_ids = input_encoding['input_ids']
-                attention_mask = input_encoding['attention_mask']
-                token_type_ids = input_encoding['token_type_ids']
-                
-                # ipdb.set_trace()
-                return {
-                    'input_ids': input_ids,
-                    'attention_mask': attention_mask,
-                    'token_type_ids': token_type_ids,
-                    'label': torch.tensor(label, dtype=torch.long),
-                }
+                    encoded["idx"].append(idx)
+                    encoded["passage"].append(passage)
+                    encoded["query"].append(query_filled)
+                    encoded["entities"].append(entity)
+                    encoded["answers"].append(answers)
+                    encoded["input_ids"].append(example_encoded["input_ids"])
+                    encoded["label"].append(label)
+                    
+                    if "token_type_ids" in example_encoded:
+                        encoded["token_type_ids"].append(example_encoded["token_type_ids"])
+                    if "attention_mask" in example_encoded:
+                        encoded["attention_mask"].append(example_encoded["attention_mask"])
+                return encoded
+            
             preprocess_function = preprocess_data_record
         
         # word sense disambiguation task
