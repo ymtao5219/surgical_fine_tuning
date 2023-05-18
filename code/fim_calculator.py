@@ -22,7 +22,7 @@ def set_seed(seed: int):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
-set_seed(1314)
+set_seed(42)
 
 class FIMCalculator:
 
@@ -170,8 +170,8 @@ SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 # Alex
 # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
 model_name = "bert-base-cased"
+# model_name = "bert-large-cased"
 tokenized_data = GlueDataloader("cb").get_samples(100)
-
 
 calc = FIMCalculator(model_name, tokenized_data)
 fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)

@@ -3,7 +3,7 @@
 #SBATCH --output=results/logs/%x_job_name_output_%j.log
 #SBATCH -c 4  # Number of Cores per Task
 #SBATCH --mem=8192  # Requested Memory
-#SBATCH -p gypsum-titanx  # Partition
+#SBATCH -p gypsum-m40  # Partition
 #SBATCH -G 1  # Number of GPUs
 
 

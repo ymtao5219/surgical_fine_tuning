@@ -2,6 +2,7 @@ from datasets import load_dataset, Dataset, DatasetDict
 import random
 from transformers import AutoTokenizer
 import torch
+from collections import defaultdict
 # import ipdb
 
 class GlueDataloader:
@@ -31,7 +32,7 @@ class GlueDataloader:
         sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
         preprocess_function = self._get_preprocessing_function()
         columns_to_remove = [col for col in sampled_data.column_names if col != 'label']
-        sampled_data = sampled_data.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
+        sampled_data = sampled_data.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
         
         return sampled_data
 
@@ -52,8 +53,8 @@ class GlueDataloader:
             # Preprocess datasets
             # ipdb.set_trace()
             columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
-            train_dataset = train_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
-            val_dataset = val_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
+            train_dataset = train_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
+            val_dataset = val_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
 
             return train_dataset, val_dataset
         
@@ -111,7 +112,7 @@ class GlueDataloader:
         elif self.task_name in ["boolq"]: 
             preprocess_function = lambda examples: self.tokenizer(examples['question'], examples['passage'], truncation=True, padding='max_length')
 
-        # NLI task 
+        # NLI task: classification
         elif self.task_name in ["cb"]:
             def preprocess_function_cb(examples):
                 encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
@@ -122,135 +123,84 @@ class GlueDataloader:
         # qa task 
         elif self.task_name in ["copa"]:
             def preprocess_function_copa(examples):
-                # Check if we are working with a single example or a batch
-                is_single_example = isinstance(examples["premise"], str)
+                COPA_DICT = {"cause": "What was the cause of this?", "effect": "What happened as a result?",}
 
-                # Handle single examples
-                if is_single_example:
-                    question_header = examples["question"]
-                    sentences = [
-                        [f"{examples['premise']} What was the {question_header} of this?", f"{examples['choice1']}"],
-                        [f"{examples['premise']} What was the {question_header} of this?", f"{examples['choice2']}"]
-                    ]
-                    labels = examples['label']
-
-                # Handle batches
-                else:
-                    question_headers = examples["question"]
-                    sentences = []
-                    labels = []
-                    for premise, question, choice1, choice2, label in zip(examples['premise'], question_headers, examples['choice1'], examples['choice2'], examples['label']):
-                        sentences.append([f"{premise} What was the {question} of this?", f"{choice1}"])
-                        sentences.append([f"{premise} What was the {question} of this?", f"{choice2}"])
-                        labels.append(label)
-
-                # Encode the sentences
+                contexts = [p + " " + COPA_DICT[q] for p, q in zip(examples["premise"], examples["question"])]
+                sentences_a = [ctx + " " + choice for ctx, choice in zip(contexts, examples["choice1"])]
+                sentences_b = [ctx + " " + choice for ctx, choice in zip(contexts, examples["choice2"])]
                 encoded = self.tokenizer(
-                    sentences,
+                    sentences_a,
+                    sentences_b,
                     truncation=True,
-                    padding='max_length',
-                    return_tensors="pt"
+                    padding="max_length",
                 )
-
-                # Combine the tokenized results
-                input_ids = encoded['input_ids'].view(-1, 2, self.tokenizer.model_max_length)
-                attention_mask = encoded['attention_mask'].view(-1, 2, self.tokenizer.model_max_length)
-                token_type_ids = encoded['token_type_ids'].view(-1, 2, self.tokenizer.model_max_length)
-                
-                # Add labels to the processed examples
-                processed_examples = {
-                    'input_ids': input_ids,
-                    'attention_mask': attention_mask,
-                    'token_type_ids': token_type_ids,
-                    'label': torch.tensor(labels)
-                }
-
-                return processed_examples
+                encoded.update({"label": examples["label"]})
+                return encoded
             preprocess_function = preprocess_function_copa
         
         # qa task 
         elif self.task_name in ["multirc"]:
-            def preprocess_data_multirc(example):
-                # Get passage, questions, answers, and labels from the example
-                passage = example['paragraph']
-                questions = example['question']
-                answers = example['answer']
-                labels = example['label']
-
-                # Tokenize the pairs of sentences
+            def preprocess_data_multirc(examples):
+                contexts = [paragraph + " " + question for paragraph, question in zip(examples["paragraph"], examples["question"])]
                 encoded = self.tokenizer(
-                    passage,
-                    questions,
-                    answers,
-                    truncation=True,
-                    padding='max_length'
+                contexts,
+                examples["answer"],
+                truncation=True,
+                padding="max_length",
                 )
-                # ipdb.set_trace()
-                # Use the provided labels
-                encoded['label'] = labels
-
+                encoded.update({"label": examples[self.column_config.label]})
                 return encoded
             preprocess_function = preprocess_data_multirc
         
         # qa task 
         elif self.task_name in ["record"]:
-            '''
-              ReCoRD contains a passage, query containing a '@placeholder' string, and a set
-                of entities that are the possible values of the placeholder. Each train and
-                validation example will have a list of answers, any of which would be
-                considered correct.
 
-                For example, a typical example from ReCoRD might look like
-                {
-                    'passsage': 'This is the passage.',
-                    'query': 'A @placeholder is a bird.',
-                    'entities': ['penguin', 'potato', 'pigeon'],
-                    'answers': ['penguin', 'pigeon'],
-                }
-            '''
             def preprocess_data_record(examples):
-
-                passage_text = examples['passage'][0]
-                query = examples['query'][0] # .replace('@placeholder', '[MASK]')
-                entities = examples['entities']
-                correct_entities = examples['answers']
-
-                label = False
-                if entities:
-                    for entity in entities: 
-                        if entity in correct_entities:
-                            label = True
-                # ipdb.set_trace()
-                # entity_spans = example['entity_spans']
-                # answer_dict = {}
-                # for i in range(len(entity_spans['text'])):
-                #     key = (entity_spans['start'][i], entity_spans['end'][i])
-                #     value = entity_spans['text'][i]
-                #     answer_dict[key] = value
-
-                input_text = f"{query} [SEP] {passage_text}"
-                input_encoding = self.tokenizer(
-                    input_text,
-                    truncation=True,
-                    padding='max_length'
-                )
-
-                input_ids = input_encoding['input_ids']
-                attention_mask = input_encoding['attention_mask']
-                token_type_ids = input_encoding['token_type_ids']
-                
-                # ipdb.set_trace()
-                return {
-                    'input_ids': input_ids,
-                    'attention_mask': attention_mask,
-                    'token_type_ids': token_type_ids,
-                    'label': torch.tensor(label, dtype=torch.long),
-                }
+                encoded = defaultdict(list)
+                for idx, passage, query, entities, answers in zip(
+                    examples["idx"], examples["passage"], examples["query"], examples["entities"], examples["answers"]
+                ):
+                    for entity in entities:
+                        label = 1 if entity in answers else 0
+                        query_filled = query.replace("@placeholder", entity)
+                        example_encoded = self.tokenizer(
+                            passage,
+                            query_filled,
+                            truncation=True,
+                            padding="max_length",
+                            return_overflowing_tokens=True,
+                        )
+                        encoded["idx"].append(idx)
+                        encoded["passage"].append(passage)
+                        encoded["query"].append(query_filled)
+                        encoded["entities"].append(entity)
+                        encoded["answers"].append(answers)
+                        encoded["input_ids"].append(example_encoded["input_ids"])
+                        encoded["label"].append(label)
+                        if "token_type_ids" in example_encoded:
+                            encoded["token_type_ids"].append(example_encoded["token_type_ids"])
+                        if "attention_mask" in example_encoded:
+                            encoded["attention_mask"].append(example_encoded["attention_mask"])
+                            
+                return encoded
+            
             preprocess_function = preprocess_data_record
         
         # word sense disambiguation task
         elif self.task_name in ["wic"]:
-            preprocess_function = lambda examples: self.tokenizer(examples['sentence1'], examples['sentence2'], truncation=True, padding='max_length')
+            def preprocess_function_wic(examples):
+                sentences = []
+                # concat all three input parts with [SEP] token
+                for parts in zip(*[examples[c] for c in ["sentence1", "sentence2", "word"]]):
+                    sentences.append(self.tokenizer.sep_token.join(parts))
+                encoded = self.tokenizer(
+                    sentences,
+                    truncation=True,
+                    padding="max_length",
+                )
+                encoded.update({"label": examples["label"]})
+                return encoded
+            preprocess_function = preprocess_function_wic
         
         # coreference resolution task
         elif self.task_name in ["wsc"]:
