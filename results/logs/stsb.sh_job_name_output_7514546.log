@@ -1,6 +1,0 @@
-######################################################################
-full model fine-tuning
-/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
-  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
-Using cuda
-  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 377.03it/s]
