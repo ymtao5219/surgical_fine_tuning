@@ -21,6 +21,7 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
+import ipdb
 
 def main(args):
     set_random_seed(42)
@@ -48,7 +49,7 @@ def main(args):
         metric = evaluate.load("spearmanr")
         def compute_metrics(eval_pred):
             logits, labels = eval_pred
-            predictions = np.argmax(logits, axis=-1)
+            predictions = logits[:, 0]
             return metric.compute(predictions=predictions, references=labels)
 
     else: 
