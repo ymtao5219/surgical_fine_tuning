@@ -1,6 +1,7 @@
 import argparse
 from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
-
+#TODO: added for roberta
+from transformers import AutoTokenizer, RobertaForSequenceClassification
 import time 
 
 import evaluate
@@ -45,7 +46,7 @@ def main(args):
             return metric.compute(predictions=predictions, references=labels)
 
     elif task_name == "stsb":
-        metric = evaluate.load("spearmanr")
+        metric = evaluate.load("accuracy")
         def compute_metrics(eval_pred):
             logits, labels = eval_pred
             predictions = np.argmax(logits, axis=-1)
@@ -76,11 +77,14 @@ def main(args):
     elif task_name == "stsb":
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
+        #TODO: changed for roberta
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
-
+        # model = RobertaForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
     # ipdb.set_trace()
     def add_prefix(val):
-        return "bert.encoder.layer." + str(val)
+        # TODO: changed for roberta
+        # return "bert.encoder.layer." + str(val)
+        return "roberta.encoder.layer." + str(val)
 
     # print("layers to freeze", freeze_layers)
     if freeze_layers:
@@ -109,6 +113,9 @@ def main(args):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
+        data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+                               'attention_mask': torch.stack([f[1] for f in data]),
+                               'labels': torch.tensor([f[2] for f in data])},
         compute_metrics=compute_metrics
     )
 

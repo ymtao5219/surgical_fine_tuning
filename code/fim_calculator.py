@@ -139,11 +139,14 @@ class FIMCalculator:
         # param_names = []
         for param_name, param_fim_diag in latest_fim_diag.items():
             layer_name_parts = param_name.split('.')
+            # print(layer_name_parts)
             layer_name = layer_name_parts[0]
             
             # param_names.append(param_name)
-            
-            if layer_name == "bert" and layer_name_parts[1] == "encoder":
+
+            # if layer_name == "bert" and layer_name_parts[1] == "encoder":
+            # if layer_name == "roberta" and layer_name_parts[1] == "encoder":
+            if layer_name == self.model_name.split("-")[0] and layer_name_parts[1] == "encoder":
                 layer_index_match = re.search(r'\d+', layer_name_parts[3])
                 if layer_index_match is not None:
                     layer_index = layer_index_match.group()
@@ -155,6 +158,8 @@ class FIMCalculator:
                 fim_diag_by_layer[layer_name] += torch.norm(param_fim_diag, p='fro').item()
         # ipdb.set_trace()
         return fim_diag_by_layer
+
+    
 
     @staticmethod
     def bottom_k_layers(input_dict, k):
@@ -171,7 +176,8 @@ SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
 model_name = "bert-base-cased"
 # model_name = "bert-large-cased"
-tokenized_data = GlueDataloader("cb").get_samples(100)
+# model_name="roberta-base"
+tokenized_data = GlueDataloader("mrpc").get_samples(100)
 
 calc = FIMCalculator(model_name, tokenized_data)
 fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
