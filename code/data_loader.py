@@ -30,7 +30,13 @@ class GlueDataloader:
 
     def get_samples(self, num_sentences, split="validation", seed=42):
         random.seed(seed)
-        sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
+        if self.task_name == "mnli_mismatched":
+            sampled_data = load_dataset("glue", "mnli")["validation_mismatched"].select(range(num_sentences))
+        elif self.task_name == "mnli_matched":
+            sampled_data = load_dataset("glue", "mnli")["validation_matched"].select(range(num_sentences))
+        else: 
+            sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
+            
         preprocess_function = self._get_preprocessing_function()
         columns_to_remove = [col for col in sampled_data.column_names if col != 'label']
         sampled_data = sampled_data.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
@@ -42,7 +48,10 @@ class GlueDataloader:
         # special case for mnli
         if self.task_name in ["mnli_mismatched", "mnli_matched"]:
             dataset_train_split = load_dataset("glue", "mnli", split="train")
-            dataset_val_split = self.dataset["validation"]
+            if self.task_name == "mnli_mismatched":
+                dataset_val_split = load_dataset("glue", "mnli")["validation_mismatched"]
+            else:
+                dataset_val_split = load_dataset("glue", "mnli")["validation_matched"]
         else:
             dataset_train_split = self.dataset["train"]
             dataset_val_split = self.dataset["validation"]

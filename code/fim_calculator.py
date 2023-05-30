@@ -15,6 +15,9 @@ from data_loader import *
 
 import ipdb
 
+import os
+os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
+
 # Set seed for reproducibility
 def set_seed(seed: int):
     random.seed(seed)
@@ -29,8 +32,8 @@ class FIMCalculator:
     def __init__(self, model_name: str, tokenized_data):
         self.model_name = model_name
         self.tokenized_data = tokenized_data
-        
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        # self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=len(tokenized_data.unique("label")))
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.num_sentences = len(self.tokenized_data)
@@ -84,17 +87,18 @@ class FIMCalculator:
                     break
                 data_iterator = iter(data_loader)
                 data, target = next(data_loader)
-            # ipdb.set_trace()
+
             if device is not None:
                 data = data.to(device)
                 if empirical:
                     target = target.to(device)
-            
+                    
             logits = model(data).logits
             if empirical:
                 outdx = target.unsqueeze(1)
             else:
                 outdx = Categorical(logits=logits).sample().unsqueeze(1).detach()
+            # ipdb.set_trace()
             samples = logits.gather(1, outdx)
 
             idx, batch_size = 0, data.size(0)
@@ -171,8 +175,9 @@ SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
 model_name = "bert-base-cased"
 # model_name = "bert-large-cased"
-tokenized_data = GlueDataloader("cb").get_samples(100)
+tokenized_data = GlueDataloader("mnli_matched").get_samples(100)
 
+# ipdb.set_trace()
 calc = FIMCalculator(model_name, tokenized_data)
 fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
 
