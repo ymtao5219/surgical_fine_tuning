@@ -43,6 +43,14 @@ def main(args):
             logits, labels = eval_pred
             predictions = np.argmax(logits, axis=-1)
             return metric.compute(predictions=predictions, references=labels)
+
+    elif task_name == "stsb":
+        metric = evaluate.load("spearmanr")
+        def compute_metrics(eval_pred):
+            logits, labels = eval_pred
+            predictions = np.argmax(logits, axis=-1)
+            return metric.compute(predictions=predictions, references=labels)
+
     else: 
         metric = evaluate.load("accuracy")
 
@@ -65,6 +73,8 @@ def main(args):
         model = AutoModelForMultipleChoice.from_pretrained(model_name)
     elif task_name == "multirc":
         model = AutoModelForQuestionAnswering.from_pretrained(model_name)
+    elif task_name == "stsb":
+        model = BertForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
 
