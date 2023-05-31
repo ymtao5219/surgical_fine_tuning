@@ -1,6 +1,5 @@
 import argparse
 from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
-#TODO: added for roberta
 from transformers import AutoTokenizer, RobertaForSequenceClassification
 import time 
 
@@ -78,14 +77,14 @@ def main(args):
     elif task_name == "stsb":
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
-        #TODO: changed for roberta
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
+        #TODO: changed for roberta
         # model = RobertaForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
     # ipdb.set_trace()
     def add_prefix(val):
-        # TODO: changed for roberta
-        # return "bert.encoder.layer." + str(val)
-        return "roberta.encoder.layer." + str(val)
+        return "bert.encoder.layer." + str(val)
+         # TODO: changed for roberta
+        # return "roberta.encoder.layer." + str(val)
 
     # print("layers to freeze", freeze_layers)
     if freeze_layers:
