@@ -1,0 +1,150 @@
+######################################################################
+Random layers finetuning for 3 layers
+######################################################################
+######################################################################
+layer-wise fine-tuning bottom 1 - rte
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 32.35it/s]
+Map:   0%|          | 0/100 [00:00<?, ? examples/s]Map: 100%|██████████| 100/100 [00:00<00:00, 640.88 examples/s]                                                              Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 149, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 122, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1872, in _inner_training_loop
+    for step, inputs in enumerate(epoch_iterator):
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 681, in __next__
+    data = self._next_data()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 721, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    return self.collate_fn(data)
+  File "code/fine_tuner.py", line 112, in <lambda>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+  File "code/fine_tuner.py", line 112, in <listcomp>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+KeyError: 0
+######################################################################
+layer-wise fine-tuning bottom 1 - qnli
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:00<00:01,  1.96it/s]100%|██████████| 3/3 [00:00<00:00,  5.23it/s]
+Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.2', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 149, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 122, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1872, in _inner_training_loop
+    for step, inputs in enumerate(epoch_iterator):
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 681, in __next__
+    data = self._next_data()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 721, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    return self.collate_fn(data)
+  File "code/fine_tuner.py", line 112, in <lambda>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+  File "code/fine_tuner.py", line 112, in <listcomp>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+KeyError: 0
+######################################################################
+layer-wise fine-tuning bottom 1 - cola
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 100.37it/s]
+Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 149, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 122, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1872, in _inner_training_loop
+    for step, inputs in enumerate(epoch_iterator):
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 681, in __next__
+    data = self._next_data()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 721, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    return self.collate_fn(data)
+  File "code/fine_tuner.py", line 112, in <lambda>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+  File "code/fine_tuner.py", line 112, in <listcomp>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+KeyError: 0
+######################################################################
+layer-wise fine-tuning bottom 1 - sst2
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:00<00:00,  7.51it/s]100%|██████████| 3/3 [00:00<00:00, 20.37it/s]
+Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 149, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 122, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1872, in _inner_training_loop
+    for step, inputs in enumerate(epoch_iterator):
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 681, in __next__
+    data = self._next_data()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 721, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    return self.collate_fn(data)
+  File "code/fine_tuner.py", line 112, in <lambda>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+  File "code/fine_tuner.py", line 112, in <listcomp>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+KeyError: 0
+######################################################################
+layer-wise fine-tuning bottom 1 - mrpc
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 73.37it/s]
+Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.4', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 149, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 122, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1872, in _inner_training_loop
+    for step, inputs in enumerate(epoch_iterator):
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 681, in __next__
+    data = self._next_data()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 721, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    return self.collate_fn(data)
+  File "code/fine_tuner.py", line 112, in <lambda>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+  File "code/fine_tuner.py", line 112, in <listcomp>
+    data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
+KeyError: 0
+######################################################################
+layer-wise fine-tuning bottom 1 - qqp

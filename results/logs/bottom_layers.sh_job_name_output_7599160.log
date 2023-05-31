@@ -1,0 +1,1230 @@
+######################################################################
+layer-wise fine-tuning bottom 1 - rte
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 30.14it/s]
+
+Map:   0%|          | 0/277 [00:00<?, ? examples/s]
+Map: 100%|██████████| 277/277 [00:00<00:00, 1192.66 examples/s]
+                                                               
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 0.8314979672431946, 'eval_accuracy': 0.5270758122743683, 'eval_runtime': 8.388, 'eval_samples_per_second': 33.023, 'eval_steps_per_second': 2.146, 'epoch': 1.0}
+{'eval_loss': 0.8069397807121277, 'eval_accuracy': 0.5270758122743683, 'eval_runtime': 8.4009, 'eval_samples_per_second': 32.973, 'eval_steps_per_second': 2.143, 'epoch': 2.0}
+{'eval_loss': 0.7685999870300293, 'eval_accuracy': 0.5270758122743683, 'eval_runtime': 8.4118, 'eval_samples_per_second': 32.93, 'eval_steps_per_second': 2.14, 'epoch': 3.0}
+{'eval_loss': 0.7226513624191284, 'eval_accuracy': 0.5270758122743683, 'eval_runtime': 8.452, 'eval_samples_per_second': 32.773, 'eval_steps_per_second': 2.13, 'epoch': 4.0}
+{'eval_loss': 0.6954119801521301, 'eval_accuracy': 0.5379061371841155, 'eval_runtime': 8.4234, 'eval_samples_per_second': 32.885, 'eval_steps_per_second': 2.137, 'epoch': 5.0}
+{'eval_loss': 0.6908735632896423, 'eval_accuracy': 0.555956678700361, 'eval_runtime': 8.4294, 'eval_samples_per_second': 32.861, 'eval_steps_per_second': 2.135, 'epoch': 6.0}
+{'loss': 0.7854, 'learning_rate': 2.5e-06, 'epoch': 6.41}
+{'eval_loss': 0.6867910623550415, 'eval_accuracy': 0.5703971119133574, 'eval_runtime': 8.4268, 'eval_samples_per_second': 32.871, 'eval_steps_per_second': 2.136, 'epoch': 7.0}
+{'eval_loss': 0.6831014156341553, 'eval_accuracy': 0.5884476534296029, 'eval_runtime': 8.421, 'eval_samples_per_second': 32.894, 'eval_steps_per_second': 2.138, 'epoch': 8.0}
+{'eval_loss': 0.6813262104988098, 'eval_accuracy': 0.5812274368231047, 'eval_runtime': 8.4179, 'eval_samples_per_second': 32.906, 'eval_steps_per_second': 2.138, 'epoch': 9.0}
+{'eval_loss': 0.6783444881439209, 'eval_accuracy': 0.5812274368231047, 'eval_runtime': 8.404, 'eval_samples_per_second': 32.961, 'eval_steps_per_second': 2.142, 'epoch': 10.0}
+{'train_runtime': 1899.3507, 'train_samples_per_second': 13.11, 'train_steps_per_second': 0.411, 'train_loss': 0.745526357797476, 'epoch': 10.0}
+Total training time: 1899.38 seconds
+######################################################################
+layer-wise fine-tuning bottom 1 - qnli
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:00<00:00,  2.10it/s]
+100%|██████████| 3/3 [00:00<00:00,  5.53it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'loss': 0.7407, 'learning_rate': 2.5e-06, 'epoch': 0.15}
+{'loss': 0.5529, 'learning_rate': 5e-06, 'epoch': 0.31}
+{'loss': 0.4752, 'learning_rate': 7.5e-06, 'epoch': 0.46}
+{'loss': 0.4334, 'learning_rate': 1e-05, 'epoch': 0.61}
+{'loss': 0.4129, 'learning_rate': 1.25e-05, 'epoch': 0.76}
+{'loss': 0.3969, 'learning_rate': 1.5e-05, 'epoch': 0.92}
+{'eval_loss': 0.31638455390930176, 'eval_accuracy': 0.8698517298187809, 'eval_runtime': 164.4625, 'eval_samples_per_second': 33.217, 'eval_steps_per_second': 2.08, 'epoch': 1.0}
+{'loss': 0.3617, 'learning_rate': 1.75e-05, 'epoch': 1.07}
+{'loss': 0.3491, 'learning_rate': 2e-05, 'epoch': 1.22}
+{'loss': 0.341, 'learning_rate': 2.25e-05, 'epoch': 1.37}
+{'loss': 0.3349, 'learning_rate': 2.5e-05, 'epoch': 1.53}
+{'loss': 0.3313, 'learning_rate': 2.7500000000000004e-05, 'epoch': 1.68}
+{'loss': 0.3264, 'learning_rate': 3e-05, 'epoch': 1.83}
+{'loss': 0.3068, 'learning_rate': 3.2500000000000004e-05, 'epoch': 1.99}
+{'eval_loss': 0.2725073993206024, 'eval_accuracy': 0.891085484166209, 'eval_runtime': 165.1765, 'eval_samples_per_second': 33.074, 'eval_steps_per_second': 2.071, 'epoch': 2.0}
+{'loss': 0.2634, 'learning_rate': 3.5e-05, 'epoch': 2.14}
+{'loss': 0.2607, 'learning_rate': 3.7500000000000003e-05, 'epoch': 2.29}
+{'loss': 0.2596, 'learning_rate': 4e-05, 'epoch': 2.44}
+{'loss': 0.2665, 'learning_rate': 4.25e-05, 'epoch': 2.6}
+{'loss': 0.2647, 'learning_rate': 4.5e-05, 'epoch': 2.75}
+{'loss': 0.2609, 'learning_rate': 4.75e-05, 'epoch': 2.9}
+{'eval_loss': 0.2671981453895569, 'eval_accuracy': 0.8960278235401794, 'eval_runtime': 164.5627, 'eval_samples_per_second': 33.197, 'eval_steps_per_second': 2.078, 'epoch': 3.0}
+{'loss': 0.232, 'learning_rate': 5e-05, 'epoch': 3.05}
+{'loss': 0.1899, 'learning_rate': 4.8900131984161904e-05, 'epoch': 3.21}
+{'loss': 0.1842, 'learning_rate': 4.7800263968323806e-05, 'epoch': 3.36}
+{'loss': 0.1887, 'learning_rate': 4.67003959524857e-05, 'epoch': 3.51}
+{'loss': 0.1931, 'learning_rate': 4.56005279366476e-05, 'epoch': 3.67}
+{'loss': 0.1881, 'learning_rate': 4.4500659920809504e-05, 'epoch': 3.82}
+{'loss': 0.178, 'learning_rate': 4.3400791904971405e-05, 'epoch': 3.97}
+{'eval_loss': 0.2839002311229706, 'eval_accuracy': 0.8991396668497162, 'eval_runtime': 164.7731, 'eval_samples_per_second': 33.155, 'eval_steps_per_second': 2.076, 'epoch': 4.0}
+{'loss': 0.127, 'learning_rate': 4.230092388913331e-05, 'epoch': 4.12}
+{'loss': 0.1218, 'learning_rate': 4.120105587329521e-05, 'epoch': 4.28}
+{'loss': 0.1191, 'learning_rate': 4.01011878574571e-05, 'epoch': 4.43}
+{'loss': 0.1183, 'learning_rate': 3.9001319841619005e-05, 'epoch': 4.58}
+{'loss': 0.1216, 'learning_rate': 3.7901451825780906e-05, 'epoch': 4.73}
+{'loss': 0.1248, 'learning_rate': 3.680158380994281e-05, 'epoch': 4.89}
+{'eval_loss': 0.3295297920703888, 'eval_accuracy': 0.8962108731466227, 'eval_runtime': 165.163, 'eval_samples_per_second': 33.076, 'eval_steps_per_second': 2.071, 'epoch': 5.0}
+{'loss': 0.1167, 'learning_rate': 3.570171579410471e-05, 'epoch': 5.04}
+{'loss': 0.0769, 'learning_rate': 3.460184777826661e-05, 'epoch': 5.19}
+{'loss': 0.0813, 'learning_rate': 3.3501979762428506e-05, 'epoch': 5.35}
+{'loss': 0.0821, 'learning_rate': 3.2402111746590414e-05, 'epoch': 5.5}
+{'loss': 0.0829, 'learning_rate': 3.130224373075231e-05, 'epoch': 5.65}
+{'loss': 0.0869, 'learning_rate': 3.020237571491421e-05, 'epoch': 5.8}
+{'loss': 0.0828, 'learning_rate': 2.9102507699076116e-05, 'epoch': 5.96}
+{'eval_loss': 0.4283008277416229, 'eval_accuracy': 0.8991396668497162, 'eval_runtime': 165.2757, 'eval_samples_per_second': 33.054, 'eval_steps_per_second': 2.069, 'epoch': 6.0}
+{'loss': 0.0661, 'learning_rate': 2.8002639683238014e-05, 'epoch': 6.11}
+{'loss': 0.0544, 'learning_rate': 2.6902771667399912e-05, 'epoch': 6.26}
+{'loss': 0.0566, 'learning_rate': 2.5802903651561817e-05, 'epoch': 6.42}
+{'loss': 0.0542, 'learning_rate': 2.4703035635723715e-05, 'epoch': 6.57}
+{'loss': 0.0536, 'learning_rate': 2.3603167619885617e-05, 'epoch': 6.72}
+{'loss': 0.0585, 'learning_rate': 2.2503299604047515e-05, 'epoch': 6.87}
+{'eval_loss': 0.488282173871994, 'eval_accuracy': 0.8951125755079626, 'eval_runtime': 164.2158, 'eval_samples_per_second': 33.267, 'eval_steps_per_second': 2.083, 'epoch': 7.0}
+{'loss': 0.0612, 'learning_rate': 2.1403431588209417e-05, 'epoch': 7.03}
+{'loss': 0.0359, 'learning_rate': 2.030356357237132e-05, 'epoch': 7.18}
+{'loss': 0.0431, 'learning_rate': 1.9203695556533217e-05, 'epoch': 7.33}
+{'loss': 0.041, 'learning_rate': 1.8103827540695118e-05, 'epoch': 7.48}
+{'loss': 0.0416, 'learning_rate': 1.700395952485702e-05, 'epoch': 7.64}
+{'loss': 0.0416, 'learning_rate': 1.5904091509018918e-05, 'epoch': 7.79}
+{'loss': 0.0413, 'learning_rate': 1.480422349318082e-05, 'epoch': 7.94}
+{'eval_loss': 0.537804126739502, 'eval_accuracy': 0.8989566172432729, 'eval_runtime': 165.0737, 'eval_samples_per_second': 33.094, 'eval_steps_per_second': 2.072, 'epoch': 8.0}
+{'loss': 0.0333, 'learning_rate': 1.370435547734272e-05, 'epoch': 8.1}
+{'loss': 0.0289, 'learning_rate': 1.260448746150462e-05, 'epoch': 8.25}
+{'loss': 0.0254, 'learning_rate': 1.1504619445666521e-05, 'epoch': 8.4}
+{'loss': 0.0291, 'learning_rate': 1.0404751429828421e-05, 'epoch': 8.55}
+{'loss': 0.032, 'learning_rate': 9.30488341399032e-06, 'epoch': 8.71}
+{'loss': 0.0264, 'learning_rate': 8.205015398152222e-06, 'epoch': 8.86}
+{'eval_loss': 0.6016590595245361, 'eval_accuracy': 0.8971261211788395, 'eval_runtime': 165.0238, 'eval_samples_per_second': 33.104, 'eval_steps_per_second': 2.072, 'epoch': 9.0}
+{'loss': 0.0284, 'learning_rate': 7.105147382314123e-06, 'epoch': 9.01}
+{'loss': 0.0206, 'learning_rate': 6.005279366476023e-06, 'epoch': 9.16}
+{'loss': 0.0185, 'learning_rate': 4.905411350637924e-06, 'epoch': 9.32}
+{'loss': 0.0253, 'learning_rate': 3.805543334799824e-06, 'epoch': 9.47}
+{'loss': 0.0202, 'learning_rate': 2.7056753189617244e-06, 'epoch': 9.62}
+{'loss': 0.0217, 'learning_rate': 1.6058073031236254e-06, 'epoch': 9.78}
+{'loss': 0.0223, 'learning_rate': 5.059392872855257e-07, 'epoch': 9.93}
+{'eval_loss': 0.6173665523529053, 'eval_accuracy': 0.899505766062603, 'eval_runtime': 165.1698, 'eval_samples_per_second': 33.075, 'eval_steps_per_second': 2.071, 'epoch': 10.0}
+{'train_runtime': 74750.3382, 'train_samples_per_second': 14.012, 'train_steps_per_second': 0.438, 'train_loss': 0.1623659015758082, 'epoch': 10.0}
+Total training time: 74750.36 seconds
+######################################################################
+layer-wise fine-tuning bottom 1 - cola
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 99.09it/s]
+
+Map:   0%|          | 0/8551 [00:00<?, ? examples/s]
+Map:  12%|█▏        | 1000/8551 [00:00<00:02, 3029.36 examples/s]
+Map:  23%|██▎       | 2000/8551 [00:00<00:01, 3355.79 examples/s]
+Map:  35%|███▌      | 3000/8551 [00:00<00:01, 3635.23 examples/s]
+Map:  47%|████▋     | 4000/8551 [00:01<00:01, 4052.70 examples/s]
+Map:  58%|█████▊    | 5000/8551 [00:01<00:00, 4297.47 examples/s]
+Map:  70%|███████   | 6000/8551 [00:01<00:00, 4467.57 examples/s]
+Map:  82%|████████▏ | 7000/8551 [00:01<00:00, 3961.74 examples/s]
+Map:  94%|█████████▎| 8000/8551 [00:01<00:00, 4183.28 examples/s]
+Map: 100%|██████████| 8551/8551 [00:02<00:00, 4252.77 examples/s]
+                                                                 
+
+Map:   0%|          | 0/1043 [00:00<?, ? examples/s]
+Map:  96%|█████████▌| 1000/1043 [00:00<00:00, 4860.83 examples/s]
+                                                                 
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10')
+{'eval_loss': 0.8776024580001831, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.5031, 'eval_samples_per_second': 33.108, 'eval_steps_per_second': 2.095, 'epoch': 1.0}
+{'loss': 0.8866, 'learning_rate': 2.5e-06, 'epoch': 1.87}
+{'eval_loss': 0.6291619539260864, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.5137, 'eval_samples_per_second': 33.097, 'eval_steps_per_second': 2.094, 'epoch': 2.0}
+{'eval_loss': 0.6128185987472534, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.4206, 'eval_samples_per_second': 33.195, 'eval_steps_per_second': 2.101, 'epoch': 3.0}
+{'loss': 0.6093, 'learning_rate': 5e-06, 'epoch': 3.74}
+{'eval_loss': 0.6090160608291626, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.3507, 'eval_samples_per_second': 33.269, 'eval_steps_per_second': 2.105, 'epoch': 4.0}
+{'eval_loss': 0.6056569814682007, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.5127, 'eval_samples_per_second': 33.098, 'eval_steps_per_second': 2.094, 'epoch': 5.0}
+{'loss': 0.6002, 'learning_rate': 7.5e-06, 'epoch': 5.61}
+{'eval_loss': 0.5992991328239441, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.4862, 'eval_samples_per_second': 33.126, 'eval_steps_per_second': 2.096, 'epoch': 6.0}
+{'eval_loss': 0.5953161716461182, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.3676, 'eval_samples_per_second': 33.251, 'eval_steps_per_second': 2.104, 'epoch': 7.0}
+{'loss': 0.586, 'learning_rate': 1e-05, 'epoch': 7.48}
+{'eval_loss': 0.5831382870674133, 'eval_matthews_correlation': 0.0, 'eval_runtime': 31.4949, 'eval_samples_per_second': 33.117, 'eval_steps_per_second': 2.096, 'epoch': 8.0}
+{'eval_loss': 0.5725709795951843, 'eval_matthews_correlation': 0.1077683109552469, 'eval_runtime': 31.4954, 'eval_samples_per_second': 33.116, 'eval_steps_per_second': 2.096, 'epoch': 9.0}
+{'loss': 0.5656, 'learning_rate': 1.25e-05, 'epoch': 9.35}
+{'eval_loss': 0.5553687810897827, 'eval_matthews_correlation': 0.20784212350901957, 'eval_runtime': 31.3264, 'eval_samples_per_second': 33.295, 'eval_steps_per_second': 2.107, 'epoch': 9.98}
+{'train_runtime': 6179.0234, 'train_samples_per_second': 13.839, 'train_steps_per_second': 0.432, 'train_loss': 0.6429689700237374, 'epoch': 9.98}
+Total training time: 6179.04 seconds
+######################################################################
+layer-wise fine-tuning bottom 1 - sst2
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:00<00:00,  8.40it/s]
+100%|██████████| 3/3 [00:00<00:00, 22.15it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10')
+{'loss': 0.7789, 'learning_rate': 2.5e-06, 'epoch': 0.24}
+{'loss': 0.6602, 'learning_rate': 5e-06, 'epoch': 0.48}
+{'loss': 0.6147, 'learning_rate': 7.5e-06, 'epoch': 0.71}
+{'loss': 0.5378, 'learning_rate': 1e-05, 'epoch': 0.95}
+{'eval_loss': 0.45588383078575134, 'eval_accuracy': 0.819954128440367, 'eval_runtime': 26.2137, 'eval_samples_per_second': 33.265, 'eval_steps_per_second': 2.098, 'epoch': 1.0}
+{'loss': 0.4395, 'learning_rate': 1.25e-05, 'epoch': 1.19}
+{'loss': 0.366, 'learning_rate': 1.5e-05, 'epoch': 1.43}
+{'loss': 0.3232, 'learning_rate': 1.75e-05, 'epoch': 1.66}
+{'loss': 0.3012, 'learning_rate': 2e-05, 'epoch': 1.9}
+{'eval_loss': 0.3053409457206726, 'eval_accuracy': 0.8623853211009175, 'eval_runtime': 26.2638, 'eval_samples_per_second': 33.202, 'eval_steps_per_second': 2.094, 'epoch': 2.0}
+{'loss': 0.2694, 'learning_rate': 2.25e-05, 'epoch': 2.14}
+{'loss': 0.2535, 'learning_rate': 2.5e-05, 'epoch': 2.38}
+{'loss': 0.2379, 'learning_rate': 2.7500000000000004e-05, 'epoch': 2.61}
+{'loss': 0.2345, 'learning_rate': 3e-05, 'epoch': 2.85}
+{'eval_loss': 0.27939605712890625, 'eval_accuracy': 0.8761467889908257, 'eval_runtime': 27.0044, 'eval_samples_per_second': 32.291, 'eval_steps_per_second': 2.037, 'epoch': 3.0}
+{'loss': 0.2156, 'learning_rate': 3.2500000000000004e-05, 'epoch': 3.09}
+{'loss': 0.1988, 'learning_rate': 3.5e-05, 'epoch': 3.33}
+{'loss': 0.1891, 'learning_rate': 3.7500000000000003e-05, 'epoch': 3.56}
+{'loss': 0.184, 'learning_rate': 4e-05, 'epoch': 3.8}
+{'eval_loss': 0.3052198886871338, 'eval_accuracy': 0.8853211009174312, 'eval_runtime': 27.0637, 'eval_samples_per_second': 32.22, 'eval_steps_per_second': 2.032, 'epoch': 4.0}
+{'loss': 0.1757, 'learning_rate': 4.25e-05, 'epoch': 4.04}
+{'loss': 0.1559, 'learning_rate': 4.5e-05, 'epoch': 4.28}
+{'loss': 0.1575, 'learning_rate': 4.75e-05, 'epoch': 4.51}
+{'loss': 0.1527, 'learning_rate': 5e-05, 'epoch': 4.75}
+{'loss': 0.1442, 'learning_rate': 4.7737556561085976e-05, 'epoch': 4.99}
+{'eval_loss': 0.310602605342865, 'eval_accuracy': 0.8922018348623854, 'eval_runtime': 27.1319, 'eval_samples_per_second': 32.139, 'eval_steps_per_second': 2.027, 'epoch': 5.0}
+{'loss': 0.1326, 'learning_rate': 4.547511312217195e-05, 'epoch': 5.23}
+{'loss': 0.1193, 'learning_rate': 4.321266968325792e-05, 'epoch': 5.46}
+{'loss': 0.1197, 'learning_rate': 4.095022624434389e-05, 'epoch': 5.7}
+{'loss': 0.1294, 'learning_rate': 3.868778280542987e-05, 'epoch': 5.94}
+{'eval_loss': 0.316663920879364, 'eval_accuracy': 0.8956422018348624, 'eval_runtime': 27.2332, 'eval_samples_per_second': 32.02, 'eval_steps_per_second': 2.02, 'epoch': 6.0}
+{'loss': 0.1066, 'learning_rate': 3.642533936651584e-05, 'epoch': 6.18}
+{'loss': 0.097, 'learning_rate': 3.416289592760181e-05, 'epoch': 6.41}
+{'loss': 0.1008, 'learning_rate': 3.1900452488687784e-05, 'epoch': 6.65}
+{'loss': 0.1043, 'learning_rate': 2.9638009049773758e-05, 'epoch': 6.89}
+{'eval_loss': 0.3668033480644226, 'eval_accuracy': 0.8910550458715596, 'eval_runtime': 27.0238, 'eval_samples_per_second': 32.268, 'eval_steps_per_second': 2.035, 'epoch': 7.0}
+{'loss': 0.0948, 'learning_rate': 2.737556561085973e-05, 'epoch': 7.13}
+{'loss': 0.0887, 'learning_rate': 2.51131221719457e-05, 'epoch': 7.36}
+{'loss': 0.0882, 'learning_rate': 2.2850678733031675e-05, 'epoch': 7.6}
+{'loss': 0.095, 'learning_rate': 2.058823529411765e-05, 'epoch': 7.84}
+{'eval_loss': 0.41354191303253174, 'eval_accuracy': 0.8830275229357798, 'eval_runtime': 27.1208, 'eval_samples_per_second': 32.152, 'eval_steps_per_second': 2.028, 'epoch': 8.0}
+{'loss': 0.0792, 'learning_rate': 1.832579185520362e-05, 'epoch': 8.08}
+{'loss': 0.0758, 'learning_rate': 1.6063348416289596e-05, 'epoch': 8.31}
+{'loss': 0.0823, 'learning_rate': 1.3800904977375568e-05, 'epoch': 8.55}
+{'loss': 0.0827, 'learning_rate': 1.153846153846154e-05, 'epoch': 8.79}
+{'eval_loss': 0.42832309007644653, 'eval_accuracy': 0.8784403669724771, 'eval_runtime': 27.1086, 'eval_samples_per_second': 32.167, 'eval_steps_per_second': 2.029, 'epoch': 9.0}
+{'loss': 0.0829, 'learning_rate': 9.276018099547511e-06, 'epoch': 9.03}
+{'loss': 0.0728, 'learning_rate': 7.013574660633485e-06, 'epoch': 9.26}
+{'loss': 0.0694, 'learning_rate': 4.751131221719457e-06, 'epoch': 9.5}
+{'loss': 0.0751, 'learning_rate': 2.48868778280543e-06, 'epoch': 9.74}
+{'loss': 0.0729, 'learning_rate': 2.2624434389140275e-07, 'epoch': 9.98}
+{'eval_loss': 0.44100308418273926, 'eval_accuracy': 0.8853211009174312, 'eval_runtime': 27.0249, 'eval_samples_per_second': 32.267, 'eval_steps_per_second': 2.035, 'epoch': 10.0}
+{'train_runtime': 46967.7832, 'train_samples_per_second': 14.339, 'train_steps_per_second': 0.448, 'train_loss': 0.2035129479614403, 'epoch': 10.0}
+Total training time: 46967.81 seconds
+######################################################################
+layer-wise fine-tuning bottom 1 - mrpc
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+100%|██████████| 3/3 [00:00<00:00, 68.82it/s]
+
+Map:   0%|          | 0/3668 [00:00<?, ? examples/s]
+Map:  27%|██▋       | 1000/3668 [00:00<00:01, 2385.81 examples/s]
+Map:  55%|█████▍    | 2000/3668 [00:00<00:00, 2843.87 examples/s]
+Map:  82%|████████▏ | 3000/3668 [00:01<00:00, 3099.23 examples/s]
+Map: 100%|██████████| 3668/3668 [00:01<00:00, 3158.39 examples/s]
+                                                                 
+
+Map:   0%|          | 0/408 [00:00<?, ? examples/s]
+Map: 100%|██████████| 408/408 [00:00<00:00, 3262.23 examples/s]
+                                                               
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.11')
+{'eval_loss': 1.0861999988555908, 'eval_accuracy': 0.3161764705882353, 'eval_runtime': 12.6502, 'eval_samples_per_second': 32.252, 'eval_steps_per_second': 2.055, 'epoch': 1.0}
+{'eval_loss': 1.0039414167404175, 'eval_accuracy': 0.3161764705882353, 'eval_runtime': 12.6596, 'eval_samples_per_second': 32.228, 'eval_steps_per_second': 2.054, 'epoch': 2.0}
+{'eval_loss': 0.8825864791870117, 'eval_accuracy': 0.3161764705882353, 'eval_runtime': 12.7178, 'eval_samples_per_second': 32.081, 'eval_steps_per_second': 2.044, 'epoch': 3.0}
+{'eval_loss': 0.7508290410041809, 'eval_accuracy': 0.3161764705882353, 'eval_runtime': 12.708, 'eval_samples_per_second': 32.106, 'eval_steps_per_second': 2.046, 'epoch': 4.0}
+{'loss': 0.9595, 'learning_rate': 2.5e-06, 'epoch': 4.35}
+{'eval_loss': 0.6549324989318848, 'eval_accuracy': 0.6838235294117647, 'eval_runtime': 12.7346, 'eval_samples_per_second': 32.039, 'eval_steps_per_second': 2.042, 'epoch': 5.0}
+{'eval_loss': 0.6295267939567566, 'eval_accuracy': 0.6838235294117647, 'eval_runtime': 12.6974, 'eval_samples_per_second': 32.133, 'eval_steps_per_second': 2.048, 'epoch': 6.0}
+{'eval_loss': 0.6240261197090149, 'eval_accuracy': 0.6813725490196079, 'eval_runtime': 12.6073, 'eval_samples_per_second': 32.362, 'eval_steps_per_second': 2.062, 'epoch': 7.0}
+{'eval_loss': 0.6215037107467651, 'eval_accuracy': 0.6838235294117647, 'eval_runtime': 12.6843, 'eval_samples_per_second': 32.166, 'eval_steps_per_second': 2.05, 'epoch': 8.0}
+{'loss': 0.6466, 'learning_rate': 5e-06, 'epoch': 8.7}
+{'eval_loss': 0.6187505722045898, 'eval_accuracy': 0.6838235294117647, 'eval_runtime': 12.5831, 'eval_samples_per_second': 32.425, 'eval_steps_per_second': 2.066, 'epoch': 9.0}
+{'eval_loss': 0.6163215637207031, 'eval_accuracy': 0.6838235294117647, 'eval_runtime': 12.7013, 'eval_samples_per_second': 32.123, 'eval_steps_per_second': 2.047, 'epoch': 10.0}
+{'train_runtime': 2746.2738, 'train_samples_per_second': 13.356, 'train_steps_per_second': 0.419, 'train_loss': 0.7801620947796365, 'epoch': 10.0}
+Total training time: 2746.29 seconds
+######################################################################
+layer-wise fine-tuning bottom 1 - qqp
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+Downloading and preparing dataset glue/qqp to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/glue/qqp/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad...
+
+Downloading data:   0%|          | 0.00/41.7M [00:00<?, ?B/s]
+Downloading data:   8%|▊         | 3.42M/41.7M [00:00<00:01, 34.2MB/s]
+Downloading data:  27%|██▋       | 11.2M/41.7M [00:00<00:00, 60.1MB/s]
+Downloading data:  45%|████▌     | 18.9M/41.7M [00:00<00:00, 67.4MB/s]
+Downloading data:  64%|██████▍   | 26.7M/41.7M [00:00<00:00, 71.9MB/s]
+Downloading data:  86%|████████▌ | 35.8M/41.7M [00:00<00:00, 78.5MB/s]
+Downloading data: 100%|██████████| 41.7M/41.7M [00:00<00:00, 74.5MB/s]
+
+Generating train split:   0%|          | 0/363846 [00:00<?, ? examples/s]
+Generating train split:   0%|          | 1000/363846 [00:00<00:46, 7829.24 examples/s]
+Generating train split:   1%|          | 2896/363846 [00:00<00:26, 13704.51 examples/s]
+Generating train split:   1%|▏         | 4754/363846 [00:00<00:22, 15798.56 examples/s]
+Generating train split:   2%|▏         | 6614/363846 [00:00<00:21, 16859.95 examples/s]
+Generating train split:   2%|▏         | 8725/363846 [00:00<00:19, 18355.87 examples/s]
+Generating train split:   3%|▎         | 11000/363846 [00:00<00:17, 19736.90 examples/s]
+Generating train split:   4%|▎         | 13317/363846 [00:00<00:16, 20840.40 examples/s]
+Generating train split:   4%|▍         | 15598/363846 [00:00<00:16, 21460.07 examples/s]
+Generating train split:   5%|▍         | 17927/363846 [00:00<00:15, 22026.98 examples/s]
+Generating train split:   6%|▌         | 20162/363846 [00:01<00:15, 22102.29 examples/s]
+Generating train split:   6%|▌         | 22473/363846 [00:01<00:15, 22406.38 examples/s]
+Generating train split:   7%|▋         | 24790/363846 [00:01<00:14, 22635.73 examples/s]
+Generating train split:   7%|▋         | 27060/363846 [00:01<00:14, 22652.95 examples/s]
+Generating train split:   8%|▊         | 29402/363846 [00:01<00:14, 22882.75 examples/s]
+Generating train split:   9%|▊         | 31720/363846 [00:01<00:14, 22970.06 examples/s]
+Generating train split:  10%|▉         | 35172/363846 [00:01<00:14, 22965.67 examples/s]
+Generating train split:  10%|█         | 37483/363846 [00:01<00:14, 23002.97 examples/s]
+Generating train split:  11%|█         | 39824/363846 [00:01<00:14, 23109.01 examples/s]
+Generating train split:  12%|█▏        | 43253/363846 [00:02<00:13, 23011.94 examples/s]
+Generating train split:  13%|█▎        | 46693/363846 [00:02<00:13, 22979.18 examples/s]
+Generating train split:  13%|█▎        | 49000/363846 [00:02<00:13, 22919.07 examples/s]
+Generating train split:  14%|█▍        | 51331/363846 [00:02<00:13, 23019.87 examples/s]
+Generating train split:  15%|█▍        | 53652/363846 [00:02<00:13, 23070.40 examples/s]
+Generating train split:  15%|█▌        | 55995/363846 [00:02<00:13, 23167.96 examples/s]
+Generating train split:  16%|█▋        | 59393/363846 [00:02<00:13, 22972.82 examples/s]
+Generating train split:  17%|█▋        | 62787/363846 [00:02<00:13, 22848.43 examples/s]
+Generating train split:  18%|█▊        | 66192/363846 [00:03<00:13, 22795.88 examples/s]
+Generating train split:  19%|█▉        | 68506/363846 [00:03<00:12, 22871.76 examples/s]
+Generating train split:  19%|█▉        | 70823/363846 [00:03<00:12, 22947.72 examples/s]
+Generating train split:  20%|██        | 74261/363846 [00:03<00:12, 22933.81 examples/s]
+Generating train split:  21%|██        | 76575/363846 [00:03<00:12, 22983.11 examples/s]
+Generating train split:  22%|██▏       | 78904/363846 [00:03<00:12, 23062.56 examples/s]
+Generating train split:  23%|██▎       | 82351/363846 [00:03<00:12, 22923.50 examples/s]
+Generating train split:  23%|██▎       | 84673/363846 [00:03<00:12, 22996.00 examples/s]
+Generating train split:  24%|██▍       | 87000/363846 [00:03<00:12, 22914.07 examples/s]
+Generating train split:  25%|██▍       | 89322/363846 [00:04<00:11, 22995.34 examples/s]
+Generating train split:  25%|██▌       | 92686/363846 [00:04<00:15, 17514.12 examples/s]
+Generating train split:  26%|██▌       | 95000/363846 [00:04<00:14, 18598.88 examples/s]
+Generating train split:  27%|██▋       | 97315/363846 [00:04<00:13, 19656.86 examples/s]
+Generating train split:  27%|██▋       | 99629/363846 [00:04<00:12, 20520.96 examples/s]
+Generating train split:  28%|██▊       | 101975/363846 [00:04<00:12, 21291.67 examples/s]
+Generating train split:  29%|██▉       | 105373/363846 [00:04<00:11, 21780.25 examples/s]
+Generating train split:  30%|██▉       | 107673/363846 [00:04<00:11, 22089.29 examples/s]
+Generating train split:  30%|███       | 110000/363846 [00:05<00:11, 22200.56 examples/s]
+Generating train split:  31%|███       | 112322/363846 [00:05<00:11, 22477.01 examples/s]
+Generating train split:  32%|███▏      | 114651/363846 [00:05<00:10, 22697.74 examples/s]
+Generating train split:  32%|███▏      | 116978/363846 [00:05<00:10, 22859.56 examples/s]
+Generating train split:  33%|███▎      | 120364/363846 [00:05<00:10, 22747.36 examples/s]
+Generating train split:  34%|███▎      | 122756/363846 [00:05<00:10, 23057.43 examples/s]
+Generating train split:  35%|███▍      | 126170/363846 [00:05<00:10, 22919.79 examples/s]
+Generating train split:  35%|███▌      | 128477/363846 [00:05<00:10, 22957.29 examples/s]
+Generating train split:  36%|███▌      | 131839/363846 [00:06<00:10, 22761.59 examples/s]
+Generating train split:  37%|███▋      | 135213/363846 [00:06<00:10, 22668.42 examples/s]
+Generating train split:  38%|███▊      | 137537/363846 [00:06<00:09, 22806.62 examples/s]
+Generating train split:  38%|███▊      | 139850/363846 [00:06<00:09, 22886.88 examples/s]
+Generating train split:  39%|███▉      | 142163/363846 [00:06<00:09, 22832.65 examples/s]
+Generating train split:  40%|███▉      | 144501/363846 [00:06<00:09, 22981.23 examples/s]
+Generating train split:  40%|████      | 146817/363846 [00:06<00:09, 23026.56 examples/s]
+Generating train split:  41%|████▏     | 150221/363846 [00:06<00:09, 22896.37 examples/s]
+Generating train split:  42%|████▏     | 152524/363846 [00:06<00:09, 22930.28 examples/s]
+Generating train split:  43%|████▎     | 154823/363846 [00:07<00:09, 22941.76 examples/s]
+Generating train split:  43%|████▎     | 158227/363846 [00:07<00:08, 22846.82 examples/s]
+Generating train split:  44%|████▍     | 160568/363846 [00:07<00:08, 22990.62 examples/s]
+Generating train split:  45%|████▌     | 164000/363846 [00:07<00:08, 22837.65 examples/s]
+Generating train split:  46%|████▌     | 166355/363846 [00:07<00:08, 23015.48 examples/s]
+Generating train split:  47%|████▋     | 169839/363846 [00:07<00:08, 23089.80 examples/s]
+Generating train split:  48%|████▊     | 173259/363846 [00:07<00:08, 22991.14 examples/s]
+Generating train split:  48%|████▊     | 175604/363846 [00:07<00:08, 23097.88 examples/s]
+Generating train split:  49%|████▉     | 179004/363846 [00:08<00:08, 22947.72 examples/s]
+Generating train split:  50%|████▉     | 181340/363846 [00:08<00:07, 23045.41 examples/s]
+Generating train split:  51%|█████     | 184684/363846 [00:08<00:07, 22782.69 examples/s]
+Generating train split:  51%|█████▏    | 186990/363846 [00:08<00:07, 22849.91 examples/s]
+Generating train split:  52%|█████▏    | 190380/363846 [00:08<00:07, 22759.40 examples/s]
+Generating train split:  53%|█████▎    | 193829/363846 [00:08<00:07, 22835.21 examples/s]
+Generating train split:  54%|█████▍    | 197228/363846 [00:08<00:07, 22775.85 examples/s]
+Generating train split:  55%|█████▍    | 199547/363846 [00:08<00:07, 22869.50 examples/s]
+Generating train split:  55%|█████▌    | 201866/363846 [00:09<00:07, 22947.61 examples/s]
+Generating train split:  56%|█████▋    | 205328/363846 [00:09<00:06, 22846.38 examples/s]
+Generating train split:  57%|█████▋    | 207638/363846 [00:09<00:06, 22905.80 examples/s]
+Generating train split:  58%|█████▊    | 209967/363846 [00:09<00:06, 23002.51 examples/s]
+Generating train split:  59%|█████▊    | 213370/363846 [00:09<00:06, 22886.66 examples/s]
+Generating train split:  59%|█████▉    | 215705/363846 [00:09<00:06, 23004.09 examples/s]
+Generating train split:  60%|██████    | 219162/363846 [00:09<00:06, 22918.17 examples/s]
+Generating train split:  61%|██████    | 221474/363846 [00:09<00:06, 22966.97 examples/s]
+Generating train split:  62%|██████▏   | 223837/363846 [00:10<00:06, 23136.96 examples/s]
+Generating train split:  62%|██████▏   | 227301/363846 [00:10<00:05, 22977.99 examples/s]
+Generating train split:  63%|██████▎   | 229623/363846 [00:10<00:05, 23037.93 examples/s]
+Generating train split:  64%|██████▎   | 231950/363846 [00:10<00:05, 23097.85 examples/s]
+Generating train split:  65%|██████▍   | 235340/363846 [00:10<00:05, 22911.88 examples/s]
+Generating train split:  65%|██████▌   | 237688/363846 [00:10<00:05, 23057.23 examples/s]
+Generating train split:  66%|██████▋   | 241167/363846 [00:10<00:05, 22938.35 examples/s]
+Generating train split:  67%|██████▋   | 243472/363846 [00:10<00:05, 22963.85 examples/s]
+Generating train split:  68%|██████▊   | 246826/363846 [00:11<00:05, 22749.20 examples/s]
+Generating train split:  69%|██████▉   | 250184/363846 [00:11<00:05, 22624.43 examples/s]
+Generating train split:  69%|██████▉   | 252494/363846 [00:11<00:04, 22737.12 examples/s]
+Generating train split:  70%|███████   | 254806/363846 [00:11<00:04, 22832.19 examples/s]
+Generating train split:  71%|███████   | 258188/363846 [00:11<00:04, 22727.13 examples/s]
+Generating train split:  72%|███████▏  | 260543/363846 [00:11<00:04, 22933.23 examples/s]
+Generating train split:  72%|███████▏  | 262872/363846 [00:11<00:04, 23025.16 examples/s]
+Generating train split:  73%|███████▎  | 266312/363846 [00:11<00:04, 22821.96 examples/s]
+Generating train split:  74%|███████▍  | 268646/363846 [00:11<00:04, 22953.25 examples/s]
+Generating train split:  74%|███████▍  | 270988/363846 [00:12<00:04, 23073.62 examples/s]
+Generating train split:  75%|███████▌  | 274380/363846 [00:12<00:03, 22903.29 examples/s]
+Generating train split:  76%|███████▌  | 276732/363846 [00:12<00:03, 23061.80 examples/s]
+Generating train split:  77%|███████▋  | 280183/363846 [00:12<00:03, 23017.44 examples/s]
+Generating train split:  78%|███████▊  | 282523/363846 [00:12<00:03, 23112.17 examples/s]
+Generating train split:  78%|███████▊  | 284865/363846 [00:12<00:03, 23189.44 examples/s]
+Generating train split:  79%|███████▉  | 288344/363846 [00:12<00:03, 23018.20 examples/s]
+Generating train split:  80%|███████▉  | 290691/363846 [00:12<00:03, 23128.17 examples/s]
+Generating train split:  81%|████████  | 294169/363846 [00:13<00:03, 23000.03 examples/s]
+Generating train split:  81%|████████▏ | 296479/363846 [00:13<00:02, 23022.67 examples/s]
+Generating train split:  82%|████████▏ | 298817/363846 [00:13<00:02, 23116.62 examples/s]
+Generating train split:  83%|████████▎ | 302225/363846 [00:13<00:02, 22968.49 examples/s]
+Generating train split:  84%|████████▎ | 304540/363846 [00:13<00:02, 23013.86 examples/s]
+Generating train split:  84%|████████▍ | 306865/363846 [00:13<00:02, 23074.45 examples/s]
+Generating train split:  85%|████████▌ | 310345/363846 [00:13<00:02, 22903.96 examples/s]
+Generating train split:  86%|████████▌ | 312688/363846 [00:13<00:02, 23034.43 examples/s]
+Generating train split:  87%|████████▋ | 315000/363846 [00:13<00:02, 22885.62 examples/s]
+Generating train split:  87%|████████▋ | 317328/363846 [00:14<00:02, 22992.35 examples/s]
+Generating train split:  88%|████████▊ | 320681/363846 [00:14<00:01, 22753.17 examples/s]
+Generating train split:  89%|████████▉ | 323000/363846 [00:14<00:01, 22642.04 examples/s]
+Generating train split:  89%|████████▉ | 325315/363846 [00:14<00:01, 22776.99 examples/s]
+Generating train split:  90%|█████████ | 327654/363846 [00:14<00:01, 22945.77 examples/s]
+Generating train split:  91%|█████████ | 329982/363846 [00:14<00:01, 23037.89 examples/s]
+Generating train split:  92%|█████████▏| 333388/363846 [00:14<00:01, 22910.15 examples/s]
+Generating train split:  92%|█████████▏| 335709/363846 [00:14<00:01, 22986.64 examples/s]
+Generating train split:  93%|█████████▎| 339164/363846 [00:15<00:01, 22851.71 examples/s]
+Generating train split:  94%|█████████▍| 341493/363846 [00:15<00:00, 22960.38 examples/s]
+Generating train split:  94%|█████████▍| 343803/363846 [00:15<00:00, 22994.32 examples/s]
+Generating train split:  95%|█████████▌| 347191/363846 [00:15<00:00, 22844.30 examples/s]
+Generating train split:  96%|█████████▌| 349530/363846 [00:15<00:00, 22981.64 examples/s]
+Generating train split:  97%|█████████▋| 352979/363846 [00:15<00:00, 22981.86 examples/s]
+Generating train split:  98%|█████████▊| 356409/363846 [00:15<00:00, 22939.29 examples/s]
+Generating train split:  99%|█████████▊| 358773/363846 [00:15<00:00, 23105.62 examples/s]
+Generating train split: 100%|█████████▉| 362200/363846 [00:16<00:00, 23013.52 examples/s]
+                                                                                         
+
+Generating validation split:   0%|          | 0/40430 [00:00<?, ? examples/s]
+Generating validation split:   4%|▍         | 1732/40430 [00:00<00:02, 16610.84 examples/s]
+Generating validation split:   9%|▉         | 3682/40430 [00:00<00:02, 18273.84 examples/s]
+Generating validation split:  15%|█▍        | 6000/40430 [00:00<00:01, 20179.53 examples/s]
+Generating validation split:  21%|██        | 8312/40430 [00:00<00:01, 21319.35 examples/s]
+Generating validation split:  26%|██▋       | 10659/40430 [00:00<00:01, 22085.67 examples/s]
+Generating validation split:  32%|███▏      | 12986/40430 [00:00<00:01, 22479.95 examples/s]
+Generating validation split:  40%|████      | 16363/40430 [00:00<00:01, 22490.96 examples/s]
+Generating validation split:  46%|████▋     | 18719/40430 [00:00<00:00, 22793.33 examples/s]
+Generating validation split:  55%|█████▍    | 22150/40430 [00:01<00:00, 22681.49 examples/s]
+Generating validation split:  61%|██████    | 24476/40430 [00:01<00:00, 22831.98 examples/s]
+Generating validation split:  66%|██████▋   | 26826/40430 [00:01<00:00, 23009.81 examples/s]
+Generating validation split:  75%|███████▍  | 30192/40430 [00:01<00:00, 22795.77 examples/s]
+Generating validation split:  80%|████████  | 32537/40430 [00:01<00:00, 22964.27 examples/s]
+Generating validation split:  89%|████████▉ | 36000/40430 [00:01<00:00, 22813.02 examples/s]
+Generating validation split:  95%|█████████▍| 38295/40430 [00:01<00:00, 22844.22 examples/s]
+                                                                                            
+
+Generating test split:   0%|          | 0/390965 [00:00<?, ? examples/s]
+Generating test split:   1%|          | 2041/390965 [00:00<00:19, 19805.69 examples/s]
+Generating test split:   1%|          | 4463/390965 [00:00<00:17, 22366.61 examples/s]
+Generating test split:   2%|▏         | 6907/390965 [00:00<00:16, 23305.89 examples/s]
+Generating test split:   3%|▎         | 10333/390965 [00:00<00:16, 23064.03 examples/s]
+Generating test split:   3%|▎         | 12750/390965 [00:00<00:16, 23415.89 examples/s]
+Generating test split:   4%|▍         | 16303/390965 [00:00<00:15, 23523.74 examples/s]
+Generating test split:   5%|▍         | 18730/390965 [00:00<00:15, 23725.69 examples/s]
+Generating test split:   6%|▌         | 22278/390965 [00:00<00:15, 23695.53 examples/s]
+Generating test split:   6%|▋         | 24723/390965 [00:01<00:15, 23890.72 examples/s]
+Generating test split:   7%|▋         | 27686/390965 [00:01<00:20, 18148.29 examples/s]
+Generating test split:   8%|▊         | 30035/390965 [00:01<00:18, 19306.95 examples/s]
+Generating test split:   8%|▊         | 32474/390965 [00:01<00:17, 20510.04 examples/s]
+Generating test split:   9%|▉         | 34930/390965 [00:01<00:16, 21531.43 examples/s]
+Generating test split:  10%|▉         | 37245/390965 [00:01<00:16, 21958.28 examples/s]
+Generating test split:  10%|█         | 39655/390965 [00:01<00:15, 22542.61 examples/s]
+Generating test split:  11%|█         | 42017/390965 [00:01<00:15, 22841.18 examples/s]
+Generating test split:  11%|█▏        | 44443/390965 [00:02<00:14, 23246.23 examples/s]
+Generating test split:  12%|█▏        | 46854/390965 [00:02<00:14, 23495.63 examples/s]
+Generating test split:  13%|█▎        | 50413/390965 [00:02<00:14, 23579.20 examples/s]
+Generating test split:  14%|█▎        | 52833/390965 [00:02<00:14, 23739.29 examples/s]
+Generating test split:  14%|█▍        | 56451/390965 [00:02<00:14, 23795.07 examples/s]
+Generating test split:  15%|█▌        | 58866/390965 [00:02<00:13, 23883.22 examples/s]
+Generating test split:  16%|█▌        | 62429/390965 [00:02<00:13, 23786.17 examples/s]
+Generating test split:  17%|█▋        | 64824/390965 [00:02<00:13, 23822.35 examples/s]
+Generating test split:  17%|█▋        | 67216/390965 [00:02<00:13, 23721.80 examples/s]
+Generating test split:  18%|█▊        | 69654/390965 [00:03<00:13, 23897.25 examples/s]
+Generating test split:  19%|█▊        | 73215/390965 [00:03<00:13, 23801.56 examples/s]
+Generating test split:  19%|█▉        | 75634/390965 [00:03<00:13, 23900.97 examples/s]
+Generating test split:  20%|██        | 79203/390965 [00:03<00:13, 23780.01 examples/s]
+Generating test split:  21%|██        | 81648/390965 [00:03<00:12, 23946.53 examples/s]
+Generating test split:  22%|██▏       | 85230/390965 [00:03<00:12, 23906.27 examples/s]
+Generating test split:  22%|██▏       | 87643/390965 [00:03<00:12, 23960.92 examples/s]
+Generating test split:  23%|██▎       | 91275/390965 [00:03<00:12, 24023.62 examples/s]
+Generating test split:  24%|██▍       | 94888/390965 [00:04<00:12, 24042.43 examples/s]
+Generating test split:  25%|██▌       | 98507/390965 [00:04<00:12, 24063.85 examples/s]
+Generating test split:  26%|██▌       | 102031/390965 [00:04<00:12, 23880.94 examples/s]
+Generating test split:  27%|██▋       | 104469/390965 [00:04<00:11, 23994.07 examples/s]
+Generating test split:  27%|██▋       | 106893/390965 [00:04<00:11, 24051.25 examples/s]
+Generating test split:  28%|██▊       | 110426/390965 [00:04<00:11, 23851.95 examples/s]
+Generating test split:  29%|██▉       | 112823/390965 [00:04<00:11, 23880.07 examples/s]
+Generating test split:  30%|██▉       | 116440/390965 [00:05<00:11, 23830.40 examples/s]
+Generating test split:  30%|███       | 118838/390965 [00:05<00:11, 23866.57 examples/s]
+Generating test split:  31%|███▏      | 122416/390965 [00:05<00:11, 23821.34 examples/s]
+Generating test split:  32%|███▏      | 124853/390965 [00:05<00:11, 23956.69 examples/s]
+Generating test split:  33%|███▎      | 128470/390965 [00:05<00:10, 23921.51 examples/s]
+Generating test split:  34%|███▎      | 131928/390965 [00:05<00:10, 23631.68 examples/s]
+Generating test split:  35%|███▍      | 135443/390965 [00:05<00:10, 23567.42 examples/s]
+Generating test split:  35%|███▌      | 137843/390965 [00:05<00:10, 23666.24 examples/s]
+Generating test split:  36%|███▌      | 140220/390965 [00:06<00:10, 23634.15 examples/s]
+Generating test split:  36%|███▋      | 142662/390965 [00:06<00:10, 23837.31 examples/s]
+Generating test split:  37%|███▋      | 146225/390965 [00:06<00:10, 23752.94 examples/s]
+Generating test split:  38%|███▊      | 148637/390965 [00:06<00:10, 23845.18 examples/s]
+Generating test split:  39%|███▉      | 152215/390965 [00:06<00:10, 23748.03 examples/s]
+Generating test split:  40%|███▉      | 154641/390965 [00:06<00:09, 23874.78 examples/s]
+Generating test split:  40%|████      | 158206/390965 [00:06<00:09, 23704.36 examples/s]
+Generating test split:  41%|████      | 160620/390965 [00:06<00:09, 23809.93 examples/s]
+Generating test split:  42%|████▏     | 164208/390965 [00:07<00:09, 23679.54 examples/s]
+Generating test split:  43%|████▎     | 166633/390965 [00:07<00:09, 23820.65 examples/s]
+Generating test split:  44%|████▎     | 170215/390965 [00:07<00:09, 23726.36 examples/s]
+Generating test split:  44%|████▍     | 172615/390965 [00:07<00:09, 23791.08 examples/s]
+Generating test split:  45%|████▌     | 176233/390965 [00:07<00:09, 23742.68 examples/s]
+Generating test split:  46%|████▌     | 178644/390965 [00:07<00:08, 23831.66 examples/s]
+Generating test split:  47%|████▋     | 182204/390965 [00:07<00:08, 23729.90 examples/s]
+Generating test split:  47%|████▋     | 184634/390965 [00:07<00:08, 23867.48 examples/s]
+Generating test split:  48%|████▊     | 188219/390965 [00:08<00:08, 23736.73 examples/s]
+Generating test split:  49%|████▉     | 190652/390965 [00:08<00:08, 23881.37 examples/s]
+Generating test split:  50%|████▉     | 194201/390965 [00:08<00:08, 23711.49 examples/s]
+Generating test split:  50%|█████     | 196662/390965 [00:08<00:08, 23931.47 examples/s]
+Generating test split:  51%|█████     | 200217/390965 [00:08<00:07, 23848.88 examples/s]
+Generating test split:  52%|█████▏    | 202671/390965 [00:08<00:07, 24017.31 examples/s]
+Generating test split:  53%|█████▎    | 206220/390965 [00:08<00:07, 23891.59 examples/s]
+Generating test split:  53%|█████▎    | 208633/390965 [00:08<00:07, 23948.00 examples/s]
+Generating test split:  54%|█████▍    | 212211/390965 [00:09<00:07, 23862.35 examples/s]
+Generating test split:  55%|█████▍    | 214630/390965 [00:09<00:07, 23941.67 examples/s]
+Generating test split:  56%|█████▌    | 218210/390965 [00:09<00:07, 23875.52 examples/s]
+Generating test split:  56%|█████▋    | 220632/390965 [00:09<00:07, 23959.15 examples/s]
+Generating test split:  57%|█████▋    | 224224/390965 [00:09<00:06, 23876.53 examples/s]
+Generating test split:  58%|█████▊    | 226617/390965 [00:09<00:06, 23888.59 examples/s]
+Generating test split:  59%|█████▉    | 230219/390965 [00:09<00:06, 23770.83 examples/s]
+Generating test split:  60%|█████▉    | 232635/390965 [00:09<00:06, 23865.25 examples/s]
+Generating test split:  60%|██████    | 236197/390965 [00:10<00:06, 23723.76 examples/s]
+Generating test split:  61%|██████    | 238620/390965 [00:10<00:06, 23845.54 examples/s]
+Generating test split:  62%|██████▏   | 242188/390965 [00:10<00:06, 23752.94 examples/s]
+Generating test split:  63%|██████▎   | 244616/390965 [00:10<00:06, 23881.90 examples/s]
+Generating test split:  63%|██████▎   | 248223/390965 [00:10<00:05, 23881.11 examples/s]
+Generating test split:  64%|██████▍   | 251813/390965 [00:10<00:05, 23896.91 examples/s]
+Generating test split:  65%|██████▌   | 255420/390965 [00:10<00:05, 23829.15 examples/s]
+Generating test split:  66%|██████▌   | 257818/390965 [00:10<00:05, 23859.35 examples/s]
+Generating test split:  67%|██████▋   | 260215/390965 [00:11<00:05, 23732.57 examples/s]
+Generating test split:  67%|██████▋   | 262642/390965 [00:11<00:05, 23871.30 examples/s]
+Generating test split:  68%|██████▊   | 266219/390965 [00:11<00:05, 23789.66 examples/s]
+Generating test split:  69%|██████▊   | 268672/390965 [00:11<00:05, 23976.86 examples/s]
+Generating test split:  70%|██████▉   | 272217/390965 [00:11<00:04, 23822.02 examples/s]
+Generating test split:  71%|███████   | 275750/390965 [00:11<00:04, 23727.30 examples/s]
+Generating test split:  71%|███████▏  | 279309/390965 [00:11<00:04, 23725.23 examples/s]
+Generating test split:  72%|███████▏  | 281747/390965 [00:11<00:04, 23878.58 examples/s]
+Generating test split:  73%|███████▎  | 285325/390965 [00:12<00:04, 23866.92 examples/s]
+Generating test split:  74%|███████▍  | 288922/390965 [00:12<00:04, 23902.26 examples/s]
+Generating test split:  75%|███████▍  | 292457/390965 [00:12<00:04, 23793.57 examples/s]
+Generating test split:  75%|███████▌  | 294853/390965 [00:12<00:04, 23830.61 examples/s]
+Generating test split:  76%|███████▋  | 298400/390965 [00:12<00:03, 23717.30 examples/s]
+Generating test split:  77%|███████▋  | 300802/390965 [00:12<00:03, 23789.54 examples/s]
+Generating test split:  78%|███████▊  | 304309/390965 [00:12<00:03, 23644.17 examples/s]
+Generating test split:  78%|███████▊  | 306739/390965 [00:13<00:03, 23802.31 examples/s]
+Generating test split:  79%|███████▉  | 310268/390965 [00:13<00:03, 23705.41 examples/s]
+Generating test split:  80%|███████▉  | 312678/390965 [00:13<00:03, 23798.63 examples/s]
+Generating test split:  81%|████████  | 316216/390965 [00:13<00:03, 23648.02 examples/s]
+Generating test split:  82%|████████▏ | 318638/390965 [00:13<00:03, 23786.73 examples/s]
+Generating test split:  82%|████████▏ | 322203/390965 [00:13<00:02, 23654.06 examples/s]
+Generating test split:  83%|████████▎ | 324647/390965 [00:13<00:02, 23841.72 examples/s]
+Generating test split:  84%|████████▍ | 328180/390965 [00:13<00:02, 23738.42 examples/s]
+Generating test split:  85%|████████▍ | 330661/390965 [00:14<00:02, 24000.99 examples/s]
+Generating test split:  85%|████████▌ | 334207/390965 [00:14<00:02, 23819.19 examples/s]
+Generating test split:  86%|████████▌ | 336608/390965 [00:14<00:02, 23863.50 examples/s]
+Generating test split:  87%|████████▋ | 340215/390965 [00:14<00:02, 23798.12 examples/s]
+Generating test split:  88%|████████▊ | 342656/390965 [00:14<00:02, 23947.04 examples/s]
+Generating test split:  89%|████████▊ | 346219/390965 [00:14<00:01, 23812.64 examples/s]
+Generating test split:  89%|████████▉ | 349835/390965 [00:14<00:01, 23905.84 examples/s]
+Generating test split:  90%|█████████ | 353409/390965 [00:14<00:01, 23762.15 examples/s]
+Generating test split:  91%|█████████ | 355825/390965 [00:15<00:01, 23851.52 examples/s]
+Generating test split:  92%|█████████▏| 358223/390965 [00:15<00:01, 23695.68 examples/s]
+Generating test split:  92%|█████████▏| 360635/390965 [00:15<00:01, 23805.97 examples/s]
+Generating test split:  93%|█████████▎| 364204/390965 [00:15<00:01, 23736.78 examples/s]
+Generating test split:  94%|█████████▍| 366625/390965 [00:15<00:01, 23854.19 examples/s]
+Generating test split:  95%|█████████▍| 370225/390965 [00:15<00:00, 23833.06 examples/s]
+Generating test split:  95%|█████████▌| 372621/390965 [00:15<00:00, 23862.02 examples/s]
+Generating test split:  96%|█████████▌| 376222/390965 [00:15<00:00, 23807.95 examples/s]
+Generating test split:  97%|█████████▋| 378607/390965 [00:16<00:00, 23812.35 examples/s]
+Generating test split:  97%|█████████▋| 381000/390965 [00:16<00:00, 23715.86 examples/s]
+Generating test split:  98%|█████████▊| 383419/390965 [00:16<00:00, 23842.04 examples/s]
+Generating test split:  99%|█████████▊| 385878/390965 [00:16<00:00, 17740.74 examples/s]
+Generating test split:  99%|█████████▉| 388224/390965 [00:16<00:00, 19035.78 examples/s]
+Generating test split: 100%|█████████▉| 390670/390965 [00:16<00:00, 20363.59 examples/s]
+                                                                                        
+Dataset glue downloaded and prepared to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/glue/qqp/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad. Subsequent calls will reuse this data.
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:00<00:01,  1.13it/s]
+ 67%|██████▋   | 2/3 [00:00<00:00,  2.35it/s]
+100%|██████████| 3/3 [00:01<00:00,  1.51it/s]
+100%|██████████| 3/3 [00:01<00:00,  1.56it/s]
+
+Map:   0%|          | 0/363846 [00:00<?, ? examples/s]
+Map:   0%|          | 1000/363846 [00:00<02:05, 2889.67 examples/s]
+Map:   1%|          | 2000/363846 [00:00<01:50, 3273.45 examples/s]
+Map:   1%|          | 3000/363846 [00:00<01:45, 3426.05 examples/s]
+Map:   1%|          | 4000/363846 [00:01<01:42, 3499.48 examples/s]
+Map:   1%|▏         | 5000/363846 [00:01<01:41, 3531.46 examples/s]
+Map:   2%|▏         | 6000/363846 [00:01<01:39, 3588.54 examples/s]
+Map:   2%|▏         | 7000/363846 [00:01<01:37, 3647.89 examples/s]
+Map:   2%|▏         | 8000/363846 [00:02<01:37, 3663.58 examples/s]
+Map:   2%|▏         | 9000/363846 [00:02<01:37, 3645.25 examples/s]
+Map:   3%|▎         | 10000/363846 [00:02<01:37, 3632.39 examples/s]
+Map:   3%|▎         | 11000/363846 [00:03<01:36, 3640.01 examples/s]
+Map:   3%|▎         | 12000/363846 [00:03<01:35, 3667.10 examples/s]
+Map:   4%|▎         | 13000/363846 [00:03<01:52, 3127.04 examples/s]
+Map:   4%|▍         | 14000/363846 [00:04<01:46, 3291.11 examples/s]
+Map:   4%|▍         | 15000/363846 [00:04<01:42, 3419.75 examples/s]
+Map:   4%|▍         | 16000/363846 [00:04<01:36, 3592.90 examples/s]
+Map:   5%|▍         | 17000/363846 [00:04<01:32, 3740.92 examples/s]
+Map:   5%|▍         | 18000/363846 [00:05<01:29, 3850.99 examples/s]
+Map:   5%|▌         | 19000/363846 [00:05<01:27, 3918.76 examples/s]
+Map:   5%|▌         | 20000/363846 [00:05<01:26, 3966.73 examples/s]
+Map:   6%|▌         | 21000/363846 [00:05<01:25, 3994.00 examples/s]
+Map:   6%|▌         | 22000/363846 [00:06<01:26, 3966.77 examples/s]
+Map:   6%|▋         | 23000/363846 [00:06<01:27, 3909.84 examples/s]
+Map:   7%|▋         | 24000/363846 [00:06<01:25, 3958.10 examples/s]
+Map:   7%|▋         | 25000/363846 [00:06<01:25, 3963.53 examples/s]
+Map:   7%|▋         | 26000/363846 [00:07<01:34, 3585.75 examples/s]
+Map:   7%|▋         | 27000/363846 [00:07<01:31, 3693.73 examples/s]
+Map:   8%|▊         | 28000/363846 [00:07<01:28, 3808.57 examples/s]
+Map:   8%|▊         | 29000/363846 [00:07<01:25, 3907.53 examples/s]
+Map:   8%|▊         | 30000/363846 [00:08<01:26, 3870.43 examples/s]
+Map:   9%|▊         | 31000/363846 [00:08<01:25, 3906.66 examples/s]
+Map:   9%|▉         | 32000/363846 [00:08<01:23, 3967.70 examples/s]
+Map:   9%|▉         | 33000/363846 [00:08<01:23, 3985.79 examples/s]
+Map:   9%|▉         | 34000/363846 [00:09<01:22, 3998.61 examples/s]
+Map:  10%|▉         | 35000/363846 [00:09<01:21, 4037.03 examples/s]
+Map:  10%|▉         | 36000/363846 [00:09<01:20, 4062.29 examples/s]
+Map:  10%|█         | 37000/363846 [00:09<01:20, 4065.93 examples/s]
+Map:  10%|█         | 38000/363846 [00:10<01:22, 3950.73 examples/s]
+Map:  11%|█         | 39000/363846 [00:10<01:29, 3640.76 examples/s]
+Map:  11%|█         | 40000/363846 [00:10<01:38, 3299.51 examples/s]
+Map:  11%|█▏        | 41000/363846 [00:11<01:34, 3406.77 examples/s]
+Map:  12%|█▏        | 42000/363846 [00:11<01:32, 3489.47 examples/s]
+Map:  12%|█▏        | 43000/363846 [00:11<01:30, 3531.35 examples/s]
+Map:  12%|█▏        | 44000/363846 [00:11<01:29, 3568.37 examples/s]
+Map:  12%|█▏        | 45000/363846 [00:12<01:28, 3593.38 examples/s]
+Map:  13%|█▎        | 46000/363846 [00:12<01:28, 3588.29 examples/s]
+Map:  13%|█▎        | 47000/363846 [00:12<01:27, 3615.98 examples/s]
+Map:  13%|█▎        | 48000/363846 [00:13<01:27, 3621.50 examples/s]
+Map:  13%|█▎        | 49000/363846 [00:13<01:27, 3613.68 examples/s]
+Map:  14%|█▎        | 50000/363846 [00:13<01:27, 3603.28 examples/s]
+Map:  14%|█▍        | 51000/363846 [00:13<01:29, 3493.77 examples/s]
+Map:  14%|█▍        | 52000/363846 [00:14<01:27, 3576.79 examples/s]
+Map:  15%|█▍        | 53000/363846 [00:14<01:24, 3669.36 examples/s]
+Map:  15%|█▍        | 54000/363846 [00:14<01:23, 3706.88 examples/s]
+Map:  15%|█▌        | 55000/363846 [00:15<01:33, 3316.06 examples/s]
+Map:  15%|█▌        | 56000/363846 [00:15<01:29, 3457.92 examples/s]
+Map:  16%|█▌        | 57000/363846 [00:15<01:26, 3542.72 examples/s]
+Map:  16%|█▌        | 58000/363846 [00:15<01:25, 3596.51 examples/s]
+Map:  16%|█▌        | 59000/363846 [00:16<01:24, 3621.99 examples/s]
+Map:  16%|█▋        | 60000/363846 [00:16<01:22, 3662.64 examples/s]
+Map:  17%|█▋        | 61000/363846 [00:16<01:22, 3689.58 examples/s]
+Map:  17%|█▋        | 62000/363846 [00:16<01:22, 3667.59 examples/s]
+Map:  17%|█▋        | 63000/363846 [00:17<01:21, 3687.74 examples/s]
+Map:  18%|█▊        | 64000/363846 [00:17<01:20, 3736.43 examples/s]
+Map:  18%|█▊        | 65000/363846 [00:17<01:19, 3751.57 examples/s]
+Map:  18%|█▊        | 66000/363846 [00:17<01:19, 3752.73 examples/s]
+Map:  18%|█▊        | 67000/363846 [00:18<01:18, 3773.61 examples/s]
+Map:  19%|█▊        | 68000/363846 [00:18<01:17, 3795.39 examples/s]
+Map:  19%|█▉        | 69000/363846 [00:18<01:26, 3423.50 examples/s]
+Map:  19%|█▉        | 70000/363846 [00:19<01:23, 3520.09 examples/s]
+Map:  20%|█▉        | 71000/363846 [00:19<01:23, 3513.02 examples/s]
+Map:  20%|█▉        | 72000/363846 [00:19<01:21, 3588.98 examples/s]
+Map:  20%|██        | 73000/363846 [00:19<01:19, 3663.52 examples/s]
+Map:  20%|██        | 74000/363846 [00:20<01:17, 3743.54 examples/s]
+Map:  21%|██        | 75000/363846 [00:20<01:15, 3836.24 examples/s]
+Map:  21%|██        | 76000/363846 [00:20<01:12, 3950.68 examples/s]
+Map:  21%|██        | 77000/363846 [00:20<01:11, 4026.66 examples/s]
+Map:  21%|██▏       | 78000/363846 [00:21<01:10, 4075.58 examples/s]
+Map:  22%|██▏       | 79000/363846 [00:21<01:09, 4118.30 examples/s]
+Map:  22%|██▏       | 80000/363846 [00:21<01:08, 4122.85 examples/s]
+Map:  22%|██▏       | 81000/363846 [00:21<01:09, 4042.90 examples/s]
+Map:  23%|██▎       | 82000/363846 [00:22<01:09, 4033.17 examples/s]
+Map:  23%|██▎       | 83000/363846 [00:22<01:18, 3572.21 examples/s]
+Map:  23%|██▎       | 84000/363846 [00:22<01:17, 3623.14 examples/s]
+Map:  23%|██▎       | 85000/363846 [00:22<01:14, 3734.09 examples/s]
+Map:  24%|██▎       | 86000/363846 [00:23<01:12, 3849.52 examples/s]
+Map:  24%|██▍       | 87000/363846 [00:23<01:10, 3950.44 examples/s]
+Map:  24%|██▍       | 88000/363846 [00:23<01:09, 3981.08 examples/s]
+Map:  24%|██▍       | 89000/363846 [00:23<01:09, 3931.19 examples/s]
+Map:  25%|██▍       | 90000/363846 [00:24<01:10, 3899.42 examples/s]
+Map:  25%|██▌       | 91000/363846 [00:24<01:08, 3964.59 examples/s]
+Map:  25%|██▌       | 92000/363846 [00:24<01:08, 3958.88 examples/s]
+Map:  26%|██▌       | 93000/363846 [00:25<01:33, 2893.31 examples/s]
+Map:  26%|██▌       | 94000/363846 [00:25<01:29, 3021.05 examples/s]
+Map:  26%|██▌       | 95000/363846 [00:25<01:28, 3049.85 examples/s]
+Map:  26%|██▋       | 96000/363846 [00:26<01:38, 2721.93 examples/s]
+Map:  27%|██▋       | 97000/363846 [00:26<01:34, 2832.99 examples/s]
+Map:  27%|██▋       | 98000/363846 [00:26<01:27, 3040.21 examples/s]
+Map:  27%|██▋       | 99000/363846 [00:27<01:19, 3313.01 examples/s]
+Map:  27%|██▋       | 100000/363846 [00:27<01:15, 3504.22 examples/s]
+Map:  28%|██▊       | 101000/363846 [00:27<01:11, 3672.52 examples/s]
+Map:  28%|██▊       | 102000/363846 [00:27<01:08, 3807.04 examples/s]
+Map:  28%|██▊       | 103000/363846 [00:28<01:07, 3879.55 examples/s]
+Map:  29%|██▊       | 104000/363846 [00:28<01:07, 3864.93 examples/s]
+Map:  29%|██▉       | 105000/363846 [00:28<01:10, 3668.22 examples/s]
+Map:  29%|██▉       | 106000/363846 [00:28<01:08, 3768.31 examples/s]
+Map:  29%|██▉       | 107000/363846 [00:29<01:06, 3854.10 examples/s]
+Map:  30%|██▉       | 108000/363846 [00:29<01:05, 3909.89 examples/s]
+Map:  30%|██▉       | 109000/363846 [00:29<01:04, 3942.39 examples/s]
+Map:  30%|███       | 110000/363846 [00:30<01:25, 2952.94 examples/s]
+Map:  31%|███       | 111000/363846 [00:30<01:20, 3128.20 examples/s]
+Map:  31%|███       | 112000/363846 [00:30<01:16, 3293.48 examples/s]
+Map:  31%|███       | 113000/363846 [00:31<01:11, 3484.43 examples/s]
+Map:  31%|███▏      | 114000/363846 [00:31<01:08, 3627.08 examples/s]
+Map:  32%|███▏      | 115000/363846 [00:31<01:09, 3580.10 examples/s]
+Map:  32%|███▏      | 116000/363846 [00:31<01:06, 3712.24 examples/s]
+Map:  32%|███▏      | 117000/363846 [00:32<01:05, 3790.58 examples/s]
+Map:  32%|███▏      | 118000/363846 [00:32<01:03, 3855.14 examples/s]
+Map:  33%|███▎      | 119000/363846 [00:32<01:07, 3630.17 examples/s]
+Map:  33%|███▎      | 120000/363846 [00:32<01:07, 3634.25 examples/s]
+Map:  33%|███▎      | 121000/363846 [00:33<01:06, 3665.19 examples/s]
+Map:  34%|███▎      | 122000/363846 [00:33<01:03, 3790.03 examples/s]
+Map:  34%|███▍      | 123000/363846 [00:33<01:02, 3871.81 examples/s]
+Map:  34%|███▍      | 124000/363846 [00:33<01:00, 3941.05 examples/s]
+Map:  34%|███▍      | 125000/363846 [00:34<01:07, 3544.50 examples/s]
+Map:  35%|███▍      | 126000/363846 [00:34<01:04, 3680.71 examples/s]
+Map:  35%|███▍      | 127000/363846 [00:34<01:02, 3809.56 examples/s]
+Map:  35%|███▌      | 128000/363846 [00:35<01:02, 3766.65 examples/s]
+Map:  35%|███▌      | 129000/363846 [00:35<01:02, 3729.61 examples/s]
+Map:  36%|███▌      | 130000/363846 [00:35<01:03, 3694.95 examples/s]
+Map:  36%|███▌      | 131000/363846 [00:35<01:03, 3664.77 examples/s]
+Map:  36%|███▋      | 132000/363846 [00:36<01:03, 3636.60 examples/s]
+Map:  37%|███▋      | 133000/363846 [00:36<01:03, 3623.79 examples/s]
+Map:  37%|███▋      | 134000/363846 [00:36<01:02, 3651.27 examples/s]
+Map:  37%|███▋      | 135000/363846 [00:36<01:02, 3663.68 examples/s]
+Map:  37%|███▋      | 136000/363846 [00:37<01:01, 3678.99 examples/s]
+Map:  38%|███▊      | 137000/363846 [00:37<01:01, 3699.29 examples/s]
+Map:  38%|███▊      | 138000/363846 [00:37<01:03, 3547.45 examples/s]
+Map:  38%|███▊      | 139000/363846 [00:38<01:12, 3109.09 examples/s]
+Map:  38%|███▊      | 140000/363846 [00:38<01:08, 3265.19 examples/s]
+Map:  39%|███▉      | 141000/363846 [00:38<01:06, 3346.05 examples/s]
+Map:  39%|███▉      | 142000/363846 [00:39<01:04, 3431.71 examples/s]
+Map:  39%|███▉      | 143000/363846 [00:39<01:03, 3485.01 examples/s]
+Map:  40%|███▉      | 144000/363846 [00:39<01:02, 3501.41 examples/s]
+Map:  40%|███▉      | 145000/363846 [00:39<01:01, 3535.99 examples/s]
+Map:  40%|████      | 146000/363846 [00:40<01:00, 3591.82 examples/s]
+Map:  40%|████      | 147000/363846 [00:40<00:59, 3639.04 examples/s]
+Map:  41%|████      | 148000/363846 [00:40<00:59, 3655.23 examples/s]
+Map:  41%|████      | 149000/363846 [00:40<00:58, 3687.16 examples/s]
+Map:  41%|████      | 150000/363846 [00:41<00:57, 3703.46 examples/s]
+Map:  42%|████▏     | 151000/363846 [00:41<00:58, 3656.05 examples/s]
+Map:  42%|████▏     | 152000/363846 [00:41<00:57, 3674.28 examples/s]
+Map:  42%|████▏     | 153000/363846 [00:42<01:04, 3270.68 examples/s]
+Map:  42%|████▏     | 154000/363846 [00:42<01:02, 3354.33 examples/s]
+Map:  43%|████▎     | 155000/363846 [00:42<01:00, 3437.49 examples/s]
+Map:  43%|████▎     | 156000/363846 [00:42<00:59, 3497.60 examples/s]
+Map:  43%|████▎     | 157000/363846 [00:43<00:58, 3539.85 examples/s]
+Map:  43%|████▎     | 158000/363846 [00:43<00:57, 3599.28 examples/s]
+Map:  44%|████▎     | 159000/363846 [00:43<00:58, 3504.15 examples/s]
+Map:  44%|████▍     | 160000/363846 [00:44<00:57, 3548.08 examples/s]
+Map:  44%|████▍     | 161000/363846 [00:44<00:56, 3587.01 examples/s]
+Map:  45%|████▍     | 162000/363846 [00:44<00:55, 3617.78 examples/s]
+Map:  45%|████▍     | 163000/363846 [00:44<00:55, 3631.08 examples/s]
+Map:  45%|████▌     | 164000/363846 [00:45<00:54, 3653.29 examples/s]
+Map:  45%|████▌     | 165000/363846 [00:45<00:54, 3653.44 examples/s]
+Map:  46%|████▌     | 166000/363846 [00:45<01:00, 3251.23 examples/s]
+Map:  46%|████▌     | 167000/363846 [00:46<00:58, 3361.06 examples/s]
+Map:  46%|████▌     | 168000/363846 [00:46<00:56, 3463.56 examples/s]
+Map:  46%|████▋     | 169000/363846 [00:46<00:54, 3562.58 examples/s]
+Map:  47%|████▋     | 170000/363846 [00:46<00:53, 3604.04 examples/s]
+Map:  47%|████▋     | 171000/363846 [00:47<00:53, 3631.70 examples/s]
+Map:  47%|████▋     | 172000/363846 [00:47<00:54, 3539.16 examples/s]
+Map:  48%|████▊     | 173000/363846 [00:47<00:53, 3569.50 examples/s]
+Map:  48%|████▊     | 174000/363846 [00:48<00:52, 3616.28 examples/s]
+Map:  48%|████▊     | 175000/363846 [00:48<00:52, 3617.78 examples/s]
+Map:  48%|████▊     | 176000/363846 [00:48<00:51, 3612.76 examples/s]
+Map:  49%|████▊     | 177000/363846 [00:48<00:51, 3635.12 examples/s]
+Map:  49%|████▉     | 178000/363846 [00:49<00:51, 3626.41 examples/s]
+Map:  49%|████▉     | 179000/363846 [00:49<00:51, 3605.01 examples/s]
+Map:  49%|████▉     | 180000/363846 [00:49<00:57, 3202.90 examples/s]
+Map:  50%|████▉     | 181000/363846 [00:50<00:54, 3351.45 examples/s]
+Map:  50%|█████     | 182000/363846 [00:50<00:52, 3439.82 examples/s]
+Map:  50%|█████     | 183000/363846 [00:50<00:51, 3509.54 examples/s]
+Map:  51%|█████     | 184000/363846 [00:50<00:50, 3569.14 examples/s]
+Map:  51%|█████     | 185000/363846 [00:51<00:49, 3613.90 examples/s]
+Map:  51%|█████     | 186000/363846 [00:51<00:49, 3626.02 examples/s]
+Map:  51%|█████▏    | 187000/363846 [00:51<00:48, 3640.01 examples/s]
+Map:  52%|█████▏    | 188000/363846 [00:51<00:48, 3656.14 examples/s]
+Map:  52%|█████▏    | 189000/363846 [00:52<00:47, 3652.26 examples/s]
+Map:  52%|█████▏    | 190000/363846 [00:52<00:49, 3538.81 examples/s]
+Map:  52%|█████▏    | 191000/363846 [00:52<00:49, 3523.84 examples/s]
+Map:  53%|█████▎    | 192000/363846 [00:53<00:48, 3578.15 examples/s]
+Map:  53%|█████▎    | 193000/363846 [00:53<00:47, 3612.08 examples/s]
+Map:  53%|█████▎    | 194000/363846 [00:53<00:46, 3646.11 examples/s]
+Map:  54%|█████▎    | 195000/363846 [00:54<00:53, 3165.10 examples/s]
+Map:  54%|█████▍    | 196000/363846 [00:54<00:50, 3300.17 examples/s]
+Map:  54%|█████▍    | 197000/363846 [00:54<00:51, 3209.07 examples/s]
+Map:  54%|█████▍    | 198000/363846 [00:54<00:49, 3353.94 examples/s]
+Map:  55%|█████▍    | 199000/363846 [00:55<00:47, 3443.99 examples/s]
+Map:  55%|█████▍    | 200000/363846 [00:55<00:46, 3502.18 examples/s]
+Map:  55%|█████▌    | 201000/363846 [00:55<00:45, 3542.45 examples/s]
+Map:  56%|█████▌    | 202000/363846 [00:56<00:45, 3557.88 examples/s]
+Map:  56%|█████▌    | 203000/363846 [00:56<00:45, 3564.80 examples/s]
+Map:  56%|█████▌    | 204000/363846 [00:56<00:43, 3650.61 examples/s]
+Map:  56%|█████▋    | 205000/363846 [00:56<00:43, 3669.00 examples/s]
+Map:  57%|█████▋    | 206000/363846 [00:57<00:42, 3688.53 examples/s]
+Map:  57%|█████▋    | 207000/363846 [00:57<00:42, 3675.00 examples/s]
+Map:  57%|█████▋    | 208000/363846 [00:57<00:42, 3664.11 examples/s]
+Map:  57%|█████▋    | 209000/363846 [00:58<00:47, 3272.72 examples/s]
+Map:  58%|█████▊    | 210000/363846 [00:58<00:45, 3392.26 examples/s]
+Map:  58%|█████▊    | 211000/363846 [00:58<00:44, 3471.24 examples/s]
+Map:  58%|█████▊    | 212000/363846 [00:58<00:43, 3504.80 examples/s]
+Map:  59%|█████▊    | 213000/363846 [00:59<00:42, 3551.13 examples/s]
+Map:  59%|█████▉    | 214000/363846 [00:59<00:42, 3550.11 examples/s]
+Map:  59%|█████▉    | 215000/363846 [00:59<00:41, 3583.38 examples/s]
+Map:  59%|█████▉    | 216000/363846 [00:59<00:40, 3607.68 examples/s]
+Map:  60%|█████▉    | 217000/363846 [01:00<00:40, 3642.21 examples/s]
+Map:  60%|█████▉    | 218000/363846 [01:00<00:39, 3658.22 examples/s]
+Map:  60%|██████    | 219000/363846 [01:03<02:26, 988.06 examples/s] 
+Map:  60%|██████    | 220000/363846 [01:03<01:56, 1236.20 examples/s]
+Map:  61%|██████    | 221000/363846 [01:03<01:32, 1541.35 examples/s]
+Map:  61%|██████    | 222000/363846 [01:04<01:16, 1865.30 examples/s]
+Map:  61%|██████▏   | 223000/363846 [01:04<01:09, 2037.09 examples/s]
+Map:  62%|██████▏   | 224000/363846 [01:04<00:59, 2343.57 examples/s]
+Map:  62%|██████▏   | 225000/363846 [01:05<00:53, 2614.11 examples/s]
+Map:  62%|██████▏   | 226000/363846 [01:05<00:48, 2840.71 examples/s]
+Map:  62%|██████▏   | 227000/363846 [01:05<00:44, 3056.86 examples/s]
+Map:  63%|██████▎   | 228000/363846 [01:05<00:42, 3226.10 examples/s]
+Map:  63%|██████▎   | 229000/363846 [01:06<00:40, 3346.50 examples/s]
+Map:  63%|██████▎   | 230000/363846 [01:06<00:38, 3452.33 examples/s]
+Map:  63%|██████▎   | 231000/363846 [01:06<00:37, 3533.92 examples/s]
+Map:  64%|██████▍   | 232000/363846 [01:06<00:36, 3588.00 examples/s]
+Map:  64%|██████▍   | 233000/363846 [01:07<00:36, 3599.24 examples/s]
+Map:  64%|██████▍   | 234000/363846 [01:07<00:36, 3601.44 examples/s]
+Map:  65%|██████▍   | 235000/363846 [01:07<00:35, 3608.90 examples/s]
+Map:  65%|██████▍   | 236000/363846 [01:08<00:40, 3181.61 examples/s]
+Map:  65%|██████▌   | 237000/363846 [01:08<00:38, 3297.10 examples/s]
+Map:  65%|██████▌   | 238000/363846 [01:08<00:36, 3411.03 examples/s]
+Map:  66%|██████▌   | 239000/363846 [01:09<00:35, 3493.74 examples/s]
+Map:  66%|██████▌   | 240000/363846 [01:09<00:34, 3557.89 examples/s]
+Map:  66%|██████▌   | 241000/363846 [01:09<00:33, 3615.05 examples/s]
+Map:  67%|██████▋   | 242000/363846 [01:09<00:33, 3629.65 examples/s]
+Map:  67%|██████▋   | 243000/363846 [01:10<00:33, 3582.07 examples/s]
+Map:  67%|██████▋   | 244000/363846 [01:10<00:33, 3588.42 examples/s]
+Map:  67%|██████▋   | 245000/363846 [01:10<00:33, 3592.42 examples/s]
+Map:  68%|██████▊   | 246000/363846 [01:10<00:32, 3616.42 examples/s]
+Map:  68%|██████▊   | 247000/363846 [01:11<00:32, 3612.03 examples/s]
+Map:  68%|██████▊   | 248000/363846 [01:11<00:32, 3583.82 examples/s]
+Map:  68%|██████▊   | 249000/363846 [01:11<00:32, 3580.52 examples/s]
+Map:  69%|██████▊   | 250000/363846 [01:12<00:35, 3203.47 examples/s]
+Map:  69%|██████▉   | 251000/363846 [01:12<00:33, 3322.94 examples/s]
+Map:  69%|██████▉   | 252000/363846 [01:12<00:32, 3427.36 examples/s]
+Map:  70%|██████▉   | 253000/363846 [01:12<00:31, 3489.47 examples/s]
+Map:  70%|██████▉   | 254000/363846 [01:13<00:31, 3532.48 examples/s]
+Map:  70%|███████   | 255000/363846 [01:13<00:30, 3564.11 examples/s]
+Map:  70%|███████   | 256000/363846 [01:13<00:30, 3584.36 examples/s]
+Map:  71%|███████   | 257000/363846 [01:14<00:29, 3588.45 examples/s]
+Map:  71%|███████   | 258000/363846 [01:14<00:29, 3589.04 examples/s]
+Map:  71%|███████   | 259000/363846 [01:14<00:29, 3589.49 examples/s]
+Map:  71%|███████▏  | 260000/363846 [01:14<00:28, 3584.26 examples/s]
+Map:  72%|███████▏  | 261000/363846 [01:15<00:28, 3589.99 examples/s]
+Map:  72%|███████▏  | 262000/363846 [01:15<00:28, 3608.89 examples/s]
+Map:  72%|███████▏  | 263000/363846 [01:15<00:27, 3622.37 examples/s]
+Map:  73%|███████▎  | 264000/363846 [01:16<00:27, 3632.47 examples/s]
+Map:  73%|███████▎  | 265000/363846 [01:16<00:30, 3284.98 examples/s]
+Map:  73%|███████▎  | 266000/363846 [01:16<00:28, 3411.40 examples/s]
+Map:  73%|███████▎  | 267000/363846 [01:16<00:27, 3477.13 examples/s]
+Map:  74%|███████▎  | 268000/363846 [01:17<00:27, 3521.28 examples/s]
+Map:  74%|███████▍  | 269000/363846 [01:17<00:26, 3542.57 examples/s]
+Map:  74%|███████▍  | 270000/363846 [01:17<00:26, 3552.64 examples/s]
+Map:  74%|███████▍  | 271000/363846 [01:18<00:26, 3567.94 examples/s]
+Map:  75%|███████▍  | 272000/363846 [01:18<00:25, 3566.89 examples/s]
+Map:  75%|███████▌  | 273000/363846 [01:18<00:25, 3557.06 examples/s]
+Map:  75%|███████▌  | 274000/363846 [01:18<00:24, 3609.72 examples/s]
+Map:  76%|███████▌  | 275000/363846 [01:19<00:24, 3647.00 examples/s]
+Map:  76%|███████▌  | 276000/363846 [01:19<00:24, 3654.61 examples/s]
+Map:  76%|███████▌  | 277000/363846 [01:19<00:23, 3651.98 examples/s]
+Map:  76%|███████▋  | 278000/363846 [01:19<00:23, 3651.42 examples/s]
+Map:  77%|███████▋  | 279000/363846 [01:20<00:25, 3264.60 examples/s]
+Map:  77%|███████▋  | 280000/363846 [01:20<00:24, 3378.48 examples/s]
+Map:  77%|███████▋  | 281000/363846 [01:20<00:24, 3446.45 examples/s]
+Map:  78%|███████▊  | 282000/363846 [01:21<00:23, 3489.83 examples/s]
+Map:  78%|███████▊  | 283000/363846 [01:21<00:23, 3507.01 examples/s]
+Map:  78%|███████▊  | 284000/363846 [01:21<00:22, 3539.53 examples/s]
+Map:  78%|███████▊  | 285000/363846 [01:22<00:22, 3551.60 examples/s]
+Map:  79%|███████▊  | 286000/363846 [01:22<00:21, 3630.75 examples/s]
+Map:  79%|███████▉  | 287000/363846 [01:22<00:20, 3772.77 examples/s]
+Map:  79%|███████▉  | 288000/363846 [01:22<00:19, 3863.89 examples/s]
+Map:  79%|███████▉  | 289000/363846 [01:23<00:19, 3934.63 examples/s]
+Map:  80%|███████▉  | 290000/363846 [01:23<00:18, 3979.75 examples/s]
+Map:  80%|███████▉  | 291000/363846 [01:23<00:18, 4001.33 examples/s]
+Map:  80%|████████  | 292000/363846 [01:23<00:17, 4011.77 examples/s]
+Map:  81%|████████  | 293000/363846 [01:24<00:20, 3495.88 examples/s]
+Map:  81%|████████  | 294000/363846 [01:24<00:19, 3591.52 examples/s]
+Map:  81%|████████  | 295000/363846 [01:24<00:18, 3728.02 examples/s]
+Map:  81%|████████▏ | 296000/363846 [01:24<00:17, 3838.85 examples/s]
+Map:  82%|████████▏ | 297000/363846 [01:25<00:16, 3952.43 examples/s]
+Map:  82%|████████▏ | 298000/363846 [01:25<00:16, 4000.20 examples/s]
+Map:  82%|████████▏ | 299000/363846 [01:25<00:16, 4030.55 examples/s]
+Map:  82%|████████▏ | 300000/363846 [01:25<00:15, 4036.24 examples/s]
+Map:  83%|████████▎ | 301000/363846 [01:26<00:15, 3994.77 examples/s]
+Map:  83%|████████▎ | 302000/363846 [01:26<00:15, 3920.76 examples/s]
+Map:  83%|████████▎ | 303000/363846 [01:26<00:15, 3967.70 examples/s]
+Map:  84%|████████▎ | 304000/363846 [01:26<00:15, 3976.23 examples/s]
+Map:  84%|████████▍ | 305000/363846 [01:27<00:14, 4003.25 examples/s]
+Map:  84%|████████▍ | 306000/363846 [01:27<00:16, 3580.06 examples/s]
+Map:  84%|████████▍ | 307000/363846 [01:27<00:15, 3689.01 examples/s]
+Map:  85%|████████▍ | 308000/363846 [01:27<00:14, 3787.53 examples/s]
+Map:  85%|████████▍ | 309000/363846 [01:28<00:14, 3753.56 examples/s]
+Map:  85%|████████▌ | 310000/363846 [01:28<00:14, 3742.40 examples/s]
+Map:  85%|████████▌ | 311000/363846 [01:28<00:14, 3731.94 examples/s]
+Map:  86%|████████▌ | 312000/363846 [01:29<00:13, 3717.88 examples/s]
+Map:  86%|████████▌ | 313000/363846 [01:29<00:13, 3693.35 examples/s]
+Map:  86%|████████▋ | 314000/363846 [01:29<00:13, 3675.96 examples/s]
+Map:  87%|████████▋ | 315000/363846 [01:29<00:13, 3653.80 examples/s]
+Map:  87%|████████▋ | 316000/363846 [01:30<00:13, 3659.50 examples/s]
+Map:  87%|████████▋ | 317000/363846 [01:30<00:12, 3641.82 examples/s]
+Map:  87%|████████▋ | 318000/363846 [01:30<00:12, 3618.84 examples/s]
+Map:  88%|████████▊ | 319000/363846 [01:31<00:13, 3418.53 examples/s]
+Map:  88%|████████▊ | 320000/363846 [01:31<00:13, 3133.15 examples/s]
+Map:  88%|████████▊ | 321000/363846 [01:31<00:13, 3283.11 examples/s]
+Map:  88%|████████▊ | 322000/363846 [01:31<00:12, 3410.97 examples/s]
+Map:  89%|████████▉ | 323000/363846 [01:32<00:11, 3495.55 examples/s]
+Map:  89%|████████▉ | 324000/363846 [01:32<00:11, 3537.84 examples/s]
+Map:  89%|████████▉ | 325000/363846 [01:32<00:10, 3570.66 examples/s]
+Map:  90%|████████▉ | 326000/363846 [01:33<00:10, 3606.40 examples/s]
+Map:  90%|████████▉ | 327000/363846 [01:33<00:10, 3472.25 examples/s]
+Map:  90%|█████████ | 328000/363846 [01:33<00:10, 3461.56 examples/s]
+Map:  90%|█████████ | 329000/363846 [01:33<00:10, 3476.75 examples/s]
+Map:  91%|█████████ | 330000/363846 [01:34<00:09, 3501.75 examples/s]
+Map:  91%|█████████ | 331000/363846 [01:34<00:09, 3515.35 examples/s]
+Map:  91%|█████████ | 332000/363846 [01:34<00:08, 3553.75 examples/s]
+Map:  92%|█████████▏| 333000/363846 [01:35<00:08, 3614.69 examples/s]
+Map:  92%|█████████▏| 334000/363846 [01:35<00:08, 3649.79 examples/s]
+Map:  92%|█████████▏| 335000/363846 [01:35<00:08, 3228.00 examples/s]
+Map:  92%|█████████▏| 336000/363846 [01:35<00:08, 3318.76 examples/s]
+Map:  93%|█████████▎| 337000/363846 [01:36<00:07, 3419.33 examples/s]
+Map:  93%|█████████▎| 338000/363846 [01:39<00:29, 877.51 examples/s] 
+Map:  93%|█████████▎| 339000/363846 [01:39<00:22, 1122.45 examples/s]
+Map:  93%|█████████▎| 340000/363846 [01:39<00:16, 1433.00 examples/s]
+Map:  94%|█████████▎| 341000/363846 [01:40<00:12, 1777.70 examples/s]
+Map:  94%|█████████▍| 342000/363846 [01:40<00:10, 2135.03 examples/s]
+Map:  94%|█████████▍| 343000/363846 [01:40<00:08, 2476.87 examples/s]
+Map:  95%|█████████▍| 344000/363846 [01:40<00:07, 2794.48 examples/s]
+Map:  95%|█████████▍| 345000/363846 [01:41<00:06, 3039.14 examples/s]
+Map:  95%|█████████▌| 346000/363846 [01:41<00:05, 3172.93 examples/s]
+Map:  95%|█████████▌| 347000/363846 [01:41<00:04, 3400.62 examples/s]
+Map:  96%|█████████▌| 348000/363846 [01:41<00:04, 3590.64 examples/s]
+Map:  96%|█████████▌| 349000/363846 [01:42<00:04, 3367.47 examples/s]
+Map:  96%|█████████▌| 350000/363846 [01:42<00:03, 3549.78 examples/s]
+Map:  96%|█████████▋| 351000/363846 [01:42<00:03, 3699.60 examples/s]
+Map:  97%|█████████▋| 352000/363846 [01:43<00:03, 3665.11 examples/s]
+Map:  97%|█████████▋| 353000/363846 [01:43<00:02, 3690.14 examples/s]
+Map:  97%|█████████▋| 354000/363846 [01:43<00:02, 3785.02 examples/s]
+Map:  98%|█████████▊| 355000/363846 [01:43<00:02, 3843.62 examples/s]
+Map:  98%|█████████▊| 356000/363846 [01:44<00:02, 3890.12 examples/s]
+Map:  98%|█████████▊| 357000/363846 [01:44<00:01, 3945.24 examples/s]
+Map:  98%|█████████▊| 358000/363846 [01:44<00:01, 3975.61 examples/s]
+Map:  99%|█████████▊| 359000/363846 [01:44<00:01, 4005.20 examples/s]
+Map:  99%|█████████▉| 360000/363846 [01:45<00:00, 3943.98 examples/s]
+Map:  99%|█████████▉| 361000/363846 [01:45<00:00, 3867.82 examples/s]
+Map:  99%|█████████▉| 362000/363846 [01:45<00:00, 3887.96 examples/s]
+Map: 100%|█████████▉| 363000/363846 [01:45<00:00, 3541.12 examples/s]
+Map: 100%|██████████| 363846/363846 [01:46<00:00, 3645.09 examples/s]
+                                                                     
+
+Map:   0%|          | 0/40430 [00:00<?, ? examples/s]
+Map:   2%|▏         | 1000/40430 [00:00<00:11, 3332.97 examples/s]
+Map:   5%|▍         | 2000/40430 [00:00<00:10, 3763.85 examples/s]
+Map:   7%|▋         | 3000/40430 [00:00<00:09, 3972.05 examples/s]
+Map:  10%|▉         | 4000/40430 [00:01<00:08, 4097.44 examples/s]
+Map:  12%|█▏        | 5000/40430 [00:01<00:08, 4128.82 examples/s]
+Map:  15%|█▍        | 6000/40430 [00:01<00:08, 4039.07 examples/s]
+Map:  17%|█▋        | 7000/40430 [00:01<00:08, 3957.83 examples/s]
+Map:  20%|█▉        | 8000/40430 [00:02<00:08, 3990.59 examples/s]
+Map:  22%|██▏       | 9000/40430 [00:02<00:07, 4007.18 examples/s]
+Map:  25%|██▍       | 10000/40430 [00:02<00:07, 4012.76 examples/s]
+Map:  27%|██▋       | 11000/40430 [00:02<00:07, 3981.63 examples/s]
+Map:  30%|██▉       | 12000/40430 [00:03<00:08, 3542.26 examples/s]
+Map:  32%|███▏      | 13000/40430 [00:03<00:07, 3628.96 examples/s]
+Map:  35%|███▍      | 14000/40430 [00:03<00:07, 3645.09 examples/s]
+Map:  37%|███▋      | 15000/40430 [00:03<00:06, 3662.77 examples/s]
+Map:  40%|███▉      | 16000/40430 [00:04<00:06, 3675.01 examples/s]
+Map:  42%|████▏     | 17000/40430 [00:04<00:06, 3695.23 examples/s]
+Map:  45%|████▍     | 18000/40430 [00:04<00:06, 3684.00 examples/s]
+Map:  47%|████▋     | 19000/40430 [00:05<00:05, 3690.52 examples/s]
+Map:  49%|████▉     | 20000/40430 [00:05<00:05, 3660.93 examples/s]
+Map:  52%|█████▏    | 21000/40430 [00:05<00:05, 3641.79 examples/s]
+Map:  54%|█████▍    | 22000/40430 [00:05<00:05, 3641.13 examples/s]
+Map:  57%|█████▋    | 23000/40430 [00:06<00:04, 3632.07 examples/s]
+Map:  59%|█████▉    | 24000/40430 [00:06<00:04, 3626.35 examples/s]
+Map:  62%|██████▏   | 25000/40430 [00:06<00:04, 3690.30 examples/s]
+Map:  64%|██████▍   | 26000/40430 [00:06<00:03, 3717.26 examples/s]
+Map:  67%|██████▋   | 27000/40430 [00:07<00:03, 3737.17 examples/s]
+Map:  69%|██████▉   | 28000/40430 [00:07<00:03, 3757.01 examples/s]
+Map:  72%|███████▏  | 29000/40430 [00:07<00:03, 3364.75 examples/s]
+Map:  74%|███████▍  | 30000/40430 [00:08<00:03, 3462.79 examples/s]
+Map:  77%|███████▋  | 31000/40430 [00:08<00:02, 3546.81 examples/s]
+Map:  79%|███████▉  | 32000/40430 [00:08<00:02, 3592.12 examples/s]
+Map:  82%|████████▏ | 33000/40430 [00:08<00:02, 3615.98 examples/s]
+Map:  84%|████████▍ | 34000/40430 [00:09<00:01, 3637.29 examples/s]
+Map:  87%|████████▋ | 35000/40430 [00:09<00:01, 3620.86 examples/s]
+Map:  89%|████████▉ | 36000/40430 [00:09<00:01, 3596.41 examples/s]
+Map:  92%|█████████▏| 37000/40430 [00:09<00:00, 3628.31 examples/s]
+Map:  94%|█████████▍| 38000/40430 [00:10<00:00, 3672.64 examples/s]
+Map:  96%|█████████▋| 39000/40430 [00:10<00:00, 3674.26 examples/s]
+Map:  99%|█████████▉| 40000/40430 [00:10<00:00, 3680.97 examples/s]
+Map: 100%|██████████| 40430/40430 [00:10<00:00, 3626.45 examples/s]
+                                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'loss': 0.6803, 'learning_rate': 2.5e-06, 'epoch': 0.04}
+{'loss': 0.5534, 'learning_rate': 5e-06, 'epoch': 0.09}
+{'loss': 0.4878, 'learning_rate': 7.5e-06, 'epoch': 0.13}
+{'loss': 0.4464, 'learning_rate': 1e-05, 'epoch': 0.18}
+{'loss': 0.4253, 'learning_rate': 1.25e-05, 'epoch': 0.22}
+{'loss': 0.4035, 'learning_rate': 1.5e-05, 'epoch': 0.26}
+{'loss': 0.3963, 'learning_rate': 1.75e-05, 'epoch': 0.31}
+{'loss': 0.3861, 'learning_rate': 2e-05, 'epoch': 0.35}
+{'loss': 0.3814, 'learning_rate': 2.25e-05, 'epoch': 0.4}
+{'loss': 0.3662, 'learning_rate': 2.5e-05, 'epoch': 0.44}
+{'loss': 0.3582, 'learning_rate': 2.7500000000000004e-05, 'epoch': 0.48}
+{'loss': 0.3484, 'learning_rate': 3e-05, 'epoch': 0.53}
+{'loss': 0.3402, 'learning_rate': 3.2500000000000004e-05, 'epoch': 0.57}
+{'loss': 0.333, 'learning_rate': 3.5e-05, 'epoch': 0.62}
+{'loss': 0.3342, 'learning_rate': 3.7500000000000003e-05, 'epoch': 0.66}
+{'loss': 0.3437, 'learning_rate': 4e-05, 'epoch': 0.7}
+{'loss': 0.3242, 'learning_rate': 4.25e-05, 'epoch': 0.75}
+{'loss': 0.3214, 'learning_rate': 4.5e-05, 'epoch': 0.79}
+{'loss': 0.3168, 'learning_rate': 4.75e-05, 'epoch': 0.84}
+{'loss': 0.3113, 'learning_rate': 5e-05, 'epoch': 0.88}
+{'loss': 0.3056, 'learning_rate': 4.9758919961427194e-05, 'epoch': 0.92}
+{'loss': 0.3006, 'learning_rate': 4.951783992285439e-05, 'epoch': 0.97}
+{'eval_loss': 0.2860335409641266, 'eval_accuracy': 0.8755379668562948, 'eval_runtime': 1254.0391, 'eval_samples_per_second': 32.24, 'eval_steps_per_second': 2.015, 'epoch': 1.0}
+{'loss': 0.2964, 'learning_rate': 4.9276759884281584e-05, 'epoch': 1.01}
+{'loss': 0.2686, 'learning_rate': 4.9035679845708775e-05, 'epoch': 1.06}
+{'loss': 0.2677, 'learning_rate': 4.8794599807135974e-05, 'epoch': 1.1}
+{'loss': 0.2632, 'learning_rate': 4.8553519768563165e-05, 'epoch': 1.14}
+{'loss': 0.2537, 'learning_rate': 4.831243972999036e-05, 'epoch': 1.19}
+{'loss': 0.2598, 'learning_rate': 4.8071359691417555e-05, 'epoch': 1.23}
+{'loss': 0.2682, 'learning_rate': 4.7830279652844746e-05, 'epoch': 1.28}
+{'loss': 0.2679, 'learning_rate': 4.758919961427194e-05, 'epoch': 1.32}
+{'loss': 0.2597, 'learning_rate': 4.7348119575699136e-05, 'epoch': 1.36}
+{'loss': 0.256, 'learning_rate': 4.710703953712633e-05, 'epoch': 1.41}
+{'loss': 0.2538, 'learning_rate': 4.6865959498553526e-05, 'epoch': 1.45}
+{'loss': 0.2554, 'learning_rate': 4.662487945998071e-05, 'epoch': 1.5}
+{'loss': 0.2563, 'learning_rate': 4.638379942140791e-05, 'epoch': 1.54}
+{'loss': 0.2548, 'learning_rate': 4.61427193828351e-05, 'epoch': 1.58}
+{'loss': 0.2535, 'learning_rate': 4.59016393442623e-05, 'epoch': 1.63}
+{'loss': 0.2453, 'learning_rate': 4.566055930568949e-05, 'epoch': 1.67}
+{'loss': 0.248, 'learning_rate': 4.541947926711668e-05, 'epoch': 1.71}
+{'loss': 0.246, 'learning_rate': 4.517839922854388e-05, 'epoch': 1.76}
+{'loss': 0.251, 'learning_rate': 4.493731918997107e-05, 'epoch': 1.8}
+{'loss': 0.25, 'learning_rate': 4.469623915139827e-05, 'epoch': 1.85}
+{'loss': 0.2484, 'learning_rate': 4.445515911282546e-05, 'epoch': 1.89}
+{'loss': 0.2461, 'learning_rate': 4.421407907425266e-05, 'epoch': 1.93}
+{'loss': 0.2423, 'learning_rate': 4.3972999035679845e-05, 'epoch': 1.98}
+{'eval_loss': 0.2580104470252991, 'eval_accuracy': 0.8896364086074697, 'eval_runtime': 1216.0359, 'eval_samples_per_second': 33.247, 'eval_steps_per_second': 2.078, 'epoch': 2.0}
+{'loss': 0.2161, 'learning_rate': 4.373191899710704e-05, 'epoch': 2.02}
+{'loss': 0.1887, 'learning_rate': 4.3490838958534234e-05, 'epoch': 2.07}
+{'loss': 0.1898, 'learning_rate': 4.324975891996143e-05, 'epoch': 2.11}
+{'loss': 0.1887, 'learning_rate': 4.3008678881388624e-05, 'epoch': 2.15}
+{'loss': 0.1883, 'learning_rate': 4.2767598842815816e-05, 'epoch': 2.2}
+{'loss': 0.1838, 'learning_rate': 4.252651880424301e-05, 'epoch': 2.24}
+{'loss': 0.1889, 'learning_rate': 4.2285438765670205e-05, 'epoch': 2.29}
+{'loss': 0.1866, 'learning_rate': 4.20443587270974e-05, 'epoch': 2.33}
+{'loss': 0.1835, 'learning_rate': 4.1803278688524595e-05, 'epoch': 2.37}
+{'loss': 0.1831, 'learning_rate': 4.156219864995179e-05, 'epoch': 2.42}
+{'loss': 0.1821, 'learning_rate': 4.132111861137898e-05, 'epoch': 2.46}
+{'loss': 0.194, 'learning_rate': 4.108003857280617e-05, 'epoch': 2.51}
+{'loss': 0.1918, 'learning_rate': 4.083895853423337e-05, 'epoch': 2.55}
+{'loss': 0.1976, 'learning_rate': 4.059787849566056e-05, 'epoch': 2.59}
+{'loss': 0.1891, 'learning_rate': 4.035679845708776e-05, 'epoch': 2.64}
+{'loss': 0.1856, 'learning_rate': 4.011571841851495e-05, 'epoch': 2.68}
+{'loss': 0.1896, 'learning_rate': 3.987463837994214e-05, 'epoch': 2.73}
+{'loss': 0.1845, 'learning_rate': 3.963355834136934e-05, 'epoch': 2.77}
+{'loss': 0.1882, 'learning_rate': 3.939247830279653e-05, 'epoch': 2.81}
+{'loss': 0.1881, 'learning_rate': 3.915139826422373e-05, 'epoch': 2.86}
+{'loss': 0.1894, 'learning_rate': 3.8910318225650914e-05, 'epoch': 2.9}
+{'loss': 0.1886, 'learning_rate': 3.866923818707811e-05, 'epoch': 2.95}
+{'loss': 0.1864, 'learning_rate': 3.8428158148505304e-05, 'epoch': 2.99}
+{'eval_loss': 0.24887709319591522, 'eval_accuracy': 0.8990848379915904, 'eval_runtime': 1216.0926, 'eval_samples_per_second': 33.246, 'eval_steps_per_second': 2.078, 'epoch': 3.0}
+{'loss': 0.1435, 'learning_rate': 3.81870781099325e-05, 'epoch': 3.03}
+{'loss': 0.1359, 'learning_rate': 3.7945998071359693e-05, 'epoch': 3.08}
+{'loss': 0.1349, 'learning_rate': 3.7704918032786885e-05, 'epoch': 3.12}
+{'loss': 0.1339, 'learning_rate': 3.7463837994214076e-05, 'epoch': 3.17}
+{'loss': 0.1383, 'learning_rate': 3.7222757955641275e-05, 'epoch': 3.21}
+{'loss': 0.1356, 'learning_rate': 3.6981677917068466e-05, 'epoch': 3.25}
+{'loss': 0.1392, 'learning_rate': 3.6740597878495665e-05, 'epoch': 3.3}
+{'loss': 0.1407, 'learning_rate': 3.6499517839922856e-05, 'epoch': 3.34}
+{'loss': 0.1409, 'learning_rate': 3.625843780135005e-05, 'epoch': 3.39}
+{'loss': 0.1356, 'learning_rate': 3.6017357762777246e-05, 'epoch': 3.43}
+{'loss': 0.1404, 'learning_rate': 3.577627772420444e-05, 'epoch': 3.47}
+{'loss': 0.1434, 'learning_rate': 3.5535197685631636e-05, 'epoch': 3.52}
+{'loss': 0.1456, 'learning_rate': 3.529411764705883e-05, 'epoch': 3.56}
+{'loss': 0.1464, 'learning_rate': 3.505303760848602e-05, 'epoch': 3.61}
+{'loss': 0.145, 'learning_rate': 3.481195756991321e-05, 'epoch': 3.65}
+{'loss': 0.1472, 'learning_rate': 3.457087753134041e-05, 'epoch': 3.69}
+{'loss': 0.1433, 'learning_rate': 3.43297974927676e-05, 'epoch': 3.74}
+{'loss': 0.1469, 'learning_rate': 3.40887174541948e-05, 'epoch': 3.78}
+{'loss': 0.1446, 'learning_rate': 3.384763741562198e-05, 'epoch': 3.83}
+{'loss': 0.1464, 'learning_rate': 3.360655737704918e-05, 'epoch': 3.87}
+{'loss': 0.1427, 'learning_rate': 3.336547733847637e-05, 'epoch': 3.91}
+{'loss': 0.1479, 'learning_rate': 3.312439729990357e-05, 'epoch': 3.96}
+{'eval_loss': 0.2911592423915863, 'eval_accuracy': 0.9, 'eval_runtime': 1216.2327, 'eval_samples_per_second': 33.242, 'eval_steps_per_second': 2.078, 'epoch': 4.0}
+{'loss': 0.1423, 'learning_rate': 3.288331726133076e-05, 'epoch': 4.0}
+{'loss': 0.1001, 'learning_rate': 3.264223722275796e-05, 'epoch': 4.05}
+{'loss': 0.1007, 'learning_rate': 3.2401157184185146e-05, 'epoch': 4.09}
+{'loss': 0.1047, 'learning_rate': 3.2160077145612344e-05, 'epoch': 4.13}
+{'loss': 0.1071, 'learning_rate': 3.1918997107039536e-05, 'epoch': 4.18}
+{'loss': 0.1015, 'learning_rate': 3.1677917068466734e-05, 'epoch': 4.22}
+{'loss': 0.1072, 'learning_rate': 3.1436837029893925e-05, 'epoch': 4.27}
+{'loss': 0.108, 'learning_rate': 3.119575699132112e-05, 'epoch': 4.31}
+{'loss': 0.113, 'learning_rate': 3.0954676952748315e-05, 'epoch': 4.35}
+{'loss': 0.1073, 'learning_rate': 3.071359691417551e-05, 'epoch': 4.4}
+{'loss': 0.1103, 'learning_rate': 3.04725168756027e-05, 'epoch': 4.44}
+{'loss': 0.1081, 'learning_rate': 3.0231436837029896e-05, 'epoch': 4.49}
+{'loss': 0.1063, 'learning_rate': 2.9990356798457088e-05, 'epoch': 4.53}
+{'loss': 0.1088, 'learning_rate': 2.9749276759884283e-05, 'epoch': 4.57}
+{'loss': 0.1167, 'learning_rate': 2.9508196721311478e-05, 'epoch': 4.62}
+{'loss': 0.1093, 'learning_rate': 2.9267116682738673e-05, 'epoch': 4.66}
+{'loss': 0.1123, 'learning_rate': 2.9026036644165868e-05, 'epoch': 4.71}
+{'loss': 0.1127, 'learning_rate': 2.878495660559306e-05, 'epoch': 4.75}
+{'loss': 0.1031, 'learning_rate': 2.854387656702025e-05, 'epoch': 4.79}
+{'loss': 0.117, 'learning_rate': 2.8302796528447446e-05, 'epoch': 4.84}
+{'loss': 0.1068, 'learning_rate': 2.806171648987464e-05, 'epoch': 4.88}
+{'loss': 0.1097, 'learning_rate': 2.7820636451301835e-05, 'epoch': 4.93}
+{'loss': 0.1098, 'learning_rate': 2.757955641272903e-05, 'epoch': 4.97}
+{'eval_loss': 0.31801238656044006, 'eval_accuracy': 0.901187237200099, 'eval_runtime': 1216.3401, 'eval_samples_per_second': 33.239, 'eval_steps_per_second': 2.078, 'epoch': 5.0}
+{'loss': 0.1043, 'learning_rate': 2.733847637415622e-05, 'epoch': 5.01}
+{'loss': 0.0821, 'learning_rate': 2.7097396335583413e-05, 'epoch': 5.06}
+{'loss': 0.077, 'learning_rate': 2.6856316297010608e-05, 'epoch': 5.1}
+{'loss': 0.0808, 'learning_rate': 2.6615236258437803e-05, 'epoch': 5.14}
+{'loss': 0.0873, 'learning_rate': 2.6374156219864998e-05, 'epoch': 5.19}
+{'loss': 0.0823, 'learning_rate': 2.6133076181292186e-05, 'epoch': 5.23}
+{'loss': 0.0865, 'learning_rate': 2.589199614271938e-05, 'epoch': 5.28}
+{'loss': 0.0855, 'learning_rate': 2.5650916104146576e-05, 'epoch': 5.32}
+{'loss': 0.0875, 'learning_rate': 2.540983606557377e-05, 'epoch': 5.36}
+{'loss': 0.0843, 'learning_rate': 2.5168756027000966e-05, 'epoch': 5.41}
+{'loss': 0.0844, 'learning_rate': 2.492767598842816e-05, 'epoch': 5.45}
+{'loss': 0.0895, 'learning_rate': 2.4686595949855356e-05, 'epoch': 5.5}
+{'loss': 0.084, 'learning_rate': 2.4445515911282547e-05, 'epoch': 5.54}
+{'loss': 0.0893, 'learning_rate': 2.4204435872709742e-05, 'epoch': 5.58}
+{'loss': 0.092, 'learning_rate': 2.3963355834136937e-05, 'epoch': 5.63}
+{'loss': 0.082, 'learning_rate': 2.372227579556413e-05, 'epoch': 5.67}
+{'loss': 0.0928, 'learning_rate': 2.3481195756991323e-05, 'epoch': 5.72}
+{'loss': 0.0953, 'learning_rate': 2.3240115718418515e-05, 'epoch': 5.76}
+{'loss': 0.0793, 'learning_rate': 2.299903567984571e-05, 'epoch': 5.8}
+{'loss': 0.0932, 'learning_rate': 2.2757955641272905e-05, 'epoch': 5.85}
+{'loss': 0.0907, 'learning_rate': 2.2516875602700096e-05, 'epoch': 5.89}
+{'loss': 0.0868, 'learning_rate': 2.227579556412729e-05, 'epoch': 5.94}
+{'loss': 0.093, 'learning_rate': 2.2034715525554486e-05, 'epoch': 5.98}
+{'eval_loss': 0.3480056822299957, 'eval_accuracy': 0.9031906999752659, 'eval_runtime': 1216.5674, 'eval_samples_per_second': 33.233, 'eval_steps_per_second': 2.077, 'epoch': 6.0}
+{'loss': 0.0739, 'learning_rate': 2.1793635486981678e-05, 'epoch': 6.02}
+{'loss': 0.0618, 'learning_rate': 2.1552555448408872e-05, 'epoch': 6.07}
+{'loss': 0.064, 'learning_rate': 2.1311475409836064e-05, 'epoch': 6.11}
+{'loss': 0.0724, 'learning_rate': 2.107039537126326e-05, 'epoch': 6.16}
+{'loss': 0.0594, 'learning_rate': 2.0829315332690454e-05, 'epoch': 6.2}
+{'loss': 0.0675, 'learning_rate': 2.058823529411765e-05, 'epoch': 6.24}
+{'loss': 0.0708, 'learning_rate': 2.0347155255544844e-05, 'epoch': 6.29}
+{'loss': 0.0723, 'learning_rate': 2.010607521697204e-05, 'epoch': 6.33}
+{'loss': 0.068, 'learning_rate': 1.986499517839923e-05, 'epoch': 6.38}
+{'loss': 0.0702, 'learning_rate': 1.9623915139826425e-05, 'epoch': 6.42}
+{'loss': 0.072, 'learning_rate': 1.9382835101253616e-05, 'epoch': 6.46}
+{'loss': 0.0696, 'learning_rate': 1.914175506268081e-05, 'epoch': 6.51}
+{'loss': 0.0737, 'learning_rate': 1.8900675024108006e-05, 'epoch': 6.55}
+{'loss': 0.0739, 'learning_rate': 1.8659594985535198e-05, 'epoch': 6.6}
+{'loss': 0.0716, 'learning_rate': 1.8418514946962393e-05, 'epoch': 6.64}
+{'loss': 0.0711, 'learning_rate': 1.8177434908389588e-05, 'epoch': 6.68}
+{'loss': 0.0777, 'learning_rate': 1.793635486981678e-05, 'epoch': 6.73}
+{'loss': 0.0647, 'learning_rate': 1.7695274831243974e-05, 'epoch': 6.77}
+{'loss': 0.0762, 'learning_rate': 1.7454194792671165e-05, 'epoch': 6.82}
+{'loss': 0.0691, 'learning_rate': 1.721311475409836e-05, 'epoch': 6.86}
+{'loss': 0.071, 'learning_rate': 1.6972034715525555e-05, 'epoch': 6.9}
+{'loss': 0.0738, 'learning_rate': 1.6730954676952747e-05, 'epoch': 6.95}
+{'loss': 0.0688, 'learning_rate': 1.6489874638379942e-05, 'epoch': 6.99}
+{'eval_loss': 0.4137278199195862, 'eval_accuracy': 0.9024239426168686, 'eval_runtime': 1215.5797, 'eval_samples_per_second': 33.26, 'eval_steps_per_second': 2.079, 'epoch': 7.0}
+{'loss': 0.0533, 'learning_rate': 1.6248794599807137e-05, 'epoch': 7.04}
+{'loss': 0.0529, 'learning_rate': 1.600771456123433e-05, 'epoch': 7.08}
+{'loss': 0.0562, 'learning_rate': 1.5766634522661526e-05, 'epoch': 7.12}
+{'loss': 0.0575, 'learning_rate': 1.5525554484088718e-05, 'epoch': 7.17}
+{'loss': 0.052, 'learning_rate': 1.5284474445515913e-05, 'epoch': 7.21}
+{'loss': 0.0538, 'learning_rate': 1.5043394406943106e-05, 'epoch': 7.26}
+{'loss': 0.0538, 'learning_rate': 1.48023143683703e-05, 'epoch': 7.3}
+{'loss': 0.0585, 'learning_rate': 1.4561234329797494e-05, 'epoch': 7.34}
+{'loss': 0.0552, 'learning_rate': 1.4320154291224689e-05, 'epoch': 7.39}
+{'loss': 0.0554, 'learning_rate': 1.407907425265188e-05, 'epoch': 7.43}
+{'loss': 0.0565, 'learning_rate': 1.3837994214079075e-05, 'epoch': 7.48}
+{'loss': 0.0559, 'learning_rate': 1.359691417550627e-05, 'epoch': 7.52}
+{'loss': 0.0604, 'learning_rate': 1.3355834136933462e-05, 'epoch': 7.56}
+{'loss': 0.0574, 'learning_rate': 1.3114754098360657e-05, 'epoch': 7.61}
+{'loss': 0.0651, 'learning_rate': 1.2873674059787848e-05, 'epoch': 7.65}
+{'loss': 0.0566, 'learning_rate': 1.2632594021215043e-05, 'epoch': 7.7}
+{'loss': 0.058, 'learning_rate': 1.2391513982642238e-05, 'epoch': 7.74}
+{'loss': 0.0572, 'learning_rate': 1.2150433944069433e-05, 'epoch': 7.78}
+{'loss': 0.0561, 'learning_rate': 1.1909353905496626e-05, 'epoch': 7.83}
+{'loss': 0.0528, 'learning_rate': 1.166827386692382e-05, 'epoch': 7.87}
+{'loss': 0.055, 'learning_rate': 1.1427193828351013e-05, 'epoch': 7.92}
+{'loss': 0.0603, 'learning_rate': 1.1186113789778208e-05, 'epoch': 7.96}
+{'eval_loss': 0.4624580144882202, 'eval_accuracy': 0.9027949542418996, 'eval_runtime': 1216.2875, 'eval_samples_per_second': 33.24, 'eval_steps_per_second': 2.078, 'epoch': 8.0}
+{'loss': 0.0512, 'learning_rate': 1.09450337512054e-05, 'epoch': 8.0}
+{'loss': 0.0359, 'learning_rate': 1.0703953712632594e-05, 'epoch': 8.05}
+{'loss': 0.0481, 'learning_rate': 1.0462873674059787e-05, 'epoch': 8.09}
+{'loss': 0.0449, 'learning_rate': 1.0221793635486982e-05, 'epoch': 8.14}
+{'loss': 0.0489, 'learning_rate': 9.980713596914177e-06, 'epoch': 8.18}
+{'loss': 0.043, 'learning_rate': 9.73963355834137e-06, 'epoch': 8.22}
+{'loss': 0.049, 'learning_rate': 9.498553519768563e-06, 'epoch': 8.27}
+{'loss': 0.0458, 'learning_rate': 9.257473481195758e-06, 'epoch': 8.31}
+{'loss': 0.0452, 'learning_rate': 9.016393442622952e-06, 'epoch': 8.35}
+{'loss': 0.0403, 'learning_rate': 8.775313404050145e-06, 'epoch': 8.4}
+{'loss': 0.0497, 'learning_rate': 8.534233365477338e-06, 'epoch': 8.44}
+{'loss': 0.047, 'learning_rate': 8.293153326904533e-06, 'epoch': 8.49}
+{'loss': 0.047, 'learning_rate': 8.052073288331726e-06, 'epoch': 8.53}
+{'loss': 0.0508, 'learning_rate': 7.810993249758921e-06, 'epoch': 8.57}
+{'loss': 0.0506, 'learning_rate': 7.569913211186113e-06, 'epoch': 8.62}
+{'loss': 0.0486, 'learning_rate': 7.328833172613308e-06, 'epoch': 8.66}
+{'loss': 0.047, 'learning_rate': 7.087753134040502e-06, 'epoch': 8.71}
+{'loss': 0.0505, 'learning_rate': 6.8466730954676955e-06, 'epoch': 8.75}
+{'loss': 0.0454, 'learning_rate': 6.605593056894889e-06, 'epoch': 8.79}
+{'loss': 0.0513, 'learning_rate': 6.364513018322084e-06, 'epoch': 8.84}
+{'loss': 0.0469, 'learning_rate': 6.123432979749278e-06, 'epoch': 8.88}
+{'loss': 0.0465, 'learning_rate': 5.882352941176471e-06, 'epoch': 8.93}
+{'loss': 0.0464, 'learning_rate': 5.641272902603665e-06, 'epoch': 8.97}
+{'eval_loss': 0.4875478148460388, 'eval_accuracy': 0.9031906999752659, 'eval_runtime': 1216.7667, 'eval_samples_per_second': 33.227, 'eval_steps_per_second': 2.077, 'epoch': 9.0}
+{'loss': 0.0431, 'learning_rate': 5.400192864030858e-06, 'epoch': 9.01}
+{'loss': 0.0388, 'learning_rate': 5.159112825458052e-06, 'epoch': 9.06}
+{'loss': 0.0317, 'learning_rate': 4.918032786885246e-06, 'epoch': 9.1}
+{'loss': 0.0375, 'learning_rate': 4.67695274831244e-06, 'epoch': 9.15}
+{'loss': 0.042, 'learning_rate': 4.4358727097396336e-06, 'epoch': 9.19}
+{'loss': 0.039, 'learning_rate': 4.194792671166828e-06, 'epoch': 9.23}
+{'loss': 0.0409, 'learning_rate': 3.953712632594022e-06, 'epoch': 9.28}
+{'loss': 0.033, 'learning_rate': 3.7126325940212153e-06, 'epoch': 9.32}
+{'loss': 0.0365, 'learning_rate': 3.471552555448409e-06, 'epoch': 9.37}
+{'loss': 0.0425, 'learning_rate': 3.230472516875603e-06, 'epoch': 9.41}
+{'loss': 0.0401, 'learning_rate': 2.9893924783027966e-06, 'epoch': 9.45}
+{'loss': 0.0399, 'learning_rate': 2.7483124397299903e-06, 'epoch': 9.5}
+{'loss': 0.0451, 'learning_rate': 2.5072324011571843e-06, 'epoch': 9.54}
+{'loss': 0.0419, 'learning_rate': 2.266152362584378e-06, 'epoch': 9.59}
+{'loss': 0.0399, 'learning_rate': 2.0250723240115716e-06, 'epoch': 9.63}
+{'loss': 0.0401, 'learning_rate': 1.7839922854387657e-06, 'epoch': 9.67}
+{'loss': 0.0395, 'learning_rate': 1.5429122468659597e-06, 'epoch': 9.72}
+{'loss': 0.0357, 'learning_rate': 1.3018322082931534e-06, 'epoch': 9.76}
+{'loss': 0.035, 'learning_rate': 1.0607521697203472e-06, 'epoch': 9.81}
+{'loss': 0.0354, 'learning_rate': 8.19672131147541e-07, 'epoch': 9.85}
+{'loss': 0.0418, 'learning_rate': 5.785920925747349e-07, 'epoch': 9.89}
+{'loss': 0.0362, 'learning_rate': 3.3751205400192864e-07, 'epoch': 9.94}
+{'loss': 0.0375, 'learning_rate': 9.643201542912248e-08, 'epoch': 9.98}
+{'eval_loss': 0.5210018157958984, 'eval_accuracy': 0.9034380410586198, 'eval_runtime': 1217.3273, 'eval_samples_per_second': 33.212, 'eval_steps_per_second': 2.076, 'epoch': 10.0}
+{'train_runtime': 266591.7028, 'train_samples_per_second': 13.648, 'train_steps_per_second': 0.426, 'train_loss': 0.13729948743771542, 'epoch': 10.0}
+Total training time: 266591.72 seconds
+######################################################################
+layer-wise fine-tuning bottom 1 - mnli_matched

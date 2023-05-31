@@ -43,8 +43,8 @@ class GlueDataloader:
             dataset_train_split = load_dataset("glue", "mnli", split="train")
             dataset_val_split = self.dataset["validation"]
         else:
-            dataset_train_split = self.dataset["train"]
-            dataset_val_split = self.dataset["validation"]
+            dataset_train_split = self.dataset["train"].select(range(100))
+            dataset_val_split = self.dataset["validation"].select(range(100))
         
         train_dataset, val_dataset = dataset_train_split, dataset_val_split
         preprocess_function = self._get_preprocessing_function()
