@@ -48,7 +48,7 @@ class FIMCalculator:
                                  verbose=verbose, 
                                  every_n=every_n)
         
-        fim_diag_by_layer = self.aggregate_fisher_information(all_fims)
+        fim_diag_by_layer = self.aggregate_fisher_information(all_fims,self.model_name)
         return fim_diag_by_layer
 
     @staticmethod
@@ -132,7 +132,7 @@ class FIMCalculator:
         return all_fims
 
     @staticmethod
-    def aggregate_fisher_information(all_fims):
+    def aggregate_fisher_information(all_fims, model_name):
         latest_fim_diag = all_fims[max(all_fims.keys())]
         fim_diag_by_layer = {}
         
@@ -146,7 +146,7 @@ class FIMCalculator:
 
             # if layer_name == "bert" and layer_name_parts[1] == "encoder":
             # if layer_name == "roberta" and layer_name_parts[1] == "encoder":
-            if layer_name == self.model_name.split("-")[0] and layer_name_parts[1] == "encoder":
+            if layer_name == model_name.split("-")[0] and layer_name_parts[1] == "encoder":
                 layer_index_match = re.search(r'\d+', layer_name_parts[3])
                 if layer_index_match is not None:
                     layer_index = layer_index_match.group()
