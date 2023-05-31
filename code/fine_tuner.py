@@ -21,7 +21,7 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
-import ipdb
+# import ipdb
 
 def main(args):
     set_random_seed(42)
@@ -75,7 +75,7 @@ def main(args):
     elif task_name == "multirc":
         model = AutoModelForQuestionAnswering.from_pretrained(model_name)
     elif task_name == "stsb":
-        model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=1)
+        model = BertForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
         #TODO: changed for roberta
@@ -113,9 +113,6 @@ def main(args):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
-        data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
-            'attention_mask': torch.stack([f[1] for f in data]),
-            'labels': torch.tensor([f[2] for f in data])},
         compute_metrics=compute_metrics
     )
 
