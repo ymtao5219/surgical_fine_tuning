@@ -113,9 +113,6 @@ def main(args):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
-        data_collator=lambda data: {'input_ids': torch.stack([f[0] for f in data]),
-                               'attention_mask': torch.stack([f[1] for f in data]),
-                               'labels': torch.tensor([f[2] for f in data])},
         compute_metrics=compute_metrics
     )
 
