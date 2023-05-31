@@ -2,6 +2,8 @@ import torch
 from torch.nn import Module
 from torch.utils.data import DataLoader
 from transformers import XLNetForSequenceClassification
+
+import argparse
 import re
 import sys
 import time
@@ -28,8 +30,8 @@ class FIMCalculator:
     def __init__(self, model_name: str, tokenized_data):
         self.model_name = model_name
         self.tokenized_data = tokenized_data
-        
-        self.model = XLNetForSequenceClassification.from_pretrained(model_name)
+
+        self.model = XLNetForSequenceClassification.from_pretrained(model_name, num_labels=len(tokenized_data.unique("label")))
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.num_sentences = len(self.tokenized_data)
@@ -86,10 +88,11 @@ class FIMCalculator:
                     target = target.to(device)
 
             logits = model(data)[0]
+
             if empirical:
-                outdx = target.unsqueeze(1)
+                outdx = target.unsqueeze(1).long()
             else:
-                outdx = torch.argmax(logits, dim=1).unsqueeze(1).detach()
+                outdx = torch.argmax(logits, dim=1).unsqueeze(1).long().detach()
             samples = logits.gather(1, outdx)
 
             idx, batch_size = 0, data.size(0)
@@ -155,18 +158,24 @@ class FIMCalculator:
         keys = [item[0] for item in sorted_items[:k]]
         return keys
 
-    
-# Example usage 
-GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2"]
-SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
+if __name__ == "__main__":    
+    # Example usage 
+    # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2"]
+    # SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa", "boolq"]
 
-model_name = "xlnet-base-cased"
-tokenized_data = GlueDataloader("mrpc").get_samples(100)
+    parser = argparse.ArgumentParser(description="Fisher score calculation")  
+    parser.add_argument("--task_name", type=str, default="mrpc", help="Name of the task in GLUE/SuperGLUE")
+ 
+    args = parser.parse_args()
+    task_name = args.task_name
 
-calc = FIMCalculator(model_name, tokenized_data)
-fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+    model_name = "xlnet-base-cased"
+    tokenized_data = GlueDataloader(task_name).get_samples(100)
 
-# Select those with the lowest FIM layers to freeze
-layers_to_freeze = calc.bottom_k_layers(fim, k=12)
-ipdb.set_trace()
+    calc = FIMCalculator(model_name, tokenized_data)
+    fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+
+    # Select those with the lowest FIM layers to freeze
+    layers_to_freeze = calc.bottom_k_layers(fim, k=12)
+    ipdb.set_trace()
 
