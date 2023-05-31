@@ -3,7 +3,8 @@ import random
 from transformers import AutoTokenizer
 import torch
 from collections import defaultdict
-# import ipdb
+import ipdb
+from dataclasses import dataclass
 
 class GlueDataloader:
     GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
@@ -29,7 +30,13 @@ class GlueDataloader:
 
     def get_samples(self, num_sentences, split="validation", seed=42):
         random.seed(seed)
-        sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
+        if self.task_name == "mnli_mismatched":
+            sampled_data = load_dataset("glue", "mnli")["validation_mismatched"].select(range(num_sentences))
+        elif self.task_name == "mnli_matched":
+            sampled_data = load_dataset("glue", "mnli")["validation_matched"].select(range(num_sentences))
+        else: 
+            sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
+            
         preprocess_function = self._get_preprocessing_function()
         columns_to_remove = [col for col in sampled_data.column_names if col != 'label']
         sampled_data = sampled_data.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
@@ -41,7 +48,10 @@ class GlueDataloader:
         # special case for mnli
         if self.task_name in ["mnli_mismatched", "mnli_matched"]:
             dataset_train_split = load_dataset("glue", "mnli", split="train")
-            dataset_val_split = self.dataset["validation"]
+            if self.task_name == "mnli_mismatched":
+                dataset_val_split = load_dataset("glue", "mnli")["validation_mismatched"]
+            else:
+                dataset_val_split = load_dataset("glue", "mnli")["validation_matched"]
         else:
             dataset_train_split = self.dataset["train"].select(range(100))
             dataset_val_split = self.dataset["validation"].select(range(100))
@@ -116,26 +126,48 @@ class GlueDataloader:
         elif self.task_name in ["cb"]:
             def preprocess_function_cb(examples):
                 encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
-                encoded['label'] = examples['label']
+                encoded.update({"label": examples["label"]})
                 return encoded
             preprocess_function = preprocess_function_cb
 
         # qa task 
         elif self.task_name in ["copa"]:
             def preprocess_function_copa(examples):
-                COPA_DICT = {"cause": "What was the cause of this?", "effect": "What happened as a result?",}
+                # COPA_DICT = {"cause": "What was the cause of this?", "effect": "What happened as a result?",}
 
-                contexts = [p + " " + COPA_DICT[q] for p, q in zip(examples["premise"], examples["question"])]
-                sentences_a = [ctx + " " + choice for ctx, choice in zip(contexts, examples["choice1"])]
-                sentences_b = [ctx + " " + choice for ctx, choice in zip(contexts, examples["choice2"])]
-                encoded = self.tokenizer(
-                    sentences_a,
-                    sentences_b,
-                    truncation=True,
-                    padding="max_length",
-                )
-                encoded.update({"label": examples["label"]})
-                return encoded
+                # contexts = [p + " " + COPA_DICT[q] for p, q in zip(examples["premise"], examples["question"])]
+                # sentences_a = [ctx + " " + choice for ctx, choice in zip(contexts, examples["choice1"])]
+                # sentences_b = [ctx + " " + choice for ctx, choice in zip(contexts, examples["choice2"])]
+                # encoded = self.tokenizer(
+                #     sentences_a,
+                #     sentences_b,
+                #     truncation=True,
+                #     padding="max_length",
+                # )
+                # encoded.update({"label": examples["label"]})
+                
+                # return encoded
+                CONTEXT_COL = "premise"
+                QUESTION_COL = "question"
+                ANSWER_1_COL = "choice1"
+                ANSWER_2_COL = "choice2"
+
+                question_headers = examples[QUESTION_COL]
+                first_sentences = [
+                    [f"{examples[CONTEXT_COL][i]} What was the cause of this? "]*2 if header == "cause" else\
+                    [f"{examples[CONTEXT_COL][i]} What was the effect of this? "]*2\
+                        for i, header in enumerate(question_headers)
+                ]
+                first_sentences = sum(first_sentences, [])
+                
+                second_sentences = [
+                    [examples[end][i] for end in [ANSWER_1_COL, ANSWER_2_COL]] for i, header in enumerate(question_headers)
+                ]
+                second_sentences = sum(second_sentences, [])
+                tokenized_examples = self.tokenizer(first_sentences, second_sentences, truncation=True, padding="max_length")
+                
+                return {k: [v[i : i + 2] for i in range(0, len(v), 2)] for k, v in tokenized_examples.items()}
+                        
             preprocess_function = preprocess_function_copa
         
         # qa task 
@@ -148,7 +180,7 @@ class GlueDataloader:
                 truncation=True,
                 padding="max_length",
                 )
-                encoded.update({"label": examples[self.column_config.label]})
+                encoded.update({"label": examples["label"]})
                 return encoded
             preprocess_function = preprocess_data_multirc
         
@@ -236,14 +268,43 @@ class GlueDataloader:
                 }
 
                 return processed_examples
-            
+
             preprocess_function = preprocess_function_wsc
         return preprocess_function
     
+@dataclass
+class DataCollatorForMultipleChoice:
+    """
+    Data collator that will dynamically pad the inputs for multiple choice received.
+    """
+    def __init__(self, tokenizer):
+        self.tokenizer = tokenizer
+        self.pad_to_multiple_of = None
+        
+    def __call__(self, features):
+        label_name = "label" if "label" in features[0].keys() else "labels"
+        labels = [feature.pop(label_name) for feature in features]
+        batch_size = len(features)
+        num_choices = len(features[0]["input_ids"])
+        flattened_features = [
+            [{k: v[i] for k, v in feature.items()} for i in range(num_choices)] for feature in features
+        ]
+        flattened_features = sum(flattened_features, [])
+
+        batch = self.tokenizer.pad(
+            flattened_features,
+            padding="max_length",
+            pad_to_multiple_of=self.pad_to_multiple_of,
+            return_tensors="pt",
+        )
+
+        batch = {k: v.view(batch_size, num_choices, -1) for k, v in batch.items()}
+        batch["labels"] = torch.tensor(labels, dtype=torch.int64)
+        return batch
 # example usage
 # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
 # SUPERGLUE_TASKS = ["boolq", "cb", "copa", "multirc", "record", "wic",  "wsc"]
-# data = GlueDataloader("record")
+# data = GlueDataloader("copa")
 # samples = data.get_samples(10)
 # train, val = data.get_train_val_split()
 # ipdb.set_trace()

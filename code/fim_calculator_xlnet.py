@@ -1,8 +1,9 @@
 import torch
 from torch.nn import Module
 from torch.utils.data import DataLoader
-from torch.distributions import Categorical
-from transformers import AutoModelForSequenceClassification
+from transformers import XLNetForSequenceClassification
+
+import argparse
 import re
 import sys
 import time
@@ -15,9 +16,6 @@ from data_loader import *
 
 import ipdb
 
-import os
-os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-
 # Set seed for reproducibility
 def set_seed(seed: int):
     random.seed(seed)
@@ -25,24 +23,23 @@ def set_seed(seed: int):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
-set_seed(42)
+set_seed(1314)
 
 class FIMCalculator:
 
     def __init__(self, model_name: str, tokenized_data):
         self.model_name = model_name
         self.tokenized_data = tokenized_data
-        # self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=len(tokenized_data.unique("label")))
+
+        self.model = XLNetForSequenceClassification.from_pretrained(model_name, num_labels=len(tokenized_data.unique("label")))
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.num_sentences = len(self.tokenized_data)
-        # self.tokenized_data = self.dataset.map(self.tokenize_function, batched=True, remove_columns=["sentence", "idx"])
         self.tokenized_data.set_format("torch", columns=["input_ids", "attention_mask", "label"])
 
     def compute_fim(self, batch_size=1, empirical=True, verbose=True, every_n=None):
         data_loader = DataLoader(self.tokenized_data, batch_size=batch_size)
-        # ipdb.set_trace()
+        
         all_fims = self.fim_diag(self.model, 
                                  data_loader, 
                                  samples_no=self.num_sentences, 
@@ -51,23 +48,23 @@ class FIMCalculator:
                                  verbose=verbose, 
                                  every_n=every_n)
         
-        fim_diag_by_layer = self.aggregate_fisher_information(all_fims,self.model_name)
+        fim_diag_by_layer = self.aggregate_fisher_information(all_fims)
         return fim_diag_by_layer
 
     @staticmethod
     def fim_diag(model: Module,
-                 data_loader: DataLoader,
-                 samples_no: int = None,
-                 empirical: bool = False,
-                 device: torch.device = None,
-                 verbose: bool = False,
-                 every_n: int = None) -> Dict[int, Dict[str, Tensor]]:
+                data_loader: DataLoader,
+                samples_no: int = None,
+                empirical: bool = False,
+                device: torch.device = None,
+                verbose: bool = False,
+                every_n: int = None) -> Dict[int, Dict[str, Tensor]]:
         model.eval()
         fim = {}
         for name, param in model.named_parameters():
             if param.requires_grad:
                 fim[name] = torch.zeros_like(param)
-        
+
         seen_no = 0
         last = 0
         tic = time.time()
@@ -77,11 +74,8 @@ class FIMCalculator:
         while samples_no is None or seen_no < samples_no:
             data_iterator = iter(data_loader)
             try:
-                # data, target = next(data_iterator)
                 batch = next(data_iterator)
-                
                 data, target = batch["input_ids"], batch["label"]
-                # ipdb.set_trace()
             except StopIteration:
                 if samples_no is None:
                     break
@@ -92,13 +86,13 @@ class FIMCalculator:
                 data = data.to(device)
                 if empirical:
                     target = target.to(device)
-                    
-            logits = model(data).logits
+
+            logits = model(data)[0]
+
             if empirical:
-                outdx = target.unsqueeze(1)
+                outdx = target.unsqueeze(1).long()
             else:
-                outdx = Categorical(logits=logits).sample().unsqueeze(1).detach()
-            # ipdb.set_trace()
+                outdx = torch.argmax(logits, dim=1).unsqueeze(1).long().detach()
             samples = logits.gather(1, outdx)
 
             idx, batch_size = 0, data.size(0)
@@ -106,7 +100,7 @@ class FIMCalculator:
                 model.zero_grad()
                 torch.autograd.backward(samples[idx], retain_graph=True)
                 for name, param in model.named_parameters():
-                    if param.requires_grad:
+                    if param.requires_grad and param.grad is not None:  # Check for None gradient
                         fim[name] += (param.grad * param.grad)
                         fim[name].detach_()
                 seen_no += 1
@@ -135,35 +129,28 @@ class FIMCalculator:
 
         return all_fims
 
+
     @staticmethod
-    def aggregate_fisher_information(all_fims, model_name):
+    def aggregate_fisher_information(all_fims):
         latest_fim_diag = all_fims[max(all_fims.keys())]
         fim_diag_by_layer = {}
-        
-        # param_names = []
+
         for param_name, param_fim_diag in latest_fim_diag.items():
             layer_name_parts = param_name.split('.')
-            # print(layer_name_parts)
             layer_name = layer_name_parts[0]
-            
-            # param_names.append(param_name)
 
-            # if layer_name == "bert" and layer_name_parts[1] == "encoder":
-            # if layer_name == "roberta" and layer_name_parts[1] == "encoder":
-            if layer_name == model_name.split("-")[0] and layer_name_parts[1] == "encoder":
-                layer_index_match = re.search(r'\d+', layer_name_parts[3])
+            if layer_name == "transformer" and layer_name_parts[1] == "layer":
+                layer_index_match = re.search(r'\d+', layer_name_parts[2])
                 if layer_index_match is not None:
                     layer_index = layer_index_match.group()
-                    layer_name = f"{layer_name}.encoder.layer_{layer_index}"
+                    layer_name = f"{layer_name}.layer_{layer_index}"
 
                 if layer_name not in fim_diag_by_layer:
                     fim_diag_by_layer[layer_name] = 0.0
 
                 fim_diag_by_layer[layer_name] += torch.norm(param_fim_diag, p='fro').item()
-        # ipdb.set_trace()
-        return fim_diag_by_layer
 
-    
+        return fim_diag_by_layer
 
     @staticmethod
     def bottom_k_layers(input_dict, k):
@@ -171,22 +158,24 @@ class FIMCalculator:
         keys = [item[0] for item in sorted_items[:k]]
         return keys
 
-    
-# example usage 
-GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
-SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
+if __name__ == "__main__":    
+    # Example usage 
+    # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2"]
+    # SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa", "boolq"]
 
-# Alex
-# ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
-model_name = "bert-base-cased"
-# model_name = "bert-large-cased"
-# model_name="roberta-base"
-tokenized_data = GlueDataloader("mrpc").get_samples(100)
+    parser = argparse.ArgumentParser(description="Fisher score calculation")  
+    parser.add_argument("--task_name", type=str, default="mrpc", help="Name of the task in GLUE/SuperGLUE")
+ 
+    args = parser.parse_args()
+    task_name = args.task_name
 
-# ipdb.set_trace()
-calc = FIMCalculator(model_name, tokenized_data)
-fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+    model_name = "xlnet-base-cased"
+    tokenized_data = GlueDataloader(task_name).get_samples(100)
 
-# select those with lowest FIM layers to freeze
-layers_to_freeze = calc.bottom_k_layers(fim, k=12)
-ipdb.set_trace()
+    calc = FIMCalculator(model_name, tokenized_data)
+    fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+
+    # Select those with the lowest FIM layers to freeze
+    layers_to_freeze = calc.bottom_k_layers(fim, k=12)
+    ipdb.set_trace()
+

@@ -1,6 +1,6 @@
 import argparse
-from transformers import BertForSequenceClassification, AutoModelForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
-
+from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
+from transformers import AutoTokenizer, RobertaForSequenceClassification
 import time 
 
 import evaluate
@@ -21,6 +21,7 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
+import ipdb
 
 def main(args):
     set_random_seed(42)
@@ -45,10 +46,10 @@ def main(args):
             return metric.compute(predictions=predictions, references=labels)
 
     elif task_name == "stsb":
-        metric = evaluate.load("spearmanr")
+        metric = evaluate.load("accuracy")
         def compute_metrics(eval_pred):
             logits, labels = eval_pred
-            predictions = np.argmax(logits, axis=-1)
+            predictions = logits[:, 0]
             return metric.compute(predictions=predictions, references=labels)
 
     else: 
@@ -77,10 +78,13 @@ def main(args):
         model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
-
+        #TODO: changed for roberta
+        # model = RobertaForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
     # ipdb.set_trace()
     def add_prefix(val):
         return "bert.encoder.layer." + str(val)
+         # TODO: changed for roberta
+        # return "roberta.encoder.layer." + str(val)
 
     # print("layers to freeze", freeze_layers)
     if freeze_layers:
