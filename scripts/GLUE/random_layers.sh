@@ -3,7 +3,7 @@
 #SBATCH --output=results/logs/%x_job_name_output_%j.log
 #SBATCH -c 4  # Number of Cores per Task
 #SBATCH -p gypsum-titanx  # Partition
-#SBATCH --time=4-11:50:00 # Time before Unity is closed
+#SBATCH --time=4-11:35:00 # Time before Unity is closed
 #SBATCH -G 1  # Number of GPUs
 
 echo "######################################################################"
