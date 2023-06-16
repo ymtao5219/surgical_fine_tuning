@@ -22,7 +22,7 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
-# import ipdb
+import ipdb
 
 def main(args):
     set_random_seed(42)
@@ -82,21 +82,21 @@ def main(args):
     elif task_name == "stsb":
         model = XLNetForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
-        model = XLNetForSequenceClassification.from_pretrained(model_name, num_labels=2)
+        model = XLNetForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
 
     # ipdb.set_trace()
     def add_prefix(val):
         return "transformer.layer." + str(val)
 
     # print("layers to freeze", freeze_layers)
-    # if freeze_layers:
-    #     for i in range(len(freeze_layers)):
-    #         freeze_layers[i] = add_prefix(freeze_layers[i])
-    #     freeze_layers = tuple(freeze_layers)
-    #     print("layers to freeze", freeze_layers)
-    #     for name, param in model.named_parameters():
-    #         if name.startswith(freeze_layers):
-    #             param.requires_grad = False
+    if freeze_layers:
+        for i in range(len(freeze_layers)):
+            freeze_layers[i] = add_prefix(freeze_layers[i])
+        freeze_layers = tuple(freeze_layers)
+        print("layers to freeze", freeze_layers)
+        for name, param in model.named_parameters():
+            if name.startswith(freeze_layers):
+                param.requires_grad = False
 
     if args.benchmark == "glue":
         config_path = "configs/glue_training_args.yaml"
