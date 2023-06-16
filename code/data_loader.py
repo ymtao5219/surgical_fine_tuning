@@ -1,6 +1,6 @@
 from datasets import load_dataset, Dataset, DatasetDict
 import random
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, XLNetTokenizer
 import torch
 from collections import defaultdict
 # import ipdb
@@ -14,7 +14,10 @@ class GlueDataloader:
         self.task_name = task_name.lower()
         self.model_name = model_name
         
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        if self.model_name.startswith('xlnet'):
+            self.tokenizer = XLNetTokenizer.from_pretrained(model_name)
+        else:
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         
         self.dataset = self._load_dataset()
 
@@ -53,8 +56,8 @@ class GlueDataloader:
             else:
                 dataset_val_split = load_dataset("glue", "mnli")["validation_matched"]
         else:
-            dataset_train_split = self.dataset["train"]
-            dataset_val_split = self.dataset["validation"]
+            dataset_train_split = self.dataset["train"].select(range(10))
+            dataset_val_split = self.dataset["validation"].select(range(10))
         
         train_dataset, val_dataset = dataset_train_split, dataset_val_split
         preprocess_function = self._get_preprocessing_function()
@@ -124,11 +127,18 @@ class GlueDataloader:
 
         # NLI task: classification
         elif self.task_name in ["cb"]:
-            def preprocess_function_cb(examples):
-                encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
-                encoded.update({"label": examples["label"]})
-                return encoded
-            preprocess_function = preprocess_function_cb
+            if self.model_name.startswith('xlnet'):
+                print("XLNET verified")
+                def preprocess_function_cb(examples):
+                    encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
+                    return encoded
+                preprocess_function = preprocess_function_cb
+            else:
+                def preprocess_function_cb(examples):
+                    encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
+                    encoded.update({"label": examples["label"]})
+                    return encoded
+                preprocess_function = preprocess_function_cb
 
         # qa task 
         elif self.task_name in ["copa"]:
