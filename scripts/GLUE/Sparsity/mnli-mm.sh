@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBTACH --job-name=glue_mnli_mm  # CHANGE THIS! for different tasks
-#SBATCH --output=results/logs/%x_job_name_output_%j.log
+#SBTACH --job-name=sparsity_glue_mnli_mm  # CHANGE THIS! for different tasks
+#SBATCH --output=results/logs/Sparsity/%x_job_name_output_%j.log
 #SBATCH -c 4  # Number of Cores per Task
 #SBATCH -p gypsum-m40  # Partition
 #SBATCH --time 15-00:00:00  # time
