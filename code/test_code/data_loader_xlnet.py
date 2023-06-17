@@ -1,4 +1,4 @@
-from datasets import load_dataset, load_metric, Dataset, DatasetDict
+from datasets import load_dataset, Dataset, DatasetDict
 import random
 from transformers import AutoTokenizer, XLNetTokenizer
 import torch
@@ -14,7 +14,7 @@ class XLNetGlueDataloader:
         self.task_name = task_name.lower()
         self.model_name = model_name
         
-        self.tokenizer = XLNetTokenizer.from_pretrained(model_name, use_fast=True)
+        self.tokenizer = XLNetTokenizer.from_pretrained(model_name)
         
         self.dataset = self._load_dataset()
 
@@ -27,7 +27,80 @@ class XLNetGlueDataloader:
             raise ValueError("Invalid task name. Please choose from GLUE or SuperGLUE tasks.")
 
         return dataset
-  
+
+    def get_samples(self, num_sentences, split="validation", seed=42):
+        random.seed(seed)
+        if self.task_name == "mnli_mismatched":
+            sampled_data = load_dataset("glue", "mnli")["validation_mismatched"].select(range(num_sentences))
+        elif self.task_name == "mnli_matched":
+            sampled_data = load_dataset("glue", "mnli")["validation_matched"].select(range(num_sentences))
+        else: 
+            sampled_data = self.dataset[split].select(range(min(len(self.dataset[split]), num_sentences)))
+            
+        preprocess_function = self._get_preprocessing_function()
+        columns_to_remove = [col for col in sampled_data.column_names if col != 'label']
+        sampled_data = sampled_data.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
+        
+        return sampled_data
+
+    def get_train_val_split(self, num_samples_per_class=None):
+        
+        # special case for mnli
+        if self.task_name in ["mnli_mismatched", "mnli_matched"]:
+            dataset_train_split = load_dataset("glue", "mnli", split="train")
+            if self.task_name == "mnli_mismatched":
+                dataset_val_split = load_dataset("glue", "mnli")["validation_mismatched"]
+            else:
+                dataset_val_split = load_dataset("glue", "mnli")["validation_matched"]
+        else:
+            dataset_train_split = self.dataset["train"]
+            dataset_val_split = self.dataset["validation"]
+        
+        train_dataset, val_dataset = dataset_train_split, dataset_val_split
+        preprocess_function = self._get_preprocessing_function()
+
+        if num_samples_per_class is None: 
+            # Preprocess datasets
+            # ipdb.set_trace()
+            columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
+            train_dataset = train_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
+            val_dataset = val_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
+
+            return train_dataset, val_dataset
+        
+        else: 
+            # Check if the dataset has the 'label' field
+            if "label" not in train_dataset.column_names:
+                raise ValueError(f"Task '{self.task_name}' does not have a 'label' field in the dataset.")
+
+            # Get the unique class labels
+            unique_labels = set(train_dataset["label"])
+
+            # Get the desired number of samples per class using filters
+            selected_samples = []
+            for label in unique_labels:
+                samples_with_label = train_dataset.filter(lambda x: x["label"] == label)
+
+                if len(samples_with_label) < num_samples_per_class:
+                    print(f"Warning: Task '{self.task_name}' has less than {num_samples_per_class} samples for class {label}.")
+                    selected_samples.extend(samples_with_label)
+                else:
+                    selected_samples.extend(random.sample(list(samples_with_label), num_samples_per_class))
+
+            
+            # Create a dictionary containing the selected samples
+            selected_samples_dict = {key: [sample[key] for sample in selected_samples] for key in train_dataset.column_names}
+
+            # Create a new dataset from the selected samples using Dataset.from_dict()
+            selected_dataset = Dataset.from_dict(selected_samples_dict)
+
+            # Preprocess the sampled training and validation datasets
+            columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
+            train_dataset = selected_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
+            val_dataset = val_dataset.map(preprocess_function, batched=False, remove_columns=columns_to_remove)
+
+            return train_dataset, val_dataset
+    
     def _get_preprocessing_function(self):
         '''
         Get the preprocessing function for each task
@@ -35,27 +108,43 @@ class XLNetGlueDataloader:
         
         # GLUE tasks
         if self.task_name in ["mrpc", "stsb", "rte", "wnli"]: 
-            preprocess_function = lambda examples: self.tokenizer(examples['sentence1'], examples['sentence2'], truncation=True)
+            preprocess_function = lambda examples: self.tokenizer(examples['sentence1'], examples['sentence2'], truncation=True, padding='max_length')
         elif self.task_name in ["qqp"]: 
-            preprocess_function = lambda examples: self.tokenizer(examples['question1'], examples['question2'], truncation=True)
+            preprocess_function = lambda examples: self.tokenizer(examples['question1'], examples['question2'], truncation=True, padding='max_length')
         elif self.task_name in ["mnli_mismatched", "mnli_matched"]: 
-            preprocess_function = lambda examples: self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True)
+            preprocess_function = lambda examples: self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
         elif self.task_name in ["qnli"]: 
-            preprocess_function = lambda examples: self.tokenizer(examples['question'], examples['sentence'], truncation=True)
+            preprocess_function = lambda examples: self.tokenizer(examples['question'], examples['sentence'], truncation=True, padding='max_length')
         elif self.task_name in ["cola", "sst2"]: 
-            preprocess_function = lambda examples: self.tokenizer(examples['sentence'], truncation=True)
+            preprocess_function = lambda examples: self.tokenizer(examples['sentence'], truncation=True, padding='max_length')
         
         # SuperGLUE tasks
         elif self.task_name in ["boolq"]: 
-            preprocess_function = lambda examples: self.tokenizer(examples['question'], examples['passage'], truncation=True)
+            preprocess_function = lambda examples: self.tokenizer(examples['question'], examples['passage'], truncation=True, padding='max_length')
 
         # NLI task: classification
         elif self.task_name in ["cb"]:
-            # def preprocess_function_cb(examples):
-            #     encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True)
-            #     encoded.update({"label": examples["label"]})
-            #     return encoded
-            preprocess_function = lambda examples: self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True)
+            if self.model_name.startswith('xlnet'):
+                # print("XLNET verified")
+                def preprocess_function_cb(examples):
+                    
+                    encoded = self.tokenizer.encode_plus(
+                        examples['premise'], 
+                        examples['hypothesis'], 
+                        add_special_tokens=True,
+                        max_length=128,
+                        padding="max_length",
+                        truncation=True,
+                        return_tensors="pt"
+                        )
+                    return encoded
+                preprocess_function = preprocess_function_cb
+            else:
+                def preprocess_function_cb(examples):
+                    encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
+                    encoded.update({"label": examples["label"]})
+                    return encoded
+                preprocess_function = preprocess_function_cb
 
         # qa task 
         elif self.task_name in ["copa"]:
@@ -198,14 +287,6 @@ class XLNetGlueDataloader:
 
             preprocess_function = preprocess_function_wsc
         return preprocess_function
-
-    def get_metric(self):
-        if self.task_name in self.GLUE_TASKS:
-            actual_task = "mnli" if self.task_name == "mnli_mismatched" or self.task_name == "mnli_matched" else self.task_name
-            metric = load_metric('glue', actual_task)
-        elif self.task_name in self.SUPERGLUE_TASKS:
-            metric = load_metric('super_glue', self.task_name)
-        return metric
     
 @dataclass
 class DataCollatorForMultipleChoice:
