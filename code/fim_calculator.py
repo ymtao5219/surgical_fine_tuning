@@ -51,7 +51,7 @@ class FIMCalculator:
                                  verbose=verbose, 
                                  every_n=every_n)
         
-        fim_diag_by_layer = self.aggregate_fisher_information(all_fims)
+        fim_diag_by_layer = self.aggregate_fisher_information(all_fims,self.model_name)
         return fim_diag_by_layer
 
     @staticmethod
@@ -136,18 +136,21 @@ class FIMCalculator:
         return all_fims
 
     @staticmethod
-    def aggregate_fisher_information(all_fims):
+    def aggregate_fisher_information(all_fims, model_name):
         latest_fim_diag = all_fims[max(all_fims.keys())]
         fim_diag_by_layer = {}
         
         # param_names = []
         for param_name, param_fim_diag in latest_fim_diag.items():
             layer_name_parts = param_name.split('.')
+            # print(layer_name_parts)
             layer_name = layer_name_parts[0]
             
             # param_names.append(param_name)
-            
-            if layer_name == "bert" and layer_name_parts[1] == "encoder":
+
+            # if layer_name == "bert" and layer_name_parts[1] == "encoder":
+            # if layer_name == "roberta" and layer_name_parts[1] == "encoder":
+            if layer_name == model_name.split("-")[0] and layer_name_parts[1] == "encoder":
                 layer_index_match = re.search(r'\d+', layer_name_parts[3])
                 if layer_index_match is not None:
                     layer_index = layer_index_match.group()
@@ -160,6 +163,8 @@ class FIMCalculator:
         # ipdb.set_trace()
         return fim_diag_by_layer
 
+    
+
     @staticmethod
     def bottom_k_layers(input_dict, k):
         sorted_items = sorted(input_dict.items(), key=lambda x: x[1])
@@ -171,16 +176,17 @@ class FIMCalculator:
 GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
 SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 
-# # Alex
-# # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
-# model_name = "bert-base-cased"
-# # model_name = "bert-large-cased"
-# tokenized_data = GlueDataloader("mnli_matched").get_samples(100)
+# Alex
+# ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
+model_name = "bert-base-cased"
+# model_name = "bert-large-cased"
+# model_name="roberta-base"
+tokenized_data = GlueDataloader("mrpc").get_samples(100)
 
-# # ipdb.set_trace()
-# calc = FIMCalculator(model_name, tokenized_data)
-# fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
-
-# # select those with lowest FIM layers to freeze
-# layers_to_freeze = calc.bottom_k_layers(fim, k=12)
 # ipdb.set_trace()
+calc = FIMCalculator(model_name, tokenized_data)
+fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+
+# select those with lowest FIM layers to freeze
+layers_to_freeze = calc.bottom_k_layers(fim, k=12)
+ipdb.set_trace()

@@ -12,6 +12,7 @@ from data_loader import *
 from utils import *
 
 import torch
+import torch.nn as nn
 
 import logging
 # Set logging level
@@ -87,14 +88,10 @@ def main(args):
         # return "roberta.encoder.layer." + str(val)
 
     # print("layers to freeze", freeze_layers)
-    if freeze_layers:
-        for i in range(len(freeze_layers)):
-            freeze_layers[i] = add_prefix(freeze_layers[i])
-        freeze_layers = tuple(freeze_layers)
-        print("layers to freeze", freeze_layers)
-        for name, param in model.named_parameters():
-            if name.startswith(freeze_layers):
-                param.requires_grad = False
+    for param in model.parameters():
+        param.requires_grad = False
+    
+    model.classifier = nn.Linear(model.config.hidden_size, model.config.num_labels)
 
     if args.benchmark == "glue":
         config_path = "configs/glue_training_args.yaml"

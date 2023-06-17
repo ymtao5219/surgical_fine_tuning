@@ -2,7 +2,7 @@
 #SBTACH --job-name=glue_qnli  # CHANGE THIS! for different tasks
 #SBATCH --output=results/logs/%x_job_name_output_%j.log
 #SBATCH -c 4  # Number of Cores per Task
-#SBATCH -p gypsum-m40  # Partition
+#SBATCH -p gypsum-titanx  # Partition
 #SBATCH -G 1  # Number of GPUs
 
 

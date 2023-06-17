@@ -1,14 +1,15 @@
 #!/bin/bash
 #SBTACH --job-name=glue_sst2  # CHANGE THIS! for different tasks
-#SBATCH --output=results/logs/%x_job_name_output_%j.log
+#SBATCH --output=results/logs/%x_job_name_output_%j_full.log
 #SBATCH -c 4  # Number of Cores per Task
+#SBATCH --mem=50G  # Requested Memory
 #SBATCH -p gypsum-m40  # Partition
 #SBATCH -G 1  # Number of GPUs
 
 
-# echo "######################################################################"
-# echo "full model fine-tuning"
-# python code/fine_tuner.py --task_name sst2
+echo "######################################################################"
+echo "full model fine-tuning"
+python code/fine_tuner.py --task_name sst2
 
 
 echo "######################################################################"
