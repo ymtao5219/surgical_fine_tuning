@@ -171,16 +171,16 @@ class FIMCalculator:
 GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
 SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 
-# Alex
-# ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
-model_name = "bert-base-cased"
-# model_name = "bert-large-cased"
-tokenized_data = GlueDataloader("mnli_matched").get_samples(100)
+# # Alex
+# # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
+# model_name = "bert-base-cased"
+# # model_name = "bert-large-cased"
+# tokenized_data = GlueDataloader("mnli_matched").get_samples(100)
 
+# # ipdb.set_trace()
+# calc = FIMCalculator(model_name, tokenized_data)
+# fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+
+# # select those with lowest FIM layers to freeze
+# layers_to_freeze = calc.bottom_k_layers(fim, k=12)
 # ipdb.set_trace()
-calc = FIMCalculator(model_name, tokenized_data)
-fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
-
-# select those with lowest FIM layers to freeze
-layers_to_freeze = calc.bottom_k_layers(fim, k=12)
-ipdb.set_trace()

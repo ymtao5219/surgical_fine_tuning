@@ -299,7 +299,7 @@ class DataCollatorForMultipleChoice:
         )
 
         batch = {k: v.view(batch_size, num_choices, -1) for k, v in batch.items()}
-        batch["labels"] = torch.tensor(labels, dtype=torch.int64)
+        batch["label"] = torch.tensor(labels, dtype=torch.int64)
         return batch
 # example usage
 # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
