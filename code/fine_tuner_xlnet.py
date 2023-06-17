@@ -1,5 +1,5 @@
 import argparse
-from transformers import XLNetForSequenceClassification, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
+from transformers import XLNetForSequenceClassification, XLNetForQuestionAnswering, XLNetForMultipleChoice, TrainingArguments, Trainer
 import time 
 from code.test_code.data_loader_xlnet import XLNetGlueDataloader
 
@@ -83,9 +83,9 @@ def main(args):
     # ipdb.set_trace()
     # Model
     if task_name == "copa": 
-        model = AutoModelForMultipleChoice.from_pretrained(model_name)
+        model = XLNetForMultipleChoice.from_pretrained(model_name)
     elif task_name == "multirc":
-        model = AutoModelForQuestionAnswering.from_pretrained(model_name)
+        model = XLNetForQuestionAnswering.from_pretrained(model_name)
     elif task_name == "stsb":
         model = XLNetForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
