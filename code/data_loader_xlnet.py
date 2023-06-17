@@ -6,15 +6,15 @@ from collections import defaultdict
 # import ipdb
 from dataclasses import dataclass
 
-class GlueDataloader:
+class XLNetGlueDataloader:
     GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
     SUPERGLUE_TASKS = ["wic", "cb", "boolq", "copa", "multirc", "record", "wsc"]
 
-    def __init__(self, task_name, model_name= "bert-base-cased", tokenizer=None):
+    def __init__(self, task_name, model_name= "xlnet-base-cased", tokenizer=None):
         self.task_name = task_name.lower()
         self.model_name = model_name
         
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.tokenizer = XLNetTokenizer.from_pretrained(model_name)
         
         self.dataset = self._load_dataset()
 
@@ -124,11 +124,27 @@ class GlueDataloader:
 
         # NLI task: classification
         elif self.task_name in ["cb"]:
-            def preprocess_function_cb(examples):
-                encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
-                encoded.update({"label": examples["label"]})
-                return encoded
-            preprocess_function = preprocess_function_cb
+            if self.model_name.startswith('xlnet'):
+                # print("XLNET verified")
+                def preprocess_function_cb(examples):
+                    
+                    encoded = self.tokenizer.encode_plus(
+                        examples['premise'], 
+                        examples['hypothesis'], 
+                        add_special_tokens=True,
+                        max_length=128,
+                        padding="max_length",
+                        truncation=True,
+                        return_tensors="pt"
+                        )
+                    return encoded
+                preprocess_function = preprocess_function_cb
+            else:
+                def preprocess_function_cb(examples):
+                    encoded = self.tokenizer(examples['premise'], examples['hypothesis'], truncation=True, padding='max_length')
+                    encoded.update({"label": examples["label"]})
+                    return encoded
+                preprocess_function = preprocess_function_cb
 
         # qa task 
         elif self.task_name in ["copa"]:
@@ -299,7 +315,7 @@ class DataCollatorForMultipleChoice:
         )
 
         batch = {k: v.view(batch_size, num_choices, -1) for k, v in batch.items()}
-        batch["label"] = torch.tensor(labels, dtype=torch.int64)
+        batch["labels"] = torch.tensor(labels, dtype=torch.int64)
         return batch
 # example usage
 # GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
