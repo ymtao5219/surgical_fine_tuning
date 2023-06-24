@@ -13,7 +13,7 @@ import numpy as np
 import yaml
 from code.test_code.data_loader_xlnet import XLNetGlueDataloader 
 
-from data_loader import *
+from code.test_code.data_loader_test import *
 from utils import *
 
 import torch

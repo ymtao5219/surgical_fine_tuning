@@ -53,8 +53,8 @@ class GlueDataloader:
             else:
                 dataset_val_split = load_dataset("glue", "mnli")["validation_matched"]
         else:
-            dataset_train_split = self.dataset["train"]
-            dataset_val_split = self.dataset["validation"]
+            dataset_train_split = self.dataset["train"].select(range(10))
+            dataset_val_split = self.dataset["validation"].select(range(10))
         
         train_dataset, val_dataset = dataset_train_split, dataset_val_split
         preprocess_function = self._get_preprocessing_function()
@@ -65,7 +65,7 @@ class GlueDataloader:
             columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
             train_dataset = train_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
             val_dataset = val_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
-
+            
             return train_dataset, val_dataset
         
         else: 
@@ -186,7 +186,7 @@ class GlueDataloader:
         
         # qa task 
         elif self.task_name in ["record"]:
-
+            
             def preprocess_data_record(examples):
                 encoded = defaultdict(list)
                 for idx, passage, query, entities, entity_spans, answers in zip(
