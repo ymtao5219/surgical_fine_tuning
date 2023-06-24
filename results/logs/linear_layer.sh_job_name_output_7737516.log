@@ -1,0 +1,135 @@
+######################################################################
+linear layer fine-tuning cb
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 475.44it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+{'eval_loss': 1.2818704843521118, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.5658, 'eval_samples_per_second': 35.765, 'eval_steps_per_second': 2.555, 'epoch': 1.0}
+{'eval_loss': 1.2816442251205444, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.5873, 'eval_samples_per_second': 35.28, 'eval_steps_per_second': 2.52, 'epoch': 2.0}
+{'eval_loss': 1.2812612056732178, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.5912, 'eval_samples_per_second': 35.194, 'eval_steps_per_second': 2.514, 'epoch': 3.0}
+{'eval_loss': 1.28072190284729, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.6044, 'eval_samples_per_second': 34.903, 'eval_steps_per_second': 2.493, 'epoch': 4.0}
+{'eval_loss': 1.280025601387024, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.6095, 'eval_samples_per_second': 34.794, 'eval_steps_per_second': 2.485, 'epoch': 5.0}
+{'eval_loss': 1.2791792154312134, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.6122, 'eval_samples_per_second': 34.735, 'eval_steps_per_second': 2.481, 'epoch': 6.0}
+{'eval_loss': 1.2781957387924194, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.6219, 'eval_samples_per_second': 34.528, 'eval_steps_per_second': 2.466, 'epoch': 7.0}
+{'eval_loss': 1.2770464420318604, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.6223, 'eval_samples_per_second': 34.518, 'eval_steps_per_second': 2.466, 'epoch': 8.0}
+{'eval_loss': 1.2757291793823242, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.6274, 'eval_samples_per_second': 34.41, 'eval_steps_per_second': 2.458, 'epoch': 9.0}
+{'eval_loss': 1.2742633819580078, 'eval_accuracy': 0.08928571428571429, 'eval_runtime': 1.6306, 'eval_samples_per_second': 34.342, 'eval_steps_per_second': 2.453, 'epoch': 10.0}
+{'train_runtime': 137.4832, 'train_samples_per_second': 18.184, 'train_steps_per_second': 0.582, 'train_loss': 1.3260311126708983, 'epoch': 10.0}
+Total training time: 137.49 seconds
+######################################################################
+linear layer fine-tuning copa
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+Downloading and preparing dataset super_glue/copa to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/super_glue/copa/1.0.3/bb9675f958ebfee0d5d6dc5476fafe38c79123727a7258d515c450873dbdbbed...
+Downloading data:   0%|          | 0.00/44.0k [00:00<?, ?B/s]Downloading data: 100%|██████████| 44.0k/44.0k [00:00<00:00, 5.12MB/s]
+Generating train split:   0%|          | 0/400 [00:00<?, ? examples/s]                                                                      Generating validation split:   0%|          | 0/100 [00:00<?, ? examples/s]                                                                           Generating test split:   0%|          | 0/500 [00:00<?, ? examples/s]                                                                     Dataset super_glue downloaded and prepared to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/super_glue/copa/1.0.3/bb9675f958ebfee0d5d6dc5476fafe38c79123727a7258d515c450873dbdbbed. Subsequent calls will reuse this data.
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 215.72it/s]
+Map:   0%|          | 0/400 [00:00<?, ? examples/s]Map: 100%|██████████| 400/400 [00:00<00:00, 1650.14 examples/s]                                                               Map:   0%|          | 0/100 [00:00<?, ? examples/s]                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+Traceback (most recent call last):
+  File "code/fine_tuner_linear_layer.py", line 147, in <module>
+    main(args)
+  File "code/fine_tuner_linear_layer.py", line 120, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1902, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2645, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2677, in compute_loss
+    outputs = model(**inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/models/bert/modeling_bert.py", line 1693, in forward
+    loss = loss_fct(reshaped_logits, labels)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/loss.py", line 1164, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/functional.py", line 3014, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+ValueError: Expected input batch_size (32) to match target batch_size (16).
+######################################################################
+linear layer fine-tuning multirc
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:00<00:00,  3.96it/s]100%|██████████| 3/3 [00:00<00:00,  8.50it/s]100%|██████████| 3/3 [00:00<00:00,  7.61it/s]
+Map:   0%|          | 0/27243 [00:00<?, ? examples/s]Map:   4%|▎         | 1000/27243 [00:00<00:15, 1740.62 examples/s]Map:   7%|▋         | 2000/27243 [00:01<00:12, 1964.94 examples/s]Map:  11%|█         | 3000/27243 [00:01<00:11, 2045.57 examples/s]Map:  15%|█▍        | 4000/27243 [00:01<00:11, 2112.01 examples/s]Map:  18%|█▊        | 5000/27243 [00:02<00:10, 2209.60 examples/s]Map:  22%|██▏       | 6000/27243 [00:02<00:09, 2228.26 examples/s]Map:  26%|██▌       | 7000/27243 [00:03<00:09, 2071.10 examples/s]Map:  29%|██▉       | 8000/27243 [00:03<00:08, 2146.52 examples/s]Map:  33%|███▎      | 9000/27243 [00:04<00:08, 2190.70 examples/s]Map:  37%|███▋      | 10000/27243 [00:04<00:08, 2096.80 examples/s]Map:  40%|████      | 11000/27243 [00:05<00:07, 2074.95 examples/s]Map:  44%|████▍     | 12000/27243 [00:05<00:07, 2057.59 examples/s]Map:  48%|████▊     | 13000/27243 [00:06<00:06, 2070.80 examples/s]Map:  51%|█████▏    | 14000/27243 [00:06<00:06, 2114.29 examples/s]Map:  55%|█████▌    | 15000/27243 [00:07<00:05, 2163.00 examples/s]Map:  59%|█████▊    | 16000/27243 [00:07<00:05, 2200.82 examples/s]Map:  62%|██████▏   | 17000/27243 [00:07<00:04, 2212.91 examples/s]Map:  66%|██████▌   | 18000/27243 [00:08<00:04, 2218.32 examples/s]Map:  70%|██████▉   | 19000/27243 [00:08<00:03, 2246.02 examples/s]Map:  73%|███████▎  | 20000/27243 [00:09<00:03, 2146.09 examples/s]Map:  77%|███████▋  | 21000/27243 [00:09<00:02, 2119.34 examples/s]Map:  81%|████████  | 22000/27243 [00:10<00:02, 2158.43 examples/s]Map:  84%|████████▍ | 23000/27243 [00:10<00:01, 2129.88 examples/s]Map:  88%|████████▊ | 24000/27243 [00:11<00:01, 2211.94 examples/s]Map:  92%|█████████▏| 25000/27243 [00:11<00:01, 2109.27 examples/s]Map:  95%|█████████▌| 26000/27243 [00:12<00:00, 2108.35 examples/s]Map:  99%|█████████▉| 27000/27243 [00:12<00:00, 2151.58 examples/s]Map: 100%|██████████| 27243/27243 [00:12<00:00, 2160.45 examples/s]                                                                   Map:   0%|          | 0/4848 [00:00<?, ? examples/s]Map:  21%|██        | 1000/4848 [00:00<00:01, 2129.74 examples/s]Map:  41%|████▏     | 2000/4848 [00:00<00:01, 2153.91 examples/s]Map:  62%|██████▏   | 3000/4848 [00:01<00:00, 2301.11 examples/s]Map:  83%|████████▎ | 4000/4848 [00:01<00:00, 2279.26 examples/s]Map: 100%|██████████| 4848/4848 [00:02<00:00, 2273.99 examples/s]                                                                 /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+Traceback (most recent call last):
+  File "code/fine_tuner_linear_layer.py", line 147, in <module>
+    main(args)
+  File "code/fine_tuner_linear_layer.py", line 120, in main
+    trainer.train()
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1633, in train
+    return inner_training_loop(
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1902, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2645, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2677, in compute_loss
+    outputs = model(**inputs)
+  File "/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+TypeError: forward() got an unexpected keyword argument 'labels'
+######################################################################
+linear layer fine-tuning wic
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 76.63it/s]
+Map:   0%|          | 0/5428 [00:00<?, ? examples/s]Map:  18%|█▊        | 1000/5428 [00:00<00:01, 3295.71 examples/s]Map:  37%|███▋      | 2000/5428 [00:00<00:00, 3467.74 examples/s]Map:  55%|█████▌    | 3000/5428 [00:00<00:00, 3890.01 examples/s]Map:  74%|███████▎  | 4000/5428 [00:01<00:00, 4157.14 examples/s]Map:  92%|█████████▏| 5000/5428 [00:01<00:00, 4304.13 examples/s]                                                                 Map:   0%|          | 0/638 [00:00<?, ? examples/s]Map: 100%|██████████| 638/638 [00:00<00:00, 3476.34 examples/s]                                                               /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+{'eval_loss': 0.6980160474777222, 'eval_accuracy': 0.5015673981191222, 'eval_runtime': 18.6827, 'eval_samples_per_second': 34.149, 'eval_steps_per_second': 2.141, 'epoch': 1.0}
+{'eval_loss': 0.6928682327270508, 'eval_accuracy': 0.5094043887147336, 'eval_runtime': 18.6672, 'eval_samples_per_second': 34.178, 'eval_steps_per_second': 2.143, 'epoch': 2.0}
+{'loss': 0.7048, 'learning_rate': 2.5e-06, 'epoch': 2.94}
+{'eval_loss': 0.6897026896476746, 'eval_accuracy': 0.5313479623824452, 'eval_runtime': 18.6305, 'eval_samples_per_second': 34.245, 'eval_steps_per_second': 2.147, 'epoch': 3.0}
+{'eval_loss': 0.6890311241149902, 'eval_accuracy': 0.554858934169279, 'eval_runtime': 18.5914, 'eval_samples_per_second': 34.317, 'eval_steps_per_second': 2.152, 'epoch': 4.0}
+{'eval_loss': 0.6887362003326416, 'eval_accuracy': 0.5611285266457681, 'eval_runtime': 18.5376, 'eval_samples_per_second': 34.417, 'eval_steps_per_second': 2.158, 'epoch': 5.0}
+{'loss': 0.6955, 'learning_rate': 5e-06, 'epoch': 5.88}
+{'eval_loss': 0.6882423162460327, 'eval_accuracy': 0.5517241379310345, 'eval_runtime': 18.5478, 'eval_samples_per_second': 34.398, 'eval_steps_per_second': 2.157, 'epoch': 6.0}
+{'eval_loss': 0.6877819299697876, 'eval_accuracy': 0.5407523510971787, 'eval_runtime': 18.5958, 'eval_samples_per_second': 34.309, 'eval_steps_per_second': 2.151, 'epoch': 7.0}
+{'eval_loss': 0.687280535697937, 'eval_accuracy': 0.5626959247648903, 'eval_runtime': 18.6643, 'eval_samples_per_second': 34.183, 'eval_steps_per_second': 2.143, 'epoch': 8.0}
+{'loss': 0.6963, 'learning_rate': 7.5e-06, 'epoch': 8.82}
+{'eval_loss': 0.6866968870162964, 'eval_accuracy': 0.5532915360501567, 'eval_runtime': 18.5365, 'eval_samples_per_second': 34.419, 'eval_steps_per_second': 2.158, 'epoch': 9.0}
+{'eval_loss': 0.6860199570655823, 'eval_accuracy': 0.5642633228840125, 'eval_runtime': 18.5879, 'eval_samples_per_second': 34.323, 'eval_steps_per_second': 2.152, 'epoch': 10.0}
+{'train_runtime': 1910.8698, 'train_samples_per_second': 28.406, 'train_steps_per_second': 0.89, 'train_loss': 0.6986537529440487, 'epoch': 10.0}
+Total training time: 1910.88 seconds
+######################################################################
+linear layer fine-tuning wsc
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+Downloading and preparing dataset super_glue/wsc to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/super_glue/wsc/1.0.3/bb9675f958ebfee0d5d6dc5476fafe38c79123727a7258d515c450873dbdbbed...
+Downloading data:   0%|          | 0.00/32.8k [00:00<?, ?B/s]Downloading data: 100%|██████████| 32.8k/32.8k [00:00<00:00, 14.6MB/s]
+Generating train split:   0%|          | 0/554 [00:00<?, ? examples/s]                                                                      Generating validation split:   0%|          | 0/104 [00:00<?, ? examples/s]                                                                           Generating test split:   0%|          | 0/146 [00:00<?, ? examples/s]                                                                     Dataset super_glue downloaded and prepared to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/super_glue/wsc/1.0.3/bb9675f958ebfee0d5d6dc5476fafe38c79123727a7258d515c450873dbdbbed. Subsequent calls will reuse this data.
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 181.62it/s]
+Map:   0%|          | 0/554 [00:00<?, ? examples/s]Map: 100%|██████████| 554/554 [00:00<00:00, 3037.74 examples/s]                                                               Map:   0%|          | 0/104 [00:00<?, ? examples/s]                                                   /home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+{'eval_loss': 0.6932542324066162, 'eval_accuracy': 0.5865384615384616, 'eval_runtime': 3.0018, 'eval_samples_per_second': 34.646, 'eval_steps_per_second': 2.332, 'epoch': 0.97}
+{'eval_loss': 0.6932868957519531, 'eval_accuracy': 0.5865384615384616, 'eval_runtime': 3.0273, 'eval_samples_per_second': 34.354, 'eval_steps_per_second': 2.312, 'epoch': 2.0}
+{'eval_loss': 0.6933339238166809, 'eval_accuracy': 0.5865384615384616, 'eval_runtime': 3.2976, 'eval_samples_per_second': 31.538, 'eval_steps_per_second': 2.123, 'epoch': 2.97}
+{'eval_loss': 0.6934276819229126, 'eval_accuracy': 0.5865384615384616, 'eval_runtime': 3.0436, 'eval_samples_per_second': 34.171, 'eval_steps_per_second': 2.3, 'epoch': 4.0}
+{'eval_loss': 0.6935287117958069, 'eval_accuracy': 0.5865384615384616, 'eval_runtime': 3.0335, 'eval_samples_per_second': 34.284, 'eval_steps_per_second': 2.308, 'epoch': 4.97}
+{'eval_loss': 0.6936162114143372, 'eval_accuracy': 0.5865384615384616, 'eval_runtime': 3.0364, 'eval_samples_per_second': 34.251, 'eval_steps_per_second': 2.305, 'epoch': 6.0}
+{'eval_loss': 0.6937487721443176, 'eval_accuracy': 0.5865384615384616, 'eval_runtime': 3.0385, 'eval_samples_per_second': 34.228, 'eval_steps_per_second': 2.304, 'epoch': 6.97}
+{'eval_loss': 0.6938453316688538, 'eval_accuracy': 0.5769230769230769, 'eval_runtime': 3.0342, 'eval_samples_per_second': 34.276, 'eval_steps_per_second': 2.307, 'epoch': 8.0}
+{'eval_loss': 0.6939637064933777, 'eval_accuracy': 0.5673076923076923, 'eval_runtime': 3.0352, 'eval_samples_per_second': 34.264, 'eval_steps_per_second': 2.306, 'epoch': 8.97}
+{'eval_loss': 0.6940412521362305, 'eval_accuracy': 0.5673076923076923, 'eval_runtime': 3.0317, 'eval_samples_per_second': 34.304, 'eval_steps_per_second': 2.309, 'epoch': 9.71}
+{'train_runtime': 241.7078, 'train_samples_per_second': 22.92, 'train_steps_per_second': 0.703, 'train_loss': 0.702433193431181, 'epoch': 9.71}
+Total training time: 241.72 seconds
+######################################################################
+linear layer fine-tuning boolq
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+Downloading and preparing dataset super_glue/boolq to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/super_glue/boolq/1.0.3/bb9675f958ebfee0d5d6dc5476fafe38c79123727a7258d515c450873dbdbbed...
+Downloading data:   0%|          | 0.00/4.12M [00:00<?, ?B/s]Downloading data:  63%|██████▎   | 2.61M/4.12M [00:00<00:00, 26.1MB/s]Downloading data: 100%|██████████| 4.12M/4.12M [00:00<00:00, 33.9MB/s]
+Generating train split:   0%|          | 0/9427 [00:00<?, ? examples/s]Generating train split:  13%|█▎        | 1244/9427 [00:00<00:00, 12024.79 examples/s]Generating train split:  32%|███▏      | 2975/9427 [00:00<00:00, 15087.49 examples/s]Generating train split:  49%|████▉     | 4658/9427 [00:00<00:00, 15872.63 examples/s]Generating train split:  67%|██████▋   | 6338/9427 [00:00<00:00, 16235.54 examples/s]Generating train split:  85%|████████▌ | 8022/9427 [00:00<00:00, 16449.98 examples/s]                                                                                     Generating validation split:   0%|          | 0/3270 [00:00<?, ? examples/s]Generating validation split:  59%|█████▊    | 1914/3270 [00:00<00:00, 18508.42 examples/s]                                                                                          Generating test split:   0%|          | 0/3245 [00:00<?, ? examples/s]Generating test split:  66%|██████▋   | 2157/3245 [00:00<00:00, 20554.66 examples/s]                                                                                    Dataset super_glue downloaded and prepared to /home/gbelapurkar_umass_edu/.cache/huggingface/datasets/super_glue/boolq/1.0.3/bb9675f958ebfee0d5d6dc5476fafe38c79123727a7258d515c450873dbdbbed. Subsequent calls will reuse this data.
+  0%|          | 0/3 [00:00<?, ?it/s] 67%|██████▋   | 2/3 [00:00<00:00, 19.33it/s]100%|██████████| 3/3 [00:00<00:00, 22.62it/s]
+Map:   0%|          | 0/9427 [00:00<?, ? examples/s]Map:  11%|█         | 1000/9427 [00:00<00:02, 2961.99 examples/s]Map:  21%|██        | 2000/9427 [00:00<00:02, 2614.32 examples/s]Map:  32%|███▏      | 3000/9427 [00:01<00:02, 2787.58 examples/s]Map:  42%|████▏     | 4000/9427 [00:01<00:01, 2976.49 examples/s]Map:  53%|█████▎    | 5000/9427 [00:01<00:01, 3078.44 examples/s]Map:  64%|██████▎   | 6000/9427 [00:01<00:01, 3154.17 examples/s]Map:  74%|███████▍  | 7000/9427 [00:02<00:00, 3163.57 examples/s]Map:  85%|████████▍ | 8000/9427 [00:02<00:00, 3179.89 examples/s]Map:  95%|█████████▌| 9000/9427 [00:02<00:00, 3215.79 examples/s]Map: 100%|██████████| 9427/9427 [00:03<00:00, 3216.48 examples/s]                                                                 Map:   0%|          | 0/3270 [00:00<?, ? examples/s]Map:  31%|███       | 1000/3270 [00:00<00:00, 3371.91 examples/s]Map:  61%|██████    | 2000/3270 [00:00<00:00, 3379.05 examples/s]Map:  92%|█████████▏| 3000/3270 [00:00<00:00, 3383.96 examples/s]                                                                 slurmstepd-gypsum-gpu087: error: *** JOB 7737516 ON gypsum-gpu087 CANCELLED AT 2023-06-11T18:05:29 DUE TO TIME LIMIT ***

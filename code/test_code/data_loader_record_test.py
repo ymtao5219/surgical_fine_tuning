@@ -65,9 +65,7 @@ class GlueDataloader:
             columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
             train_dataset = train_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
             val_dataset = val_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
-            # if self.task_name == "record":
-            #     train_dataset = train_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask'])
-            #     val_dataset = val_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask'])
+            
             return train_dataset, val_dataset
         
         else: 
@@ -188,8 +186,7 @@ class GlueDataloader:
         
         # qa task 
         elif self.task_name in ["record"]:
-            # preprocess_function = lambda examples: self.tokenizer(examples["passage"], examples["query"],  truncation=True, padding="max_length")
-
+            
             def preprocess_data_record(examples):
                 encoded = defaultdict(list)
                 for idx, passage, query, entities, entity_spans, answers in zip(
