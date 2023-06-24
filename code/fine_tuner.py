@@ -2,7 +2,7 @@ import argparse
 from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
 from transformers import AutoTokenizer, RobertaForSequenceClassification
 import time 
-
+from datasets import load_metric
 import evaluate
 import numpy as np
 
@@ -52,6 +52,13 @@ def main(args):
             predictions = logits[:, 0]
             return metric.compute(predictions=predictions, references=labels)
 
+    elif task_name=="record":
+        metric = load_metric('super_glue', task_name)
+        def compute_metrics(eval_pred):
+            predictions, labels = eval_pred
+            predictions = predictions[:, 0]
+            return metric.compute(predictions=predictions, references=labels)
+
     else: 
         metric = evaluate.load("accuracy")
 
@@ -78,7 +85,7 @@ def main(args):
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
-        #TODO: changed for roberta
+        # TODO: changed for roberta
         # model = RobertaForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
     # ipdb.set_trace()
     def add_prefix(val):

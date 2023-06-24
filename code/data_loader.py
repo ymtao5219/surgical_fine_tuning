@@ -53,8 +53,8 @@ class GlueDataloader:
             else:
                 dataset_val_split = load_dataset("glue", "mnli")["validation_matched"]
         else:
-            dataset_train_split = self.dataset["train"]
-            dataset_val_split = self.dataset["validation"]
+            dataset_train_split = self.dataset["train"].select(range(10))
+            dataset_val_split = self.dataset["validation"].select(range(10))
         
         train_dataset, val_dataset = dataset_train_split, dataset_val_split
         preprocess_function = self._get_preprocessing_function()
@@ -65,7 +65,9 @@ class GlueDataloader:
             columns_to_remove = [col for col in train_dataset.column_names if col != 'label']
             train_dataset = train_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
             val_dataset = val_dataset.map(preprocess_function, batched=True, remove_columns=columns_to_remove)
-
+            # if self.task_name == "record":
+            #     train_dataset = train_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask'])
+            #     val_dataset = val_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask'])
             return train_dataset, val_dataset
         
         else: 
@@ -186,11 +188,12 @@ class GlueDataloader:
         
         # qa task 
         elif self.task_name in ["record"]:
+            # preprocess_function = lambda examples: self.tokenizer(examples["passage"], examples["query"],  truncation=True, padding="max_length")
 
             def preprocess_data_record(examples):
                 encoded = defaultdict(list)
-                for idx, passage, query, entities, answers in zip(
-                    examples["idx"], examples["passage"], examples["query"], examples["entities"], examples["answers"]
+                for idx, passage, query, entities, entity_spans, answers in zip(
+                    examples["idx"], examples["passage"], examples["query"], examples["entities"], examples["entity_spans"], examples["answers"]
                 ):
                     for entity in entities:
                         label = 1 if entity in answers else 0
@@ -200,7 +203,7 @@ class GlueDataloader:
                             query_filled,
                             truncation=True,
                             padding="max_length",
-                            return_overflowing_tokens=True,
+                            # return_overflowing_tokens=True,
                         )
                         encoded["idx"].append(idx)
                         encoded["passage"].append(passage)
@@ -208,6 +211,9 @@ class GlueDataloader:
                         encoded["entities"].append(entity)
                         encoded["answers"].append(answers)
                         encoded["input_ids"].append(example_encoded["input_ids"])
+                        encoded["start_position"].append(entity_spans.get('start'))
+                        encoded["end_position"].append(entity_spans.get('end'))
+                        
                         encoded["label"].append(label)
                         if "token_type_ids" in example_encoded:
                             encoded["token_type_ids"].append(example_encoded["token_type_ids"])

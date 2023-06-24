@@ -1,0 +1,316 @@
+######################################################################
+full model fine-tuning
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+code/fine_tuner.py:56: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric('super_glue', task_name)
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 211.90it/s]
+Map:   0%|          | 0/10 [00:00<?, ? examples/s]Map: 100%|██████████| 10/10 [00:00<00:00, 55.48 examples/s]                                                           Map:   0%|          | 0/10 [00:00<?, ? examples/s]Map: 100%|██████████| 10/10 [00:00<00:00, 60.53 examples/s]                                                           /home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 157, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 130, in main
+    trainer.train()
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1662, in train
+    return inner_training_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2021, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2287, in _maybe_log_save_evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2993, in evaluate
+    output = eval_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3281, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "code/fine_tuner.py", line 60, in compute_metrics
+    return metric.compute(predictions=predictions, references=labels)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 442, in compute
+    self.add_batch(**inputs)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 494, in add_batch
+    batch = self.info.features.encode_batch(batch)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in encode_batch
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in <listcomp>
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in encode_nested_example
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in <dictcomp>
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in zip_dict
+    yield key, tuple(d[key] for d in dicts)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in <genexpr>
+    yield key, tuple(d[key] for d in dicts)
+IndexError: invalid index to scalar variable.
+######################################################################
+layer-wise fine-tuning top 1
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+code/fine_tuner.py:56: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric('super_glue', task_name)
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 260.66it/s]
+Map:   0%|          | 0/10 [00:00<?, ? examples/s]Map: 100%|██████████| 10/10 [00:00<00:00, 65.72 examples/s]                                                           /home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 157, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 130, in main
+    trainer.train()
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1662, in train
+    return inner_training_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2021, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2287, in _maybe_log_save_evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2993, in evaluate
+    output = eval_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3281, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "code/fine_tuner.py", line 60, in compute_metrics
+    return metric.compute(predictions=predictions, references=labels)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 442, in compute
+    self.add_batch(**inputs)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 494, in add_batch
+    batch = self.info.features.encode_batch(batch)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in encode_batch
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in <listcomp>
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in encode_nested_example
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in <dictcomp>
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in zip_dict
+    yield key, tuple(d[key] for d in dicts)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in <genexpr>
+    yield key, tuple(d[key] for d in dicts)
+IndexError: invalid index to scalar variable.
+######################################################################
+layer-wise fine-tuning top 2
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+code/fine_tuner.py:56: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric('super_glue', task_name)
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 300.61it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.5', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 157, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 130, in main
+    trainer.train()
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1662, in train
+    return inner_training_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2021, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2287, in _maybe_log_save_evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2993, in evaluate
+    output = eval_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3281, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "code/fine_tuner.py", line 60, in compute_metrics
+    return metric.compute(predictions=predictions, references=labels)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 442, in compute
+    self.add_batch(**inputs)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 494, in add_batch
+    batch = self.info.features.encode_batch(batch)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in encode_batch
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in <listcomp>
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in encode_nested_example
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in <dictcomp>
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in zip_dict
+    yield key, tuple(d[key] for d in dicts)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in <genexpr>
+    yield key, tuple(d[key] for d in dicts)
+IndexError: invalid index to scalar variable.
+######################################################################
+layer-wise fine-tuning top 3
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+code/fine_tuner.py:56: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric('super_glue', task_name)
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 306.24it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 157, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 130, in main
+    trainer.train()
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1662, in train
+    return inner_training_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2021, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2287, in _maybe_log_save_evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2993, in evaluate
+    output = eval_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3281, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "code/fine_tuner.py", line 60, in compute_metrics
+    return metric.compute(predictions=predictions, references=labels)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 442, in compute
+    self.add_batch(**inputs)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 494, in add_batch
+    batch = self.info.features.encode_batch(batch)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in encode_batch
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in <listcomp>
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in encode_nested_example
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in <dictcomp>
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in zip_dict
+    yield key, tuple(d[key] for d in dicts)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in <genexpr>
+    yield key, tuple(d[key] for d in dicts)
+IndexError: invalid index to scalar variable.
+######################################################################
+layer-wise fine-tuning top 4
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+code/fine_tuner.py:56: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric('super_glue', task_name)
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 316.35it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.3', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 157, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 130, in main
+    trainer.train()
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1662, in train
+    return inner_training_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2021, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2287, in _maybe_log_save_evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2993, in evaluate
+    output = eval_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3281, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "code/fine_tuner.py", line 60, in compute_metrics
+    return metric.compute(predictions=predictions, references=labels)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 442, in compute
+    self.add_batch(**inputs)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 494, in add_batch
+    batch = self.info.features.encode_batch(batch)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in encode_batch
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in <listcomp>
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in encode_nested_example
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in <dictcomp>
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in zip_dict
+    yield key, tuple(d[key] for d in dicts)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in <genexpr>
+    yield key, tuple(d[key] for d in dicts)
+IndexError: invalid index to scalar variable.
+######################################################################
+layer-wise fine-tuning top 5
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+code/fine_tuner.py:56: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric('super_glue', task_name)
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 281.90it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.3', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.9', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 157, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 130, in main
+    trainer.train()
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1662, in train
+    return inner_training_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2021, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2287, in _maybe_log_save_evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2993, in evaluate
+    output = eval_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3281, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "code/fine_tuner.py", line 60, in compute_metrics
+    return metric.compute(predictions=predictions, references=labels)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 442, in compute
+    self.add_batch(**inputs)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 494, in add_batch
+    batch = self.info.features.encode_batch(batch)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in encode_batch
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in <listcomp>
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in encode_nested_example
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in <dictcomp>
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in zip_dict
+    yield key, tuple(d[key] for d in dicts)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in <genexpr>
+    yield key, tuple(d[key] for d in dicts)
+IndexError: invalid index to scalar variable.
+######################################################################
+layer-wise fine-tuning bottom 1
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+code/fine_tuner.py:56: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric('super_glue', task_name)
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 255.12it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+Traceback (most recent call last):
+  File "code/fine_tuner.py", line 157, in <module>
+    main(args)
+  File "code/fine_tuner.py", line 130, in main
+    trainer.train()
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1662, in train
+    return inner_training_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2021, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2287, in _maybe_log_save_evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2993, in evaluate
+    output = eval_loop(
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3281, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "code/fine_tuner.py", line 60, in compute_metrics
+    return metric.compute(predictions=predictions, references=labels)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 442, in compute
+    self.add_batch(**inputs)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/metric.py", line 494, in add_batch
+    batch = self.info.features.encode_batch(batch)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in encode_batch
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1858, in <listcomp>
+    encoded_batch[key] = [encode_nested_example(self[key], obj) for obj in column]
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in encode_nested_example
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/features/features.py", line 1223, in <dictcomp>
+    {
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in zip_dict
+    yield key, tuple(d[key] for d in dicts)
+  File "/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/datasets/utils/py_utils.py", line 302, in <genexpr>
+    yield key, tuple(d[key] for d in dicts)
+IndexError: invalid index to scalar variable.
+######################################################################
+finished
