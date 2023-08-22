@@ -75,12 +75,12 @@ def main(args):
 
     if task_name == "stsb":
         def get_predictions(output):
-            predictions = output.logits[:, 0]
+            predictions = output.logits[:, 0].cpu().numpy()
             return predictions
 
     else: 
         def get_predictions(output):
-            predictions = np.argmax(output.logits, axis=-1)
+            predictions = np.argmax(output.logits.cpu().numpy(), axis=-1)
             return predictions
         
 
