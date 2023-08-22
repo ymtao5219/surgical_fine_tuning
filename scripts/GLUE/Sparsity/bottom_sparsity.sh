@@ -16,25 +16,25 @@
 # echo "layer-wise fine-tuning bottom 1 copa"
 # python code/fine_tuner.py --benchmark superglue --task_name copa --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
 
-echo "######################################################################"
-# bottom layers based on fisher information: 11
-echo "layer-wise fine-tuning bottom 1 wsc"
-python code/fine_tuner.py --benchmark superglue --task_name wsc --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
+# echo "######################################################################"
+# # bottom layers based on fisher information: 11
+# echo "layer-wise fine-tuning bottom 1 wsc"
+# python code/fine_tuner.py --benchmark superglue --task_name wsc --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
 
-echo "######################################################################"
-# bottom layers based on fisher information: 11
-echo "layer-wise fine-tuning bottom 1 wic"
-python code/fine_tuner.py --benchmark superglue --task_name wic --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
+# echo "######################################################################"
+# # bottom layers based on fisher information: 11
+# echo "layer-wise fine-tuning bottom 1 wic"
+# python code/fine_tuner.py --benchmark superglue --task_name wic --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
 
-echo "######################################################################"
-# bottom layers based on fisher information: 11
-echo "layer-wise fine-tuning bottom 1 boolq"
-python code/fine_tuner.py --benchmark superglue --task_name boolq --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
+# echo "######################################################################"
+# # bottom layers based on fisher information: 11
+# echo "layer-wise fine-tuning bottom 1 boolq"
+# python code/fine_tuner.py --benchmark superglue --task_name boolq --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
 
-echo "######################################################################"
-# bottom layer based on fisher information: 11
-echo "layer-wise fine-tuning bottom 1 - mrpc"
-python code/fine_tuner.py --task_name mrpc --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
+# echo "######################################################################"
+# # bottom layer based on fisher information: 11
+# echo "layer-wise fine-tuning bottom 1 - mrpc"
+# python code/fine_tuner.py --task_name mrpc --freeze_layers 0 1 2 3 4 5 6 7 8 9 10
 
 echo "######################################################################"
 # bottom layer based on fisher information: 11

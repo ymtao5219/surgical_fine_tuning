@@ -23,6 +23,13 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
 # import ipdb
 
+# Define a function to extract activations from the model
+def get_activations(model, inputs):
+    with torch.no_grad():
+        outputs = model(**inputs, output_hidden_states=True)
+        activations = outputs.hidden_states
+    return activations
+
 def main(args):
     set_random_seed(42)
     
@@ -39,7 +46,6 @@ def main(args):
     
     if task_name == "cola":
         metric = evaluate.load("matthews_correlation")
-
         def compute_metrics(eval_pred):
             logits, labels = eval_pred
             predictions = np.argmax(logits, axis=-1)
@@ -54,12 +60,22 @@ def main(args):
 
     else: 
         metric = evaluate.load("accuracy")
-
         def compute_metrics(eval_pred):
             logits, labels = eval_pred
             predictions = np.argmax(logits, axis=-1)
             return metric.compute(predictions=predictions, references=labels)
 
+
+    if task_name == "stsb":
+        def get_predictions(output):
+            predictions = output.logits[:, 0]
+            return predictions
+
+    else: 
+        def get_predictions(output):
+            predictions = np.argmax(output.logits, axis=-1)
+            return predictions
+        
 
     if args.few_shot:
         data_loader = GlueDataloader(task_name, model_name)
@@ -129,6 +145,22 @@ def main(args):
     training_time = end_time - start_time
     print(f"Total training time: {training_time:.2f} seconds")
 
+    activations = []
+    predictions = []
+
+    for batch in trainer.get_eval_dataloader():
+        inputs = {k: v.to(trainer.args.device) for k, v in batch.items() if k != "label"}
+        batch_activations = get_activations(model, inputs)
+        activations.append(batch_activations)
+        
+        with torch.no_grad():
+            outputs = model(**inputs)
+            batch_predictions = get_predictions(outputs)
+            predictions.append(batch_predictions)
+
+    print("Activations: \n", activations)
+    print("\nPredictions: \n", predictions)
+
     # print("evaluating on test set")
     # GLUE benchmark has not labels for test set, so the following code is commented out
     # # Evaluate the model
@@ -141,8 +173,8 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
     parser.add_argument("--parent_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face")
-    parser.add_argument("--benchmark", type=str, default="glue", help="Name of the benchmark to use (glue or superglue)")
-    parser.add_argument("--task_name", type=str, default="wic", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
+    parser.add_argument("--benchmark", type=str, default="super_glue", help="Name of the benchmark to use (glue or superglue)")
+    parser.add_argument("--task_name", type=str, default="wsc", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
     parser.add_argument("--freeze_layers", nargs='+', type=int, help="List of which layers to freeze")
     parser.add_argument("--few_shot", type=int, help="Number of examples per class to use for fine-tuning")
     args = parser.parse_args()
