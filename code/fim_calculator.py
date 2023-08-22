@@ -99,6 +99,7 @@ class FIMCalculator:
             else:
                 outdx = Categorical(logits=logits).sample().unsqueeze(1).detach()
             # ipdb.set_trace()
+            outdx = outdx.to(torch.int64) # added to fix stsb error
             samples = logits.gather(1, outdx)
 
             idx, batch_size = 0, data.size(0)
@@ -178,10 +179,10 @@ SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 
 # Alex
 # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
-model_name = "bert-base-cased"
+# model_name = "bert-base-cased"
 # model_name = "bert-large-cased"
-# model_name="roberta-base"
-tokenized_data = GlueDataloader("mrpc").get_samples(100)
+model_name="roberta-base"
+tokenized_data = GlueDataloader("mnli_mismatched").get_samples(100)
 
 # ipdb.set_trace()
 calc = FIMCalculator(model_name, tokenized_data)

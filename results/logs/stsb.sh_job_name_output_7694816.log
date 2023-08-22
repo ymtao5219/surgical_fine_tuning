@@ -1,0 +1,73 @@
+######################################################################
+layer-wise fine-tuning bottom 1
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+Downloading readme:   0%|          | 0.00/27.9k [00:00<?, ?B/s]Downloading readme: 100%|██████████| 27.9k/27.9k [00:00<00:00, 20.9MB/s]
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 31.31it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.10', 'bert.encoder.layer.11')
+{'eval_loss': 4.651278495788574, 'eval_accuracy': 0.22933333333333333, 'eval_runtime': 50.4941, 'eval_samples_per_second': 29.706, 'eval_steps_per_second': 1.862, 'epoch': 1.0}
+{'eval_loss': 3.7899043560028076, 'eval_accuracy': 0.256, 'eval_runtime': 50.3135, 'eval_samples_per_second': 29.813, 'eval_steps_per_second': 1.868, 'epoch': 2.0}
+{'loss': 5.2372, 'learning_rate': 2.5e-06, 'epoch': 2.78}
+{'eval_loss': 2.813079833984375, 'eval_accuracy': 0.24333333333333335, 'eval_runtime': 50.3352, 'eval_samples_per_second': 29.8, 'eval_steps_per_second': 1.867, 'epoch': 3.0}
+{'eval_loss': 1.5281974077224731, 'eval_accuracy': 0.3466666666666667, 'eval_runtime': 50.3208, 'eval_samples_per_second': 29.809, 'eval_steps_per_second': 1.868, 'epoch': 4.0}
+{'eval_loss': 0.7965468764305115, 'eval_accuracy': 0.458, 'eval_runtime': 50.3342, 'eval_samples_per_second': 29.801, 'eval_steps_per_second': 1.868, 'epoch': 5.0}
+{'loss': 1.9457, 'learning_rate': 5e-06, 'epoch': 5.56}
+{'eval_loss': 0.6701439023017883, 'eval_accuracy': 0.49133333333333334, 'eval_runtime': 50.2718, 'eval_samples_per_second': 29.838, 'eval_steps_per_second': 1.87, 'epoch': 6.0}
+{'eval_loss': 0.6858503222465515, 'eval_accuracy': 0.49666666666666665, 'eval_runtime': 50.2949, 'eval_samples_per_second': 29.824, 'eval_steps_per_second': 1.869, 'epoch': 7.0}
+{'eval_loss': 0.6190060377120972, 'eval_accuracy': 0.5073333333333333, 'eval_runtime': 50.3543, 'eval_samples_per_second': 29.789, 'eval_steps_per_second': 1.867, 'epoch': 8.0}
+{'loss': 0.7485, 'learning_rate': 7.5e-06, 'epoch': 8.33}
+{'eval_loss': 0.6111278533935547, 'eval_accuracy': 0.5253333333333333, 'eval_runtime': 50.3523, 'eval_samples_per_second': 29.79, 'eval_steps_per_second': 1.867, 'epoch': 9.0}
+{'eval_loss': 0.5986464619636536, 'eval_accuracy': 0.5253333333333333, 'eval_runtime': 50.291, 'eval_samples_per_second': 29.826, 'eval_steps_per_second': 1.869, 'epoch': 10.0}
+{'train_runtime': 4766.3321, 'train_samples_per_second': 12.062, 'train_steps_per_second': 0.378, 'train_loss': 2.3062555440266927, 'epoch': 10.0}
+Total training time: 4766.36 seconds
+######################################################################
+layer-wise fine-tuning bottom 2
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 77.48it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6', 'bert.encoder.layer.7', 'bert.encoder.layer.8', 'bert.encoder.layer.11')
+{'eval_loss': 4.651278495788574, 'eval_accuracy': 0.22933333333333333, 'eval_runtime': 50.3203, 'eval_samples_per_second': 29.809, 'eval_steps_per_second': 1.868, 'epoch': 1.0}
+{'eval_loss': 3.7899043560028076, 'eval_accuracy': 0.256, 'eval_runtime': 50.3516, 'eval_samples_per_second': 29.791, 'eval_steps_per_second': 1.867, 'epoch': 2.0}
+{'loss': 5.2372, 'learning_rate': 2.5e-06, 'epoch': 2.78}
+{'eval_loss': 2.813079833984375, 'eval_accuracy': 0.24333333333333335, 'eval_runtime': 50.3458, 'eval_samples_per_second': 29.794, 'eval_steps_per_second': 1.867, 'epoch': 3.0}
+{'eval_loss': 1.5281974077224731, 'eval_accuracy': 0.3466666666666667, 'eval_runtime': 50.4496, 'eval_samples_per_second': 29.733, 'eval_steps_per_second': 1.863, 'epoch': 4.0}
+{'eval_loss': 0.7965468764305115, 'eval_accuracy': 0.458, 'eval_runtime': 50.427, 'eval_samples_per_second': 29.746, 'eval_steps_per_second': 1.864, 'epoch': 5.0}
+{'loss': 1.9457, 'learning_rate': 5e-06, 'epoch': 5.56}
+{'eval_loss': 0.6701439023017883, 'eval_accuracy': 0.49133333333333334, 'eval_runtime': 50.473, 'eval_samples_per_second': 29.719, 'eval_steps_per_second': 1.862, 'epoch': 6.0}
+{'eval_loss': 0.6858503222465515, 'eval_accuracy': 0.49666666666666665, 'eval_runtime': 50.5147, 'eval_samples_per_second': 29.694, 'eval_steps_per_second': 1.861, 'epoch': 7.0}
+{'eval_loss': 0.6190060377120972, 'eval_accuracy': 0.5073333333333333, 'eval_runtime': 50.4298, 'eval_samples_per_second': 29.744, 'eval_steps_per_second': 1.864, 'epoch': 8.0}
+{'loss': 0.7485, 'learning_rate': 7.5e-06, 'epoch': 8.33}
+{'eval_loss': 0.6111278533935547, 'eval_accuracy': 0.5253333333333333, 'eval_runtime': 50.3978, 'eval_samples_per_second': 29.763, 'eval_steps_per_second': 1.865, 'epoch': 9.0}
+{'eval_loss': 0.5986464619636536, 'eval_accuracy': 0.5253333333333333, 'eval_runtime': 50.4342, 'eval_samples_per_second': 29.742, 'eval_steps_per_second': 1.864, 'epoch': 10.0}
+{'train_runtime': 4767.8764, 'train_samples_per_second': 12.058, 'train_steps_per_second': 0.378, 'train_loss': 2.3062555440266927, 'epoch': 10.0}
+Total training time: 4767.89 seconds
+######################################################################
+layer-wise fine-tuning bottom 5
+/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (2.0.2) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported "
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 70.20it/s]
+/home/schalkapurka_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4', 'bert.encoder.layer.5', 'bert.encoder.layer.6')
+{'eval_loss': 4.548619270324707, 'eval_accuracy': 0.22933333333333333, 'eval_runtime': 50.403, 'eval_samples_per_second': 29.76, 'eval_steps_per_second': 1.865, 'epoch': 1.0}
+{'eval_loss': 3.718966245651245, 'eval_accuracy': 0.256, 'eval_runtime': 50.3804, 'eval_samples_per_second': 29.773, 'eval_steps_per_second': 1.866, 'epoch': 2.0}
+{'loss': 5.1492, 'learning_rate': 2.5e-06, 'epoch': 2.78}
+{'eval_loss': 2.2426950931549072, 'eval_accuracy': 0.2713333333333333, 'eval_runtime': 50.3675, 'eval_samples_per_second': 29.781, 'eval_steps_per_second': 1.866, 'epoch': 3.0}
+{'eval_loss': 0.7192429900169373, 'eval_accuracy': 0.49, 'eval_runtime': 50.4367, 'eval_samples_per_second': 29.74, 'eval_steps_per_second': 1.864, 'epoch': 4.0}
+{'eval_loss': 0.6974460482597351, 'eval_accuracy': 0.504, 'eval_runtime': 50.3595, 'eval_samples_per_second': 29.786, 'eval_steps_per_second': 1.867, 'epoch': 5.0}
+{'loss': 1.207, 'learning_rate': 5e-06, 'epoch': 5.56}
+{'eval_loss': 0.6416628360748291, 'eval_accuracy': 0.5173333333333333, 'eval_runtime': 50.4338, 'eval_samples_per_second': 29.742, 'eval_steps_per_second': 1.864, 'epoch': 6.0}
+{'eval_loss': 0.6506967544555664, 'eval_accuracy': 0.5166666666666667, 'eval_runtime': 50.4047, 'eval_samples_per_second': 29.759, 'eval_steps_per_second': 1.865, 'epoch': 7.0}
+{'eval_loss': 0.5912518501281738, 'eval_accuracy': 0.5293333333333333, 'eval_runtime': 50.5195, 'eval_samples_per_second': 29.691, 'eval_steps_per_second': 1.861, 'epoch': 8.0}
+{'loss': 0.6004, 'learning_rate': 7.5e-06, 'epoch': 8.33}
+{'eval_loss': 0.5643457174301147, 'eval_accuracy': 0.5486666666666666, 'eval_runtime': 50.5048, 'eval_samples_per_second': 29.7, 'eval_steps_per_second': 1.861, 'epoch': 9.0}
+{'eval_loss': 0.5787457823753357, 'eval_accuracy': 0.5453333333333333, 'eval_runtime': 50.5324, 'eval_samples_per_second': 29.684, 'eval_steps_per_second': 1.86, 'epoch': 10.0}
+{'train_runtime': 4966.7492, 'train_samples_per_second': 11.575, 'train_steps_per_second': 0.362, 'train_loss': 2.010342593722873, 'epoch': 10.0}
+Total training time: 4966.77 seconds

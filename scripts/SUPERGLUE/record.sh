@@ -15,7 +15,7 @@ python code/fine_tuner.py --benchmark superglue --task_name record
 echo "######################################################################"
 # top layers based on fisher information: [4,6,5,2,1,3,11,10,0,7,8,9]
 echo "layer-wise fine-tuning top 1"
-python code/test_code/fine_tuner.py --benchmark superglue --task_name record --freeze_layers 0 1 2 3 5 6 7 8 9 10 11
+python code/fine_tuner.py --benchmark superglue --task_name record --freeze_layers 0 1 2 3 5 6 7 8 9 10 11
 echo "######################################################################"
 echo "layer-wise fine-tuning top 2"
 python code/fine_tuner.py --benchmark superglue --task_name record --freeze_layers 0 1 2 3 5 7 8 9 10 11
