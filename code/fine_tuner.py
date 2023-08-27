@@ -24,11 +24,11 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 # import ipdb
 
 # Define a function to extract activations from the model
-def get_activations(model, inputs):
-    with torch.no_grad():
-        outputs = model(**inputs, output_hidden_states=True)
-        activations = outputs.hidden_states
-    return activations
+# def get_activations(model, inputs):
+#     with torch.no_grad():
+#         outputs = model(**inputs, output_hidden_states=True)
+#         activations = outputs.hidden_states
+#     return activations
 
 def main(args):
     set_random_seed(42)
@@ -73,15 +73,15 @@ def main(args):
             return metric.compute(predictions=predictions, references=labels)
 
 
-    if task_name == "stsb":
-        def get_predictions(output):
-            predictions = output.logits[:, 0].cpu().numpy()
-            return predictions
+    # if task_name == "stsb":
+    #     def get_predictions(output):
+    #         predictions = output.logits[:, 0].cpu().numpy()
+    #         return predictions
 
-    else: 
-        def get_predictions(output):
-            predictions = np.argmax(output.logits.cpu().numpy(), axis=-1)
-            return predictions
+    # else: 
+    #     def get_predictions(output):
+    #         predictions = np.argmax(output.logits.cpu().numpy(), axis=-1)
+    #         return predictions
         
 
     if args.few_shot:
@@ -152,21 +152,21 @@ def main(args):
     training_time = end_time - start_time
     print(f"Total training time: {training_time:.2f} seconds")
 
-    activations = []
-    predictions = []
+    # activations = []
+    # predictions = []
 
-    for batch in trainer.get_eval_dataloader():
-        inputs = {k: v.to(trainer.args.device) for k, v in batch.items() if k != "label"}
-        batch_activations = get_activations(model, inputs)
-        activations.append(batch_activations)
+    # for batch in trainer.get_eval_dataloader():
+    #     inputs = {k: v.to(trainer.args.device) for k, v in batch.items() if k != "label"}
+    #     batch_activations = get_activations(model, inputs)
+    #     activations.append(batch_activations)
         
-        with torch.no_grad():
-            outputs = model(**inputs)
-            batch_predictions = get_predictions(outputs)
-            predictions.append(batch_predictions)
+    #     with torch.no_grad():
+    #         outputs = model(**inputs)
+    #         batch_predictions = get_predictions(outputs)
+    #         predictions.append(batch_predictions)
 
-    print("Activations: \n", activations)
-    print("\nPredictions: \n", predictions)
+    # print("Activations: \n", activations)
+    # print("\nPredictions: \n", predictions)
 
     # print("evaluating on test set")
     # GLUE benchmark has not labels for test set, so the following code is commented out
