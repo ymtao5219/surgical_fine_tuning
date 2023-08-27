@@ -2,3 +2,19 @@
 layer-wise fine-tuning full model CB
 Using cuda
   0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 40.87it/s]
+/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+{'eval_loss': 1.0623544454574585, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7611, 'eval_samples_per_second': 31.799, 'eval_steps_per_second': 2.271, 'epoch': 1.0}
+{'eval_loss': 1.0618880987167358, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7193, 'eval_samples_per_second': 32.571, 'eval_steps_per_second': 2.327, 'epoch': 2.0}
+{'eval_loss': 1.0610960721969604, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7234, 'eval_samples_per_second': 32.493, 'eval_steps_per_second': 2.321, 'epoch': 3.0}
+{'eval_loss': 1.0600354671478271, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.722, 'eval_samples_per_second': 32.52, 'eval_steps_per_second': 2.323, 'epoch': 4.0}
+{'eval_loss': 1.0587185621261597, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7158, 'eval_samples_per_second': 32.639, 'eval_steps_per_second': 2.331, 'epoch': 5.0}
+{'eval_loss': 1.0571846961975098, 'eval_accuracy': 0.39285714285714285, 'eval_runtime': 1.7199, 'eval_samples_per_second': 32.559, 'eval_steps_per_second': 2.326, 'epoch': 6.0}
+{'eval_loss': 1.055475115776062, 'eval_accuracy': 0.4107142857142857, 'eval_runtime': 1.7191, 'eval_samples_per_second': 32.576, 'eval_steps_per_second': 2.327, 'epoch': 7.0}
+{'eval_loss': 1.0536209344863892, 'eval_accuracy': 0.4107142857142857, 'eval_runtime': 1.7204, 'eval_samples_per_second': 32.55, 'eval_steps_per_second': 2.325, 'epoch': 8.0}
+{'eval_loss': 1.0514782667160034, 'eval_accuracy': 0.4107142857142857, 'eval_runtime': 1.718, 'eval_samples_per_second': 32.597, 'eval_steps_per_second': 2.328, 'epoch': 9.0}
+{'eval_loss': 1.0489357709884644, 'eval_accuracy': 0.42857142857142855, 'eval_runtime': 1.7168, 'eval_samples_per_second': 32.619, 'eval_steps_per_second': 2.33, 'epoch': 10.0}
+{'train_runtime': 376.0486, 'train_samples_per_second': 6.648, 'train_steps_per_second': 0.213, 'train_loss': 1.0230074882507325, 'epoch': 10.0}
+Total training time: 376.08 seconds
+######################################################################
+finished

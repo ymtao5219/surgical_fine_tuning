@@ -184,7 +184,7 @@ SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
 model_name = "bert-base-cased"
 # model_name = "bert-large-cased"
-load_model="checkpoints/checkpoint-80"
+load_model="bert-base-cased"
 tokenized_data = GlueDataloader("cb").get_samples(100)
 
 # ipdb.set_trace()
