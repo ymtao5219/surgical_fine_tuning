@@ -1,3 +1,4 @@
+import argparse
 import torch
 from torch.nn import Module
 from torch.utils.data import DataLoader
@@ -176,23 +177,33 @@ class FIMCalculator:
         return keys
 
     
-# example usage 
-GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
-SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
+def main(args):
+    # example usage 
+    GLUE_TASKS = ["mrpc", "stsb", "rte", "wnli", "qqp", "mnli_mismatched", "mnli_matched", "qnli", "cola", "sst2" ]
+    SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 
-# Alex
-# ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
-model_name = "bert-base-cased"
-# model_name = "bert-large-cased"
-load_model="bert-base-cased"
-tokenized_data = GlueDataloader("cb").get_samples(100)
+    # Alex
+    # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
+    model_name = "bert-base-cased"
+    # model_name = "bert-large-cased"
+    load_model = args.load_model
+    task = args.task_name
+    tokenized_data = GlueDataloader(task).get_samples(100)
 
-# ipdb.set_trace()
-calc = FIMCalculator(model_name, load_model, tokenized_data)
-fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
+    # ipdb.set_trace()
+    calc = FIMCalculator(model_name, load_model, tokenized_data)
+    fim = calc.compute_fim(batch_size=1, empirical=True, verbose=True, every_n=None)
 
-# select those with lowest FIM layers to freeze
-layers_to_freeze = calc.bottom_k_layers(fim, k=12)
-print(fim)
-print(layers_to_freeze)
-# ipdb.set_trace()
+    # select those with lowest FIM layers to freeze
+    layers_to_freeze = calc.bottom_k_layers(fim, k=12)
+    print(fim)
+    print(layers_to_freeze)
+    # ipdb.set_trace()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
+    parser.add_argument("--load_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face or local")
+    parser.add_argument("--task_name", type=str, default="wsc", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
+    args = parser.parse_args()
+
+    main(args)

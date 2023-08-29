@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBTACH --job-name=cb_full  # CHANGE THIS! for different tasks
+#SBTACH --job-name=superglue_boolq  # CHANGE THIS! for different tasks
 #SBATCH --output=results/logs/bottom/%x_job_name_output_%j.log
 #SBATCH -c 4  # Number of Cores per Task
 #SBATCH --mem=50G  # Requested Memory
@@ -9,9 +9,9 @@
 
 
 
-# echo "######################################################################"
-# echo "layer-wise fine-tuning freezing bottom 5 WSC"
-# python code/fine_tuner.py --benchmark superglue --task_name wsc --freeze_layers 0 1 2 3 4 
+echo "######################################################################"
+echo "layer-wise fine-tuning full WSC"
+python code/fine_tuner.py --benchmark superglue --task_name wsc
 
 # echo "######################################################################"
 # echo "layer-wise fine-tuning freezing bottom 5 WIC"
@@ -33,9 +33,9 @@
 # echo "layer-wise fine-tuning freezing bottom 5 BOOLQ"
 # python code/fine_tuner.py --benchmark superglue --task_name boolq --freeze_layers 0 1 2 3 4 
 
-echo "######################################################################"
-echo "layer-wise fine-tuning full model CB"
-python code/fine_tuner.py --benchmark superglue --task_name cb
+# echo "######################################################################"
+# echo "layer-wise fine-tuning freezing bottom 5 CB"
+# python code/fine_tuner.py --benchmark superglue --task_name cb --freeze_layers 0 1 2 3 4 
 
 # echo "######################################################################"
 # echo "layer-wise fine-tuning freezing bottom 5 COPA"
