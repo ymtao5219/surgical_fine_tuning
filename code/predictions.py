@@ -1,7 +1,7 @@
 import argparse
 from transformers import BertForSequenceClassification, BertTokenizerFast, TrainingArguments, Trainer, AutoModelForMultipleChoice, AutoModelForQuestionAnswering
 from transformers import AutoTokenizer, RobertaForSequenceClassification
-import time 
+import pickle 
 from datasets import load_metric
 import evaluate
 import numpy as np
@@ -21,8 +21,6 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
-# import ipdb
-
 
 def main(args):
     set_random_seed(42)
@@ -35,7 +33,8 @@ def main(args):
         print(f"Using {device}")
         
     model_name = args.parent_model
-    freeze_layers = args.freeze_layers
+    # freeze_layers = args.freeze_layers
+    load_model = args.load_model
     task_name = args.task_name
     
     if task_name == "cola":
@@ -66,6 +65,25 @@ def main(args):
             predictions = np.argmax(logits, axis=-1)
             return metric.compute(predictions=predictions, references=labels)
 
+
+    if task_name == "stsb":
+        def get_predictions(output):
+            predictions = output.logits[:, 0].cpu().numpy()
+            return predictions
+
+    else: 
+        def get_predictions(output):
+            predictions = np.argmax(output.logits.cpu().numpy(), axis=-1)
+            return predictions
+
+    # Define a function to extract activations from the model
+    def get_activations(model, inputs):
+        with torch.no_grad():
+            outputs = model(**inputs, output_hidden_states=True)
+            activations = outputs.hidden_states
+        return activations
+        
+
     if args.few_shot:
         data_loader = GlueDataloader(task_name, model_name)
         train_dataset, val_dataset = data_loader.get_train_val_split(args.few_shot)
@@ -76,30 +94,20 @@ def main(args):
     # ipdb.set_trace()
     # Model
     if task_name == "copa": 
-        model = AutoModelForMultipleChoice.from_pretrained(model_name)
+        model = AutoModelForMultipleChoice.from_pretrained(load_model)
     elif task_name == "multirc":
-        model = AutoModelForQuestionAnswering.from_pretrained(model_name)
+        model = AutoModelForQuestionAnswering.from_pretrained(load_model)
     elif task_name == "stsb":
-        model = BertForSequenceClassification.from_pretrained(model_name, num_labels=1)
+        model = BertForSequenceClassification.from_pretrained(load_model, num_labels=1)
     else: 
-        model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
+        model = BertForSequenceClassification.from_pretrained(load_model, num_labels=len(train_dataset.unique("label")))
         # TODO: changed for roberta
-        # model = RobertaForSequenceClassification.from_pretrained(model_name, num_labels=len(train_dataset.unique("label")))
+        # model = RobertaForSequenceClassification.from_pretrained(load_model, num_labels=len(train_dataset.unique("label")))
     # ipdb.set_trace()
     def add_prefix(val):
         return "bert.encoder.layer." + str(val)
          # TODO: changed for roberta
         # return "roberta.encoder.layer." + str(val)
-
-    # print("layers to freeze", freeze_layers)
-    if freeze_layers:
-        for i in range(len(freeze_layers)):
-            freeze_layers[i] = add_prefix(freeze_layers[i])
-        freeze_layers = tuple(freeze_layers)
-        print("layers to freeze", freeze_layers)
-        for name, param in model.named_parameters():
-            if name.startswith(freeze_layers):
-                param.requires_grad = False
 
     if args.benchmark == "glue":
         config_path = "configs/glue_training_args.yaml"
@@ -121,28 +129,43 @@ def main(args):
         compute_metrics=compute_metrics
     )
 
-    # Record the start time
-    start_time = time.time()
+    activations = []
+    predictions = []
 
-    # Train the model
-    trainer.train()
+    for batch in trainer.get_eval_dataloader():
+        inputs = {k: v.to(trainer.args.device) for k, v in batch.items() if k != "label"}
+        batch_activations = get_activations(model, inputs)
+        activations.append(batch_activations)
+        
+        with torch.no_grad():
+            outputs = model(**inputs)
+            batch_predictions = get_predictions(outputs)
+            predictions.append(batch_predictions)
 
-    # Record the end time
-    end_time = time.time()
+    print("Predictions: \n", predictions)
 
-    # Calculate the total training time
-    training_time = end_time - start_time
-    print(f"Total training time: {training_time:.2f} seconds")
+    activations_file = 'results/logs/Pickle_files/' + task_name + '.pickle'
+    with open(activations_file, 'wb') as f:
+        pickle.dump(activations, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-    # Save the best model
-    trainer.save_model(f"checkpoints/best_model_{args.task_name}")
+    # To load these activations use the following code:
+    # with open(activations_file, 'rb') as f:
+    #     loaded_activations = pickle.load(f)
+ 
+
+    print("Evaluating on validation set")
+    # GLUE benchmark has not labels for test set, so the following code is commented out
+    # Evaluate the model
+    test_results = trainer.evaluate()
+    print("\nValidation results: \n", test_results)
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
     parser.add_argument("--parent_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face")
+    parser.add_argument("--load_model", type=str, default="checkpoints/best_model_wsc", help="Name of the model to use to get predictions")
     parser.add_argument("--benchmark", type=str, default="super_glue", help="Name of the benchmark to use (glue or superglue)")
     parser.add_argument("--task_name", type=str, default="wsc", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
-    parser.add_argument("--freeze_layers", nargs='+', type=int, help="List of which layers to freeze")
     parser.add_argument("--few_shot", type=int, help="Number of examples per class to use for fine-tuning")
     args = parser.parse_args()
 

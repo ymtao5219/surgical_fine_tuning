@@ -1,0 +1,13 @@
+######################################################################
+Predictions and activations for WSC best model
+Using cuda
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 367.24it/s]
+Predictions: 
+ [array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), array([0, 0, 0, 0, 0, 0, 0, 0])]
+Evaluating on validation set
+{'eval_loss': 0.659196138381958, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0556, 'eval_samples_per_second': 34.036, 'eval_steps_per_second': 2.291}
+
+Validation results: 
+ {'eval_loss': 0.659196138381958, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0556, 'eval_samples_per_second': 34.036, 'eval_steps_per_second': 2.291}
+######################################################################
+finished

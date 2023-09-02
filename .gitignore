@@ -4,5 +4,6 @@ ignore/
 best_model_*/
 code/checkpoints
 checkpoints/
+results/logs/Pickle_files/
 # # ignore log files (need to save output logs)
 # *.log
