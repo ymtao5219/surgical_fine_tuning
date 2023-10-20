@@ -2,7 +2,7 @@ import torch
 from torch.nn import Module
 from torch.utils.data import DataLoader
 from torch.distributions import Categorical
-from transformers import AutoModelForSequenceClassification
+from transformers import AutoModelForSequenceClassification, AutoModelForMultipleChoice
 import re
 import sys
 import time
@@ -33,7 +33,8 @@ class FIMCalculator:
         self.model_name = model_name
         self.tokenized_data = tokenized_data
         # self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=len(tokenized_data.unique("label")))
+        # self.model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=len(tokenized_data.unique("label")))
+        self.model = AutoModelForMultipleChoice.from_pretrained(model_name)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.num_sentences = len(self.tokenized_data)
@@ -92,8 +93,9 @@ class FIMCalculator:
                 data = data.to(device)
                 if empirical:
                     target = target.to(device)
-                    
+        
             logits = model(data).logits
+                
             if empirical:
                 outdx = target.unsqueeze(1)
             else:
@@ -179,10 +181,10 @@ SUPERGLUE_TASKS = ["cb", "multirc", "wic", "wsc", "record", "copa"]
 
 # Alex
 # ["cola", "cb", "record", "wic", "wsc", "multirc", "copa"]
-# model_name = "bert-base-cased"
+model_name = "bert-base-cased"
 # model_name = "bert-large-cased"
-model_name="roberta-base"
-tokenized_data = GlueDataloader("mnli_mismatched").get_samples(100)
+# model_name="roberta-base"
+tokenized_data = GlueDataloader("copa").get_samples(100)
 
 # ipdb.set_trace()
 calc = FIMCalculator(model_name, tokenized_data)

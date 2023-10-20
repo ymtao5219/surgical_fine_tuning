@@ -3,7 +3,7 @@ import torch
 from torch.nn import Module
 from torch.utils.data import DataLoader
 from torch.distributions import Categorical
-from transformers import AutoModelForSequenceClassification, BertModel
+from transformers import AutoModelForSequenceClassification, BertModel, AutoModelForMultipleChoice
 import re
 import sys
 import time
@@ -35,7 +35,9 @@ class FIMCalculator:
         self.load_model = load_model
         self.tokenized_data = tokenized_data
         # self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
-        self.model = AutoModelForSequenceClassification.from_pretrained(load_model, num_labels=len(tokenized_data.unique("label")))
+        # self.model = AutoModelForSequenceClassification.from_pretrained(load_model, num_labels=len(tokenized_data.unique("label")))
+        self.model = AutoModelForMultipleChoice.from_pretrained(load_model)
+
         # self.model = BertModel.from_pretrained(load_model, num_labels=len(tokenized_data.unique("label")))
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
@@ -95,8 +97,9 @@ class FIMCalculator:
                 data = data.to(device)
                 if empirical:
                     target = target.to(device)
-                    
+
             logits = model(data).logits
+                
             if empirical:
                 outdx = target.unsqueeze(1)
             else:
@@ -202,8 +205,8 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning a parent model")
-    parser.add_argument("--load_model", type=str, default="bert-base-cased", help="Name of the parent model to use from Hugging Face or local")
-    parser.add_argument("--task_name", type=str, default="wsc", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
+    parser.add_argument("--load_model", type=str, default="checkpoints/checkpoint-120", help="Name of the parent model to use from Hugging Face or local")
+    parser.add_argument("--task_name", type=str, default="copa", help="Name of the task in GLUE/SuperGLUE to fine-tune on")
     args = parser.parse_args()
 
     main(args)
