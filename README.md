@@ -2,7 +2,7 @@
 
 > Method to surgically finetune language encoders with a subset of layers to perform close to full-finetuning!
 
-This repository contains the code for our paper: 
+This repository contains the code for our paper (EMNLP Findings 2023): 
 
 ![Paper Title](title.png)
 
