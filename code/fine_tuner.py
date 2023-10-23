@@ -77,8 +77,6 @@ def main(args):
     # Model
     if task_name == "copa": 
         model = AutoModelForMultipleChoice.from_pretrained(model_name)
-    elif task_name == "multirc":
-        model = AutoModelForQuestionAnswering.from_pretrained(model_name)
     elif task_name == "stsb":
         model = BertForSequenceClassification.from_pretrained(model_name, num_labels=1)
     else: 
