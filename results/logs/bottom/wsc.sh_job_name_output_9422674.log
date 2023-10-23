@@ -1,23 +1,0 @@
-######################################################################
-layer-wise fine-tuning freezing bottom 5
-Using cuda
-  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 399.13it/s]
-/home/gbelapurkar_umass_edu/.local/lib/python3.8/site-packages/transformers/optimization.py:391: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
-  warnings.warn(
-layers to freeze ('bert.encoder.layer.0', 'bert.encoder.layer.1', 'bert.encoder.layer.2', 'bert.encoder.layer.3', 'bert.encoder.layer.4')
-{'eval_loss': 0.6928689479827881, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0404, 'eval_samples_per_second': 34.206, 'eval_steps_per_second': 2.302, 'epoch': 0.97}
-{'eval_loss': 0.6918704509735107, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0951, 'eval_samples_per_second': 33.602, 'eval_steps_per_second': 2.262, 'epoch': 2.0}
-{'eval_loss': 0.6902850270271301, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0549, 'eval_samples_per_second': 34.043, 'eval_steps_per_second': 2.291, 'epoch': 2.97}
-{'eval_loss': 0.6881628036499023, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0597, 'eval_samples_per_second': 33.991, 'eval_steps_per_second': 2.288, 'epoch': 4.0}
-{'eval_loss': 0.6856293082237244, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0763, 'eval_samples_per_second': 33.807, 'eval_steps_per_second': 2.275, 'epoch': 4.97}
-{'eval_loss': 0.6824066638946533, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0629, 'eval_samples_per_second': 33.955, 'eval_steps_per_second': 2.285, 'epoch': 6.0}
-{'eval_loss': 0.67899090051651, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0741, 'eval_samples_per_second': 33.831, 'eval_steps_per_second': 2.277, 'epoch': 6.97}
-{'eval_loss': 0.6751309037208557, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0678, 'eval_samples_per_second': 33.901, 'eval_steps_per_second': 2.282, 'epoch': 8.0}
-{'eval_loss': 0.6713676452636719, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0729, 'eval_samples_per_second': 33.844, 'eval_steps_per_second': 2.278, 'epoch': 8.97}
-{'eval_loss': 0.6686000823974609, 'eval_accuracy': 0.6346153846153846, 'eval_runtime': 3.0995, 'eval_samples_per_second': 33.554, 'eval_steps_per_second': 2.258, 'epoch': 9.71}
-{'train_runtime': 516.2404, 'train_samples_per_second': 10.731, 'train_steps_per_second': 0.329, 'train_loss': 0.7846278471105239, 'epoch': 9.71}
-Total training time: 516.26 seconds
-######################################################################
-layer-wise fine-tuning freezing bottom 5
-Using cuda
-  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 68.85it/s]slurmstepd-gypsum-gpu098: error: *** JOB 9422674 ON gypsum-gpu098 CANCELLED AT 2023-08-23T17:48:01 DUE TO TIME LIMIT ***
