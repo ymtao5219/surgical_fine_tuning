@@ -37,37 +37,8 @@ def main(args):
     freeze_layers = args.freeze_layers
     task_name = args.task_name
     
-    
-    # if task_name == "cola":
-    #     metric = evaluate.load("matthews_correlation")
-
-    #     def compute_metrics(eval_pred):
-    #         logits, labels = eval_pred
-    #         predictions = np.argmax(logits, axis=-1)
-    #         return metric.compute(predictions=predictions, references=labels)
-
-    # elif task_name == "stsb":
-    #     metric = evaluate.load("accuracy")
-    #     def compute_metrics(eval_pred):
-    #         logits, labels = eval_pred
-    #         predictions = logits[:, 0]
-    #         return metric.compute(predictions=predictions, references=labels)
-
-    # else: 
-    #     metric = evaluate.load("accuracy")
-
-    #     def compute_metrics(eval_pred):
-    #         logits, labels = eval_pred
-    #         predictions = np.argmax(logits, axis=-1)
-    #         return metric.compute(predictions=predictions, references=labels)
-
     data_loader = XLNetGlueDataloader(task_name, model_name)
-    # if args.few_shot:
-    #     train_dataset, val_dataset = data_loader.get_train_val_split(args.few_shot)
-    # else: 
-    #     data_loader = XLNetGlueDataloader1(task_name, model_name)
-    #     train_dataset, val_dataset = data_loader.get_train_val_split()
-
+   
     metric = data_loader.get_metric()
     
     def compute_metrics(eval_pred):
