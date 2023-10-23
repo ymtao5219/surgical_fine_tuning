@@ -10,9 +10,9 @@ This repository contains the code for our paper:
 Fine-tuning all layers of a pre-trained neural language encoder is commonly done to adapt it to a new task, but our research demonstrates that selectively fine-tuning a subset of layers, identified using an efficient method based on the Fisher Information Matrix, can achieve comparable or even improved performance across different downstream language tasks, indicating that task-specific information is often localized within a few layers of the encoder.
 
 ## Set up
-This code was tested with Python 3.9.16, Pytorch 1.12.1 using pre-trained models through huggingface/transformers 4.28.1. Additional required packages are listed in the requirements file. The code was tested on a Tesla M40 24GB GPU but should work on other cards with at least 24GB VRAM for BERT-base model.
+This code was tested with Python 3.9.16, Pytorch 1.12.1 using pre-trained models through huggingface/transformers 4.28.1. Additional required packages are listed in the `requirements.txt` file. The code was tested on a Tesla M40 24GB GPU but should work on other cards with at least 24GB VRAM for BERT-base model.
 
-## Explaination of Scripts 
+## Repository Structure and Descriptions
 - `checkpoints/` contains fine-tuned models
 
 - `configs/` contains the configurations being used to train the GLUE and SuperGLUE tasks
