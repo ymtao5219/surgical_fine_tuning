@@ -2,9 +2,10 @@
 
 > Method to surgically finetune language encoders with a subset of layers to perform close to full-finetuning!
 
-This repository contains the code for our paper (EMNLP Findings 2023): 
+This repository contains the code for our ![paper](https://arxiv.org/pdf/2310.17041.pdf) (EMNLP Findings 2023): 
 
 ![Paper Title](title.png)
+
 
 ## Abstract 
 Fine-tuning all layers of a pre-trained neural language encoder is commonly done to adapt it to a new task, but our research demonstrates that selectively fine-tuning a subset of layers, identified using an efficient method based on the Fisher Information Matrix, can achieve comparable or even improved performance across different downstream language tasks, indicating that task-specific information is often localized within a few layers of the encoder.
